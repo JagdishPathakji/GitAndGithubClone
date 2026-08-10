@@ -8,8 +8,8 @@ import { useState, useEffect } from "react";
 import Otp from "./components/VerifyOtp";
 // import OwnRepo from "./components/OwnRepo";
 // import GetPublicRepo from "./components/getPublicRepo";
-// import Profile from "./components/Profile";
-// import PublicProfile from "./components/PublicProfile";
+import Profile from "./components/Profile";
+import PublicProfile from "./components/PublicProfile";
 // import Documentation from "./components/Documentation";
 import LandingPage from "./components/LandingPage";
 // import Documentation from "./components/Documentation";
@@ -106,7 +106,7 @@ function App() {
           <Route
             path="/repo/public/:repoName"
             element={<GetPublicRepo setIsAuthenticated={setIsAuthenticated} />}
-          />
+          /> */}
           <Route 
             path="/profile"
             element={<Profile setIsAuthenticated={setIsAuthenticated}/>}
@@ -114,7 +114,7 @@ function App() {
           <Route 
             path="/publicProfile/:username"
             element={<PublicProfile  setIsAuthenticated={setIsAuthenticated}/>}
-          /> */}
+          />
         </Route>
 
         <Route

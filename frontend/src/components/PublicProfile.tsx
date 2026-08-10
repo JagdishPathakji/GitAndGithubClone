@@ -232,7 +232,7 @@ export default function PublicProfile({
         )}
 
         {/* ---- PUBLIC REPOS ---- */}
-        <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 shadow-2xl transition-all duration-300">
+        {/* <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 shadow-2xl transition-all duration-300">
           <div className="px-6 py-6 border-b border-[#3023ae]/20">
             <h2 className="text-lg font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent flex items-center gap-2">
               <GitBranch className="w-5 h-5 text-[#3023ae]" /> Public Repositories
@@ -277,7 +277,7 @@ export default function PublicProfile({
               ))}
             </div>
           )}
-        </div>
+        </div> */}
       </main>
     </div>
   );

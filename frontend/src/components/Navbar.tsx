@@ -111,14 +111,21 @@ export default function Navbar({
               </button> */}
 
               <span
-                className="text-sm text-gray-600 hidden sm:block transition-colors"
+                className="text-sm text-gray-600 hidden sm:block hover:text-[#b428b4] transition-colors cursor-pointer"
+                onClick={() => {
+                  navigate("/profile");
+                }}
               >
                 {username}
               </span>
 
               {/* Square Profile Icon */}
               <div
-                className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20 rounded-lg border border-[#b428b4]/30"
+                className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20 rounded-lg border border-[#b428b4]/30 hover:border-[#b428b4]/60 transition-all"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  navigate("/profile");
+                }}
               >
                 <User className="w-5 h-5 text-[#b428b4]" />
               </div>
