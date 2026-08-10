@@ -90,7 +90,8 @@ export default function Dashboard({ setIsAuthenticated }) {
                 {profiles.map((profile, index) => (
                   <div 
                     key={index} 
-                    className="flex items-center gap-4 p-4 border border-[#b428b4]/20 bg-gray-50 hover:bg-[#b428b4]/5 transition-colors"
+                    onClick={() => navigate(`/publicProfile/${profile.username}`)}
+                    className="flex items-center gap-4 p-4 border border-[#b428b4]/20 bg-gray-50 hover:bg-[#b428b4]/5 transition-colors cursor-pointer hover:shadow-md hover:border-[#b428b4]/40"
                   >
                     <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20 border border-[#b428b4]/30 rounded-full flex-shrink-0">
                       <User className="w-6 h-6 text-[#b428b4]" />
