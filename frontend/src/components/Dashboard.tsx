@@ -29,11 +29,11 @@ function Toast({
     "fixed top-6 right-6 z-50 px-6 py-4 border text-sm font-semibold shadow-xl backdrop-blur-md animate-slide-in";
   const styles = {
     success:
-      "bg-[#0d0221]/90 border-[#00d9ff]/40 text-[#00d9ff] shadow-[0_0_30px_rgba(0,217,255,0.4)]",
+      "bg-gray-100/90 border-[#3023ae]/40 text-[#3023ae] shadow-[0_0_30px_rgba(0,217,255,0.4)]",
     error:
-      "bg-[#0d0221]/90 border-red-500/40 text-red-400 shadow-[0_0_30px_rgba(239,68,68,0.4)]",
+      "bg-gray-100/90 border-red-500/40 text-red-400 shadow-[0_0_30px_rgba(239,68,68,0.4)]",
     info:
-      "bg-[#0d0221]/90 border-[#ff006e]/40 text-[#ff006e] shadow-[0_0_30px_rgba(255,0,110,0.4)]",
+      "bg-gray-100/90 border-[#b428b4]/40 text-[#b428b4] shadow-[0_0_30px_rgba(255,0,110,0.4)]",
   };
 
   return (
@@ -127,7 +127,7 @@ export default function Dashboard({ setIsAuthenticated }) {
         />
       )}
 
-      <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-200">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-800">
         <Navbar
           username={username}
           setIsAuthenticated={setIsAuthenticated}
@@ -137,11 +137,11 @@ export default function Dashboard({ setIsAuthenticated }) {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10 grid grid-cols-12 gap-6 md:gap-8">
           {/* Sidebar */}
           <aside className="col-span-12 md:col-span-3">
-            <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 p-4 sm:p-6 shadow-2xl">
-              <h2 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#ff006e] to-[#00d9ff] bg-clip-text text-transparent">
+            <div className="bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 p-4 sm:p-6 shadow-2xl">
+              <h2 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent">
                 Dashboard
               </h2>
-              <p className="text-gray-400 mt-2 text-xs sm:text-sm">
+              <p className="text-gray-500 mt-2 text-xs sm:text-sm">
                 Welcome back, {username || "Developer"}.
               </p>
 
@@ -153,8 +153,8 @@ export default function Dashboard({ setIsAuthenticated }) {
                     onClick={() => setActiveTab(tab)}
                     className={`px-3 py-2 text-xs font-semibold rounded-md border ${
                       activeTab === tab
-                        ? "border-[#00d9ff]/40 bg-[#0d0221]/60"
-                        : "border-[#ff006e]/20 bg-[#0d0221]/30"
+                        ? "border-[#3023ae]/40 bg-gray-100/60"
+                        : "border-[#b428b4]/20 bg-gray-100/30"
                     }`}
                   >
                     {tab === "overview"
@@ -174,8 +174,8 @@ export default function Dashboard({ setIsAuthenticated }) {
                   onClick={() => setActiveTab("overview")}
                   className={`w-full text-left px-4 py-3 border ${
                     activeTab === "overview"
-                      ? "border-[#00d9ff]/40 bg-[#0d0221]/60"
-                      : "border-[#ff006e]/20"
+                      ? "border-[#3023ae]/40 bg-gray-100/60"
+                      : "border-[#b428b4]/20"
                   }`}
                 >
                   Overview
@@ -185,8 +185,8 @@ export default function Dashboard({ setIsAuthenticated }) {
                   onClick={() => setActiveTab("myRepos")}
                   className={`w-full text-left px-4 py-3 border ${
                     activeTab === "myRepos"
-                      ? "border-[#00d9ff]/40 bg-[#0d0221]/60"
-                      : "border-[#ff006e]/20"
+                      ? "border-[#3023ae]/40 bg-gray-100/60"
+                      : "border-[#b428b4]/20"
                   }`}
                 >
                   My Repos
@@ -196,8 +196,8 @@ export default function Dashboard({ setIsAuthenticated }) {
                   onClick={() => setActiveTab("publicRepos")}
                   className={`w-full text-left px-4 py-3 border ${
                     activeTab === "publicRepos"
-                      ? "border-[#00d9ff]/40 bg-[#0d0221]/60"
-                      : "border-[#ff006e]/20"
+                      ? "border-[#3023ae]/40 bg-gray-100/60"
+                      : "border-[#b428b4]/20"
                   }`}
                 >
                   Public Repos
@@ -207,8 +207,8 @@ export default function Dashboard({ setIsAuthenticated }) {
                   onClick={() => setActiveTab("profiles")}
                   className={`w-full text-left px-4 py-3 border ${
                     activeTab === "profiles"
-                      ? "border-[#00d9ff]/40 bg-[#0d0221]/60"
-                      : "border-[#ff006e]/20"
+                      ? "border-[#3023ae]/40 bg-gray-100/60"
+                      : "border-[#b428b4]/20"
                   }`}
                 >
                   Profiles
@@ -221,15 +221,15 @@ export default function Dashboard({ setIsAuthenticated }) {
           <main className="col-span-12 md:col-span-9 space-y-6 md:space-y-8">
             {/* Overview */}
             {activeTab === "overview" && (
-              <section className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#00d9ff]/30 rounded-none p-5 sm:p-8 shadow-2xl transition-all duration-300">
+              <section className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 rounded-none p-5 sm:p-8 shadow-2xl transition-all duration-300">
                 <div className="flex items-center justify-between gap-3 mb-6">
-                  <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#00d9ff] to-[#ff006e] bg-clip-text text-transparent">
+                  <h2 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent">
                     Overview
                   </h2>
                   <div className="flex gap-2 sm:gap-3">
                     <button
                       onClick={() => navigate("/createRepo")}
-                      className="px-4 sm:px-5 py-2 sm:py-3 bg-[#00d9ff]/20 border border-[#00d9ff]/30 text-xs sm:text-sm font-semibold text-gray-200 hover:bg-[#00d9ff]/30 transition-all"
+                      className="px-4 sm:px-5 py-2 sm:py-3 bg-[#3023ae]/20 border border-[#3023ae]/30 text-xs sm:text-sm font-semibold text-gray-800 hover:bg-[#3023ae]/30 transition-all"
                     >
                       Create Repo
                     </button>
@@ -239,11 +239,11 @@ export default function Dashboard({ setIsAuthenticated }) {
                 {/* UPDATED GRID */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-6">
                   {/* Top Repos */}
-                  <div className="p-4 sm:p-6 bg-[#0d0221]/60 border border-[#ff006e]/20">
-                    <h3 className="text-lg font-bold text-gray-100 mb-4">Top Repos</h3>
+                  <div className="p-4 sm:p-6 bg-gray-100/60 border border-[#b428b4]/20">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">Top Repos</h3>
 
                     {userRepo.length === 0 ? (
-                      <p className="text-gray-400">
+                      <p className="text-gray-500">
                         No repos yet. Create one to get started.
                       </p>
                     ) : (
@@ -255,11 +255,11 @@ export default function Dashboard({ setIsAuthenticated }) {
                           <div
                             key={repo._id}
                             onClick={() => openOwnRepo(repo.name)}
-                            className="p-3 sm:p-4 border border-[#ff006e]/20 mb-3 cursor-pointer hover:bg-[#ff006e]/10 transition-all"
+                            className="p-3 sm:p-4 border border-[#b428b4]/20 mb-3 cursor-pointer hover:bg-[#b428b4]/10 transition-all"
                           >
-                            <p className="font-semibold text-gray-100">{repo.name}</p>
-                            <p className="text-xs sm:text-sm text-gray-400">{repo.description}</p>
-                            <p className="text-xs sm:text-sm text-gray-400 mt-2">
+                            <p className="font-semibold text-gray-800">{repo.name}</p>
+                            <p className="text-xs sm:text-sm text-gray-500">{repo.description}</p>
+                            <p className="text-xs sm:text-sm text-gray-500 mt-2">
                               ⭐ {repo.starred.length} stars
                             </p>
                           </div>
@@ -268,14 +268,14 @@ export default function Dashboard({ setIsAuthenticated }) {
                   </div>
 
                   {/* Community Highlights */}
-                  <div className="p-4 sm:p-6 bg-[#0d0221]/60 border border-[#00d9ff]/20">
-                    <h3 className="text-lg font-bold text-gray-100 mb-4">
+                  <div className="p-4 sm:p-6 bg-gray-100/60 border border-[#3023ae]/20">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">
                       Community Highlights
                     </h3>
 
-                    <div className="p-3 sm:p-4 border border-[#00d9ff]/20 mb-3">
-                      <p className="text-xs sm:text-sm text-gray-400">Most Starred Public Repo</p>
-                      <p className="font-semibold text-gray-100">
+                    <div className="p-3 sm:p-4 border border-[#3023ae]/20 mb-3">
+                      <p className="text-xs sm:text-sm text-gray-500">Most Starred Public Repo</p>
+                      <p className="font-semibold text-gray-800">
                         {publicRepos
                           .slice()
                           .sort((a, b) => b.starred.length - a.starred.length)[0]?.name ||
@@ -283,9 +283,9 @@ export default function Dashboard({ setIsAuthenticated }) {
                       </p>
                     </div>
 
-                    <div className="p-3 sm:p-4 border border-[#00d9ff]/20">
-                      <p className="text-xs sm:text-sm text-gray-400">Most Followed Profile</p>
-                      <p className="font-semibold text-gray-100">
+                    <div className="p-3 sm:p-4 border border-[#3023ae]/20">
+                      <p className="text-xs sm:text-sm text-gray-500">Most Followed Profile</p>
+                      <p className="font-semibold text-gray-800">
                         {publicProfiles
                           .slice()
                           .sort(
@@ -298,29 +298,29 @@ export default function Dashboard({ setIsAuthenticated }) {
                   </div>
 
                   {/* Stats */}
-                  <div className="p-4 sm:p-6 bg-[#0d0221]/60 border border-[#ffbe0b]/20">
-                    <h3 className="text-lg font-bold text-gray-100 mb-4">Your Stats</h3>
+                  <div className="p-4 sm:p-6 bg-gray-100/60 border border-[#ffbe0b]/20">
+                    <h3 className="text-lg font-bold text-gray-800 mb-4">Your Stats</h3>
 
                     <div className="grid grid-cols-2 gap-3 sm:gap-4">
                       <div className="p-3 sm:p-4 border border-[#ffbe0b]/20">
-                        <p className="text-xs sm:text-sm text-gray-400">Total Repos</p>
-                        <p className="font-semibold text-gray-100">{userRepo.length}</p>
+                        <p className="text-xs sm:text-sm text-gray-500">Total Repos</p>
+                        <p className="font-semibold text-gray-800">{userRepo.length}</p>
                       </div>
                       <div className="p-3 sm:p-4 border border-[#ffbe0b]/20">
-                        <p className="text-xs sm:text-sm text-gray-400">Public Repos</p>
-                        <p className="font-semibold text-gray-100">
+                        <p className="text-xs sm:text-sm text-gray-500">Public Repos</p>
+                        <p className="font-semibold text-gray-800">
                           {publicRepos.length}
                         </p>
                       </div>
                       <div className="p-3 sm:p-4 border border-[#ffbe0b]/20">
-                        <p className="text-xs sm:text-sm text-gray-400">Profiles</p>
-                        <p className="font-semibold text-gray-100">
+                        <p className="text-xs sm:text-sm text-gray-500">Profiles</p>
+                        <p className="font-semibold text-gray-800">
                           {publicProfiles.length}
                         </p>
                       </div>
                       <div className="p-3 sm:p-4 border border-[#ffbe0b]/20">
-                        <p className="text-xs sm:text-sm text-gray-400">Top Star</p>
-                        <p className="font-semibold text-gray-100">
+                        <p className="text-xs sm:text-sm text-gray-500">Top Star</p>
+                        <p className="font-semibold text-gray-800">
                           {userRepo
                             .slice()
                             .sort((a, b) => b.starred.length - a.starred.length)[0]
@@ -339,12 +339,12 @@ export default function Dashboard({ setIsAuthenticated }) {
 
             {/* My Repos */}
             {activeTab === "myRepos" && (
-              <section className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 p-5 sm:p-8 shadow-2xl">
+              <section className="bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 p-5 sm:p-8 shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-gradient-to-br from-[#ff006e]/20 to-[#00d9ff]/20">
-                    <GitBranch className="w-6 h-6 text-[#ff006e]" />
+                  <div className="p-2 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20">
+                    <GitBranch className="w-6 h-6 text-[#b428b4]" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#ff006e] to-[#00d9ff] bg-clip-text text-transparent">
+                  <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent">
                     My Repositories
                   </h2>
                 </div>
@@ -359,20 +359,20 @@ export default function Dashboard({ setIsAuthenticated }) {
                       <div
                         onClick={() => openOwnRepo(repo.name)}
                         key={repo._id}
-                        className="border border-[#ff006e]/20 bg-[#0d0221]/60 p-4 sm:p-5 hover:border-[#ff006e]/60 transition-all cursor-pointer hover:shadow-lg hover:shadow-[#ff006e]/30 group"
+                        className="border border-[#b428b4]/20 bg-gray-100/60 p-4 sm:p-5 hover:border-[#b428b4]/60 transition-all cursor-pointer hover:shadow-lg hover:shadow-[#b428b4]/30 group"
                       >
                         <div className="flex items-start justify-between mb-2">
-                          <h3 className="font-semibold text-gray-100 group-hover:text-[#ff006e] transition-colors text-sm sm:text-base">
+                          <h3 className="font-semibold text-gray-800 group-hover:text-[#b428b4] transition-colors text-sm sm:text-base">
                             {repo.name}
                           </h3>
-                          <span className="text-xs px-2 py-1 bg-gradient-to-r from-[#ff006e]/20 to-[#00d9ff]/20 text-gray-300 border border-[#ff006e]/30 font-medium">
+                          <span className="text-xs px-2 py-1 bg-gradient-to-r from-[#b428b4]/20 to-[#3023ae]/20 text-gray-600 border border-[#b428b4]/30 font-medium">
                             {repo.visibility}
                           </span>
                         </div>
-                        <p className="text-xs sm:text-sm text-gray-400 mb-3">
+                        <p className="text-xs sm:text-sm text-gray-500 mb-3">
                           {repo.description}
                         </p>
-                        <div className="flex items-center gap-4 text-xs text-gray-500 group-hover:text-gray-300 transition-colors">
+                        <div className="flex items-center gap-4 text-xs text-gray-500 group-hover:text-gray-600 transition-colors">
                           <span className="flex items-center gap-1">
                             <Star className="w-3 h-3 text-[#ffbe0b]" />{" "}
                             {repo.starred.length}
@@ -387,18 +387,18 @@ export default function Dashboard({ setIsAuthenticated }) {
 
             {/* Public Repos */}
             {activeTab === "publicRepos" && (
-              <section className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#00d9ff]/30 p-5 sm:p-8 shadow-2xl">
+              <section className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 p-5 sm:p-8 shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-gradient-to-br from-[#00d9ff]/20 to-[#ff006e]/20">
-                    <Users className="w-6 h-6 text-[#00d9ff]" />
+                  <div className="p-2 bg-gradient-to-br from-[#3023ae]/20 to-[#b428b4]/20">
+                    <Users className="w-6 h-6 text-[#3023ae]" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#00d9ff] to-[#ff006e] bg-clip-text text-transparent">
+                  <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent">
                     Public Repositories
                   </h2>
                 </div>
 
                 {publicRepos.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 bg-[#0d0221]/60 border border-[#00d9ff]/20">
+                  <div className="text-center py-8 text-gray-500 bg-gray-100/60 border border-[#3023ae]/20">
                     <p>No public Repos found.</p>
                   </div>
                 ) : (
@@ -407,15 +407,15 @@ export default function Dashboard({ setIsAuthenticated }) {
                       <div
                         key={repo._id}
                         onClick={() => getPublicRepo(repo.name)}
-                        className="border border-[#00d9ff]/20 bg-[#0d0221]/60 p-4 sm:p-5 hover:border-[#00d9ff]/60 transition-all cursor-pointer hover:shadow-lg hover:shadow-[#00d9ff]/30 group"
+                        className="border border-[#3023ae]/20 bg-gray-100/60 p-4 sm:p-5 hover:border-[#3023ae]/60 transition-all cursor-pointer hover:shadow-lg hover:shadow-[#3023ae]/30 group"
                       >
-                        <h3 className="font-semibold text-gray-100 group-hover:text-[#00d9ff] transition-colors mb-2 text-sm sm:text-base">
+                        <h3 className="font-semibold text-gray-800 group-hover:text-[#3023ae] transition-colors mb-2 text-sm sm:text-base">
                           {repo.name}
                         </h3>
-                        <p className="text-xs sm:text-sm text-gray-400 mb-3">
+                        <p className="text-xs sm:text-sm text-gray-500 mb-3">
                           {repo.description}
                         </p>
-                        <div className="flex items-center gap-4 text-xs text-gray-500 group-hover:text-gray-300 transition-colors">
+                        <div className="flex items-center gap-4 text-xs text-gray-500 group-hover:text-gray-600 transition-colors">
                           <span className="flex items-center gap-1">
                             <Star className="w-3 h-3 text-[#ffbe0b]" />{" "}
                             {repo.starred.length}
@@ -430,18 +430,18 @@ export default function Dashboard({ setIsAuthenticated }) {
 
             {/* Profiles */}
             {activeTab === "profiles" && (
-              <section className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 p-5 sm:p-8 shadow-2xl">
+              <section className="bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 p-5 sm:p-8 shadow-2xl">
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="p-2 bg-gradient-to-br from-[#ff006e]/20 to-[#00d9ff]/20">
-                    <User className="w-6 h-6 text-[#ff006e]" />
+                  <div className="p-2 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20">
+                    <User className="w-6 h-6 text-[#b428b4]" />
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#ff006e] to-[#00d9ff] bg-clip-text text-transparent">
+                  <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent">
                     Public Profiles
                   </h2>
                 </div>
 
                 {publicProfiles.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500 bg-[#0d0221]/60 border border-[#ff006e]/20">
+                  <div className="text-center py-8 text-gray-500 bg-gray-100/60 border border-[#b428b4]/20">
                     <p>No public profiles found.</p>
                   </div>
                 ) : (
@@ -452,19 +452,19 @@ export default function Dashboard({ setIsAuthenticated }) {
                         onClick={() => {
                           navigate(`/publicProfile/${profile.username}`);
                         }}
-                        className="flex items-start gap-3 p-4 border border-[#ff006e]/20 bg-[#0d0221]/60 hover:border-[#ff006e]/60 transition-all hover:shadow-lg hover:shadow-[#ff006e]/30 group cursor-pointer"
+                        className="flex items-start gap-3 p-4 border border-[#b428b4]/20 bg-gray-100/60 hover:border-[#b428b4]/60 transition-all hover:shadow-lg hover:shadow-[#b428b4]/30 group cursor-pointer"
                       >
-                        <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-[#ff006e]/20 to-[#00d9ff]/20 border border-[#ff006e]/30 flex-shrink-0 group-hover:border-[#ff006e]/60 transition-colors">
-                          <User className="w-5 h-5 text-[#ff006e]" />
+                        <div className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20 border border-[#b428b4]/30 flex-shrink-0 group-hover:border-[#b428b4]/60 transition-colors">
+                          <User className="w-5 h-5 text-[#b428b4]" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-semibold text-gray-100 group-hover:text-[#ff006e] transition-colors cursor-pointer text-sm">
+                          <h4 className="font-semibold text-gray-800 group-hover:text-[#b428b4] transition-colors cursor-pointer text-sm">
                             {profile.username}
                           </h4>
-                          <p className="text-xs text-gray-400 mb-1">
+                          <p className="text-xs text-gray-500 mb-1">
                             {profile.description || "No description provided."}
                           </p>
-                          <div className="flex gap-3 text-xs text-gray-500 group-hover:text-gray-300 transition-colors">
+                          <div className="flex gap-3 text-xs text-gray-500 group-hover:text-gray-600 transition-colors">
                             <span>{profile.followedUser?.length || 0} following</span>
                             <span>{profile.followingUser?.length || 0} followers</span>
                           </div>
@@ -477,16 +477,16 @@ export default function Dashboard({ setIsAuthenticated }) {
             )}
 
             {/* AI Assistant */}
-            <section className="bg-gradient-to-r from-[#1a1629]/90 to-[#0d0221]/90 backdrop-blur-xl border border-[#ffbe0b]/30 p-6 sm:p-8 shadow-2xl text-center">
+            <section className="bg-gradient-to-r from-[#1a1629]/90 to-gray-100/90 backdrop-blur-xl border border-[#ffbe0b]/30 p-6 sm:p-8 shadow-2xl text-center">
               <div className="flex items-center justify-center gap-3 mb-4">
-                <div className="p-2 bg-gradient-to-br from-[#ffbe0b]/20 to-[#ff006e]/20">
+                <div className="p-2 bg-gradient-to-br from-[#ffbe0b]/20 to-[#b428b4]/20">
                   <Bot className="w-7 h-7 text-[#ffbe0b]" />
                 </div>
-                <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#ffbe0b] to-[#ff006e] bg-clip-text text-transparent">
+                <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-[#ffbe0b] to-[#b428b4] bg-clip-text text-transparent">
                   AI Assistant
                 </h2>
               </div>
-              <p className="text-gray-300 max-w-xl mx-auto text-sm sm:text-base">
+              <p className="text-gray-600 max-w-xl mx-auto text-sm sm:text-base">
                 🤖 Coming soon — Girgit Hub AI Assistant to help you analyze commits,
                 generate insights, and manage repositories smartly.
               </p>

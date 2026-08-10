@@ -39,8 +39,8 @@ export default function StreakGrid({ streak }: StreakGridProps) {
   };
 
   return (
-    <div className="bg-[#0d1117] border border-[#1f2328] rounded-xl p-5 text-gray-300">
-      <h2 className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#ff006e] via-[#00d9ff] to-[#ffbe0b] mb-4">
+    <div className="bg-[#0d1117] border border-[#1f2328] rounded-xl p-5 text-gray-600">
+      <h2 className="text-lg font-semibold bg-clip-text text-transparent bg-gradient-to-r from-[#b428b4] via-[#3023ae] to-[#ffbe0b] mb-4">
         Push Activity
       </h2>
 

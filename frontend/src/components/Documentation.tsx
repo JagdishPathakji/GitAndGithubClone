@@ -136,16 +136,16 @@ export default function Documentation({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-800">
       {/* Navbar with dynamic username */}
       <Navbar username={username} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           <div className="lg:col-span-1">
-            <div className="sticky top-24 bg-gradient-to-b from-[#1a1629]/95 to-[#0d0221]/95 backdrop-blur-xl border border-[#ff006e]/40 p-6 shadow-2xl shadow-[#ff006e]/5">
-              <h3 className="text-sm font-bold text-[#ff006e] uppercase tracking-widest mb-6 flex items-center gap-2">
-                <span className="w-1.5 h-5 bg-gradient-to-b from-[#ff006e] to-[#00d9ff]"></span>
+            <div className="sticky top-24 bg-gradient-to-b from-[#1a1629]/95 to-gray-100/95 backdrop-blur-xl border border-[#b428b4]/40 p-6 shadow-2xl shadow-[#b428b4]/5">
+              <h3 className="text-sm font-bold text-[#b428b4] uppercase tracking-widest mb-6 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-gradient-to-b from-[#b428b4] to-[#3023ae]"></span>
                 Sections
               </h3>
 
@@ -156,8 +156,8 @@ export default function Documentation({
                     onClick={() => scrollToSection(section.id)}
                     className={`w-full text-left px-4 py-3 transition-all duration-200 flex items-center gap-3 ${
                       activeSection === section.id
-                        ? "bg-gradient-to-r from-[#ff006e] to-[#00d9ff] text-white shadow-lg shadow-[#ff006e]/30"
-                        : "text-gray-400 hover:bg-[#ff006e]/15 hover:text-[#ff006e] hover:translate-x-1"
+                        ? "bg-gradient-to-r from-[#b428b4] to-[#3023ae] text-gray-900 shadow-lg shadow-[#b428b4]/30"
+                        : "text-gray-500 hover:bg-[#b428b4]/15 hover:text-[#b428b4] hover:translate-x-1"
                     }`}
                   >
                     <span className="text-lg">{section.icon}</span>
@@ -170,7 +170,7 @@ export default function Documentation({
 
           <div className="lg:col-span-4 space-y-12">
             <section id="installation" className="scroll-mt-20 space-y-6">
-              <h2 className="text-4xl font-bold text-white mb-6">Installation</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">Installation</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {[
                   {
@@ -188,10 +188,10 @@ export default function Documentation({
                 ].map((inst, idx) => (
                   <div
                     key={idx}
-                    className="bg-[#0d0221] border border-[#ff006e]/40 p-6 shadow-md hover:shadow-lg transition-all"
+                    className="bg-gray-100 border border-[#b428b4]/40 p-6 shadow-md hover:shadow-lg transition-all"
                   >
-                    <h3 className="text-2xl font-bold text-[#ff006e] mb-2">{inst.title}</h3>
-                    <p className="text-gray-300 mb-3">{inst.desc}</p>
+                    <h3 className="text-2xl font-bold text-[#b428b4] mb-2">{inst.title}</h3>
+                    <p className="text-gray-600 mb-3">{inst.desc}</p>
                     <div className="relative mb-2">
                       <SyntaxHighlighter
                         language="bash"
@@ -205,7 +205,7 @@ export default function Documentation({
                       </SyntaxHighlighter>
                       <button
                         onClick={() => copyToClipboard(inst.cmd, `install-${idx}`)}
-                        className="absolute top-4 right-4 p-2.5 hover:bg-[#ff006e]/20 transition-all"
+                        className="absolute top-4 right-4 p-2.5 hover:bg-[#b428b4]/20 transition-all"
                       >
                         {copied === `install-${idx}` ? (
                           <Check className="w-5 h-5 text-[#ffbe0b]" />
@@ -221,18 +221,18 @@ export default function Documentation({
             </section>
 
             <section id="commands" className="scroll-mt-20 space-y-6">
-              <h2 className="text-4xl font-bold text-white mb-6">Commands</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">Commands</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {commands.map((cmd, idx) => (
                   <div
                     key={idx}
-                    className="bg-[#0d0221] border border-[#ff006e]/40 p-6 shadow-md hover:shadow-lg transition-all"
+                    className="bg-gray-100 border border-[#b428b4]/40 p-6 shadow-md hover:shadow-lg transition-all"
                   >
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-2xl font-bold text-[#ff006e]">{cmd.cmd}</h3>
+                      <h3 className="text-2xl font-bold text-[#b428b4]">{cmd.cmd}</h3>
                       <button
                         onClick={() => copyToClipboard(cmd.example, `cmd-${idx}`)}
-                        className="p-2 bg-[#ff006e]/20 hover:bg-[#ff006e]/40 transition-colors"
+                        className="p-2 bg-[#b428b4]/20 hover:bg-[#b428b4]/40 transition-colors"
                       >
                         {copied === `cmd-${idx}` ? (
                           <Check className="text-[#ffbe0b]" />
@@ -241,7 +241,7 @@ export default function Documentation({
                         )}
                       </button>
                     </div>
-                    <p className="text-gray-300 mb-3">{cmd.desc}</p>
+                    <p className="text-gray-600 mb-3">{cmd.desc}</p>
                     <div className="overflow-hidden mb-2">
                       <SyntaxHighlighter
                         language="bash"
@@ -261,7 +261,7 @@ export default function Documentation({
             </section>
 
             <section id="workflow" className="scroll-mt-20 space-y-6">
-              <h2 className="text-4xl font-bold text-white mb-6">Basic Workflow</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">Basic Workflow</h2>
               <div className="bg-[#0a0b0f] border border-[#1f2029] p-6 overflow-x-auto">
                 <SyntaxHighlighter
                   language="bash"
@@ -291,15 +291,15 @@ girgit log`}
             </section>
 
             <section id="faq" className="scroll-mt-20 space-y-6">
-              <h2 className="text-4xl font-bold text-white mb-6">FAQ</h2>
+              <h2 className="text-4xl font-bold text-gray-900 mb-6">FAQ</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {faq.map((item, idx) => (
                   <div
                     key={idx}
-                    className="bg-[#0d0221] border border-[#ff006e]/40 p-6 shadow-md hover:shadow-lg transition-all"
+                    className="bg-gray-100 border border-[#b428b4]/40 p-6 shadow-md hover:shadow-lg transition-all"
                   >
-                    <h4 className="text-lg font-bold text-[#ff006e] mb-2">❓ {item.q}</h4>
-                    <p className="text-gray-300">{item.a}</p>
+                    <h4 className="text-lg font-bold text-[#b428b4] mb-2">❓ {item.q}</h4>
+                    <p className="text-gray-600">{item.a}</p>
                   </div>
                 ))}
               </div>

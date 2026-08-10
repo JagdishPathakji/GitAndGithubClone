@@ -229,14 +229,14 @@ export default function OwnRepo({
       <div className="flex flex-col">
         {nodes.map((node) => (
           <div key={node.driveId}>
-            <div className="flex items-center py-2 px-3 border-y border-[#1f2029] cursor-pointer hover:bg-[#0e1118] hover:border-[#00d9ff]/20 transition-all" style={{ paddingLeft: `${level * 1.2}rem` }} onClick={() => node.type === "folder" ? toggleNode(node.driveId) : onFileClick(node.driveId, node.name)}>
+            <div className="flex items-center py-2 px-3 border-y border-[#1f2029] cursor-pointer hover:bg-[#0e1118] hover:border-[#3023ae]/20 transition-all" style={{ paddingLeft: `${level * 1.2}rem` }} onClick={() => node.type === "folder" ? toggleNode(node.driveId) : onFileClick(node.driveId, node.name)}>
               {node.type === "folder" ? (
                 <>
-                  {openNodes[node.driveId] ? <ChevronDown className="w-4 h-4 text-[#00d9ff] mr-1" /> : <ChevronRight className="w-4 h-4 text-[#00d9ff] mr-1" />}
-                  <Folder className="w-4 h-4 text-[#00d9ff] mr-2" />
+                  {openNodes[node.driveId] ? <ChevronDown className="w-4 h-4 text-[#3023ae] mr-1" /> : <ChevronRight className="w-4 h-4 text-[#3023ae] mr-1" />}
+                  <Folder className="w-4 h-4 text-[#3023ae] mr-2" />
                 </>
-              ) : <File className="w-4 h-4 text-[#00d9ff] mr-2 ml-[1.2rem]" />}
-              <span className="text-sm text-gray-300">{node.name}</span>
+              ) : <File className="w-4 h-4 text-[#3023ae] mr-2 ml-[1.2rem]" />}
+              <span className="text-sm text-gray-600">{node.name}</span>
             </div>
             {node.children && openNodes[node.driveId] && <FileTree nodes={node.children} level={level + 1} onFileClick={onFileClick} />}
           </div>
@@ -246,80 +246,80 @@ export default function OwnRepo({
   };
 
   if (loading) return (
-    <div className="min-h-screen bg-[#0d0221] text-gray-300 flex flex-col">
+    <div className="min-h-screen bg-gray-100 text-gray-600 flex flex-col">
       <Navbar username={username} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
       <div className="flex-1 flex flex-col items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ff006e] mb-4"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#b428b4] mb-4"></div>
         <p>Loading repository...</p>
       </div>
     </div>
   );
 
   if (!repo) return (
-    <div className="min-h-screen bg-[#0d0221] text-gray-300">
+    <div className="min-h-screen bg-gray-100 text-gray-600">
       <Navbar username={username} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
       <div className="text-center py-10 text-red-500 font-semibold text-lg">Repository not found</div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-200 flex flex-col relative">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-800 flex flex-col relative">
       <Navbar username={username} setIsAuthenticated={setIsAuthenticated} navigate={navigate} />
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-10 space-y-10">
         
         {/* Repo Header */}
-        <div className="grid grid-cols-12 gap-0 bg-[#1a1629]/90 border border-[#ff006e]/30 shadow-2xl">
-          <div className="col-span-12 sm:col-span-8 px-8 py-8 border-r border-[#ff006e]/20">
+        <div className="grid grid-cols-12 gap-0 bg-white/90 border border-[#b428b4]/30 shadow-2xl">
+          <div className="col-span-12 sm:col-span-8 px-8 py-8 border-r border-[#b428b4]/20">
             <div className="flex items-center gap-3">
-              <GitBranch className="w-6 h-6 text-[#ff006e]" />
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-[#ff006e] to-[#00d9ff] bg-clip-text text-transparent break-all italic tracking-tighter">
+              <GitBranch className="w-6 h-6 text-[#b428b4]" />
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent break-all italic tracking-tighter">
                 {repo.name}
               </h1>
             </div>
             <div className="relative group mt-6">
               {isEditing ? (
                 <div className="space-y-3">
-                  <textarea value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} className="w-full bg-[#0d0221]/50 border border-[#ff006e]/30 p-4 rounded-none text-sm text-gray-200 focus:outline-none focus:border-[#ff006e]" rows={3} placeholder="Describe this repository..." />
+                  <textarea value={editedDescription} onChange={(e) => setEditedDescription(e.target.value)} className="w-full bg-gray-100/50 border border-[#b428b4]/30 p-4 rounded-none text-sm text-gray-800 focus:outline-none focus:border-[#b428b4]" rows={3} placeholder="Describe this repository..." />
                   <div className="flex gap-2 justify-end">
-                    <button onClick={handleSaveDescription} className="px-4 py-2 bg-[#ff006e] text-white text-xs font-bold rounded-none hover:bg-[#ff006e]/80 transition-all"><Check className="w-4 h-4 inline mr-1" /> Save</button>
+                    <button onClick={handleSaveDescription} className="px-4 py-2 bg-[#b428b4] text-white text-xs font-bold rounded-none hover:bg-[#b428b4]/80 transition-all"><Check className="w-4 h-4 inline mr-1" /> Save</button>
                     <button onClick={handleCancelEdit} className="px-4 py-2 bg-gray-700 text-white text-xs font-bold rounded-none hover:bg-gray-600 transition-all"><X className="w-4 h-4 inline mr-1" /> Cancel</button>
                   </div>
                 </div>
               ) : (
                 <div className="flex items-start gap-3">
-                  <p className="text-gray-400 text-sm leading-relaxed flex-1 italic">{repo.description || "No description provided."}</p>
-                  <button onClick={startEditing} className="p-2 text-gray-500 hover:text-[#ff006e] border border-transparent hover:border-[#ff006e]/20 transition-all"><Pencil className="w-4 h-4" /></button>
+                  <p className="text-gray-500 text-sm leading-relaxed flex-1 italic">{repo.description || "No description provided."}</p>
+                  <button onClick={startEditing} className="p-2 text-gray-500 hover:text-[#b428b4] border border-transparent hover:border-[#b428b4]/20 transition-all"><Pencil className="w-4 h-4" /></button>
                 </div>
               )}
             </div>
           </div>
-          <div className="col-span-12 sm:col-span-4 p-8 flex flex-col gap-4 bg-[#0d0221]/40">
-            <div className="flex justify-between items-center border border-[#ff006e]/20 bg-[#0d0221]/60 px-5 py-4">
-              <span className="text-gray-400 text-xs font-black uppercase tracking-widest">Stars</span>
+          <div className="col-span-12 sm:col-span-4 p-8 flex flex-col gap-4 bg-gray-100/40">
+            <div className="flex justify-between items-center border border-[#b428b4]/20 bg-gray-100/60 px-5 py-4">
+              <span className="text-gray-500 text-xs font-black uppercase tracking-widest">Stars</span>
               <button onClick={() => toggleStar(repo._id)} className="flex items-center gap-2 text-[#ffbe0b] hover:scale-110 transition-transform">
                 <Star className="w-5 h-5" fill={isStarred ? "#ffbe0b" : "none"} />
                 <span className="font-black text-lg">{star}</span>
               </button>
             </div>
-            <div className="flex justify-between items-center border border-[#00d9ff]/20 bg-[#0d0221]/60 px-5 py-4 cursor-pointer hover:border-[#00d9ff]/60 transition-all" onClick={() => changeVisibility(repo.name)}>
-              <span className="text-gray-400 text-xs font-black uppercase tracking-widest">Access</span>
+            <div className="flex justify-between items-center border border-[#3023ae]/20 bg-gray-100/60 px-5 py-4 cursor-pointer hover:border-[#3023ae]/60 transition-all" onClick={() => changeVisibility(repo.name)}>
+              <span className="text-gray-500 text-xs font-black uppercase tracking-widest">Access</span>
               <div className="flex items-center gap-2">
-                {visibility === "public" ? <Eye className="w-5 h-5 text-[#00d9ff]" /> : <EyeOff className="w-5 h-5 text-gray-500" />}
-                <span className="capitalize font-black text-[#00d9ff]">{visibility}</span>
+                {visibility === "public" ? <Eye className="w-5 h-5 text-[#3023ae]" /> : <EyeOff className="w-5 h-5 text-gray-500" />}
+                <span className="capitalize font-black text-[#3023ae]">{visibility}</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Repository README Section */}
-        <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 shadow-2xl overflow-hidden transition-all duration-300">
-          <div className="px-6 py-4 border-b border-[#ff006e]/20 flex justify-between items-center bg-[#0d0221]/40">
-            <div className="flex items-center gap-2 text-sm font-mono text-gray-400">
-              <FileText className="w-4 h-4 text-[#ff006e]" />
+        <div className="bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 shadow-2xl overflow-hidden transition-all duration-300">
+          <div className="px-6 py-4 border-b border-[#b428b4]/20 flex justify-between items-center bg-gray-100/40">
+            <div className="flex items-center gap-2 text-sm font-mono text-gray-500">
+              <FileText className="w-4 h-4 text-[#b428b4]" />
               <span className="uppercase tracking-widest font-black text-[10px]">{repo.name} / README.md</span>
             </div>
             {!isEditingReadme && (
-              <button onClick={startEditingReadme} className="text-[10px] font-black uppercase text-[#00d9ff] hover:text-[#ff006e] transition-colors border border-transparent hover:border-[#ff006e]/30 px-3 py-1">
+              <button onClick={startEditingReadme} className="text-[10px] font-black uppercase text-[#3023ae] hover:text-[#b428b4] transition-colors border border-transparent hover:border-[#b428b4]/30 px-3 py-1">
                 {repo.readme ? "Edit README" : "Add README"}
               </button>
             )}
@@ -327,17 +327,17 @@ export default function OwnRepo({
           <div className="p-8">
             {isEditingReadme ? (
               <div className="space-y-4">
-                <textarea value={editedReadme} onChange={(e) => setEditedReadme(e.target.value)} className="w-full bg-[#0d0221]/50 border border-[#ff006e]/30 p-6 rounded-none text-sm text-gray-200 font-mono focus:outline-none focus:border-[#ff006e] transition-all" rows={14} placeholder="### Documentation... Use Markdown to describe your repository." />
+                <textarea value={editedReadme} onChange={(e) => setEditedReadme(e.target.value)} className="w-full bg-gray-100/50 border border-[#b428b4]/30 p-6 rounded-none text-sm text-gray-800 font-mono focus:outline-none focus:border-[#b428b4] transition-all" rows={14} placeholder="### Documentation... Use Markdown to describe your repository." />
                 <div className="flex gap-2 justify-end">
-                  <button onClick={handleSaveReadme} className="px-6 py-3 bg-[#ff006e] text-white text-xs font-black rounded-none hover:shadow-[0_0_20px_rgba(255,0,110,0.3)] transition-all">SAVE SNAPSHOT</button>
+                  <button onClick={handleSaveReadme} className="px-6 py-3 bg-[#b428b4] text-white text-xs font-black rounded-none hover:shadow-[0_0_20px_rgba(255,0,110,0.3)] transition-all">SAVE SNAPSHOT</button>
                   <button onClick={() => setIsEditingReadme(false)} className="px-6 py-3 bg-gray-800 text-white text-xs font-black rounded-none hover:bg-gray-700 transition-all">CANCEL</button>
                 </div>
               </div>
             ) : (
-              <div className="relative group prose prose-invert max-w-none text-gray-300 prose-headings:text-[#00d9ff] prose-a:text-[#ff006e] prose-strong:text-[#ffbe0b] prose-code:text-[#ff006e] prose-pre:bg-[#0d0221]/80 rounded-none">
+              <div className="relative group prose prose-invert max-w-none text-gray-600 prose-headings:text-[#3023ae] prose-a:text-[#b428b4] prose-strong:text-[#ffbe0b] prose-code:text-[#b428b4] prose-pre:bg-gray-100/80 rounded-none">
                 {repo.readme ? (
                   <>
-                    <button onClick={startEditingReadme} className="absolute -top-4 -right-4 p-3 bg-[#0d0221] border border-[#ff006e]/30 text-gray-500 hover:text-[#ff006e] opacity-0 group-hover:opacity-100 transition-all rounded-none shadow-2xl" title="Edit README">
+                    <button onClick={startEditingReadme} className="absolute -top-4 -right-4 p-3 bg-gray-100 border border-[#b428b4]/30 text-gray-500 hover:text-[#b428b4] opacity-0 group-hover:opacity-100 transition-all rounded-none shadow-2xl" title="Edit README">
                       <Pencil className="w-4 h-4" />
                     </button>
                     <ReactMarkdown
@@ -355,9 +355,9 @@ export default function OwnRepo({
                     </ReactMarkdown>
                   </>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-16 border border-dashed border-[#ff006e]/20 bg-[#0d0221]/20">
+                  <div className="flex flex-col items-center justify-center py-16 border border-dashed border-[#b428b4]/20 bg-gray-100/20">
                     <p className="text-gray-500 text-xs font-black uppercase tracking-[0.2em] mb-6 italic">Repository has no overview documentation.</p>
-                    <button onClick={startEditingReadme} className="px-8 py-3 border-2 border-[#ff006e] text-[#ff006e] text-xs font-black hover:bg-[#ff006e] hover:text-white transition-all tracking-widest">INITIALIZE README.md</button>
+                    <button onClick={startEditingReadme} className="px-8 py-3 border-2 border-[#b428b4] text-[#b428b4] text-xs font-black hover:bg-[#b428b4] hover:text-white transition-all tracking-widest">INITIALIZE README.md</button>
                   </div>
                 )}
               </div>
@@ -367,8 +367,8 @@ export default function OwnRepo({
 
         {/* History Area */}
         <div className="bg-[#111217] border border-[#1f2029]">
-          <div className="px-8 py-6 border-b border-[#1f2029] bg-[#1a1629]/40">
-            <h2 className="text-sm font-black text-[#00d9ff] uppercase tracking-[0.3em] flex items-center gap-3">
+          <div className="px-8 py-6 border-b border-[#1f2029] bg-white/40">
+            <h2 className="text-sm font-black text-[#3023ae] uppercase tracking-[0.3em] flex items-center gap-3">
               <Clock className="w-5 h-5" /> REPOSITORY TIMELINE
             </h2>
           </div>
@@ -379,8 +379,8 @@ export default function OwnRepo({
                 return (
                   <div key={commit._id} className="border border-white/5 bg-[#16181f] p-6">
                     <div className="flex justify-between items-center mb-6">
-                      <h3 className="font-black text-[10px] text-[#00d9ff] uppercase tracking-widest">
-                        COMMIT ID: <span className="text-gray-400 font-mono ml-2">{commit.uuid}</span>
+                      <h3 className="font-black text-[10px] text-[#3023ae] uppercase tracking-widest">
+                        COMMIT ID: <span className="text-gray-500 font-mono ml-2">{commit.uuid}</span>
                       </h3>
                       <p className="text-[10px] font-black text-gray-500 uppercase italic">{new Date(commit.createdAt).toLocaleString()}</p>
                     </div>
@@ -397,9 +397,9 @@ export default function OwnRepo({
 
       {/* FIXED FILE VIEW MODAL (Outside Main to avoid gap) */}
       {showModal && selectedFile && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 z-[99999] flex flex-col bg-[#0b0c10] text-white w-full h-full">
+        <div className="fixed top-0 left-0 right-0 bottom-0 z-[99999] flex flex-col bg-[#0b0c10] text-gray-900 w-full h-full">
           <div className="flex justify-between items-center px-6 py-4 border-b border-white/10 bg-[#0f1114]">
-            <h3 className="text-[#00d9ff] font-black text-xs uppercase tracking-widest truncate">{selectedFile.name}</h3>
+            <h3 className="text-[#3023ae] font-black text-xs uppercase tracking-widest truncate">{selectedFile.name}</h3>
             <button onClick={() => setShowModal(false)} className="text-gray-500 hover:text-white text-lg">✕</button>
           </div>
           <div className="flex-1 overflow-auto p-8">

@@ -23,11 +23,11 @@ function Toast({
     "fixed top-6 right-6 z-50 px-6 py-4 border text-sm font-semibold shadow-xl backdrop-blur-md animate-slide-in";
   const styles = {
     success:
-      "bg-[#0d0221]/90 border-[#00d9ff]/40 text-[#00d9ff] shadow-[0_0_30px_rgba(0,217,255,0.4)]",
+      "bg-gray-100/90 border-[#3023ae]/40 text-[#3023ae] shadow-[0_0_30px_rgba(0,217,255,0.4)]",
     error:
-      "bg-[#0d0221]/90 border-red-500/40 text-red-400 shadow-[0_0_30px_rgba(239,68,68,0.4)]",
+      "bg-gray-100/90 border-red-500/40 text-red-400 shadow-[0_0_30px_rgba(239,68,68,0.4)]",
     info:
-      "bg-[#0d0221]/90 border-[#ff006e]/40 text-[#ff006e] shadow-[0_0_30px_rgba(255,0,110,0.4)]",
+      "bg-gray-100/90 border-[#b428b4]/40 text-[#b428b4] shadow-[0_0_30px_rgba(255,0,110,0.4)]",
   };
 
   return (
@@ -106,19 +106,19 @@ export default function Otp() {
         />
       )}
 
-      <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] flex items-center justify-center px-4 py-8 sm:py-12 text-gray-100">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 flex items-center justify-center px-4 py-8 sm:py-12 text-gray-800">
         <div className="w-full max-w-md">
           {/* 🔲 Square Box */}
-          <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#00d9ff]/30 p-8 shadow-2xl hover:shadow-[0_0_50px_rgba(0,217,255,0.2)] transition-all duration-300">
+          <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 p-8 shadow-2xl hover:shadow-[0_0_50px_rgba(0,217,255,0.2)] transition-all duration-300">
             {/* Header */}
             <div className="text-center mb-8">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#00d9ff] to-[#ff006e] shadow-lg shadow-[#00d9ff]/40 mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#3023ae] to-[#b428b4] shadow-lg shadow-[#3023ae]/40 mb-4">
                 <ShieldCheck className="w-8 h-8 text-white" strokeWidth={2.5} />
               </div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#00d9ff] via-[#ff006e] to-[#ffbe0b] bg-clip-text text-transparent mb-2">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-[#3023ae] via-[#b428b4] to-[#ffbe0b] bg-clip-text text-transparent mb-2">
                 Verify Your Email
               </h1>
-              <p className="text-gray-300 text-sm">
+              <p className="text-gray-600 text-sm">
                 Enter the 6-digit code sent to your email
               </p>
             </div>
@@ -134,7 +134,7 @@ export default function Otp() {
               )}
 
               <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
+                <label className="block text-sm font-semibold text-gray-800 mb-2">
                   Registered Email
                 </label>
                 <input
@@ -144,12 +144,12 @@ export default function Otp() {
                   placeholder="Email"
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#00d9ff]/20 text-gray-100 focus:outline-none focus:border-[#00d9ff]"
+                  className="w-full px-4 py-3 bg-gray-100/60 border border-[#3023ae]/20 text-gray-800 focus:outline-none focus:border-[#3023ae]"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-gray-200 mb-2">
+                <label className="block text-sm font-semibold text-gray-800 mb-2">
                   Verification Code
                 </label>
                 <input
@@ -160,13 +160,13 @@ export default function Otp() {
                   value={formData.otp}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#ff006e]/20 text-2xl font-bold tracking-widest text-gray-100 focus:outline-none focus:border-[#ff006e]"
+                  className="w-full px-4 py-3 bg-gray-100/60 border border-[#b428b4]/20 text-2xl font-bold tracking-widest text-gray-800 focus:outline-none focus:border-[#b428b4]"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#00d9ff] to-[#ff006e] text-white font-semibold py-3 shadow-lg hover:shadow-[0_0_25px_rgba(0,217,255,0.5)]"
+                className="w-full bg-gradient-to-r from-[#3023ae] to-[#b428b4] text-white font-semibold py-3 shadow-lg hover:shadow-[0_0_25px_rgba(0,217,255,0.5)]"
               >
                 Verify Code
               </button>
@@ -176,7 +176,7 @@ export default function Otp() {
             <div className="text-center mt-6">
               <button
                 onClick={() => navigate("/login")}
-                className="text-[#00d9ff] hover:text-[#ff006e] font-semibold text-sm"
+                className="text-[#3023ae] hover:text-[#b428b4] font-semibold text-sm"
               >
                 Back to Login
               </button>

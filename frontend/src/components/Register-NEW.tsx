@@ -50,7 +50,7 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0a0b0f] via-[#0f1219] to-[#0a0b0f] flex items-center justify-center px-4 py-8 sm:py-12 text-gray-200">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a0b0f] via-[#0f1219] to-[#0a0b0f] flex items-center justify-center px-4 py-8 sm:py-12 text-gray-800">
       <div className="w-full max-w-md">
         <div className="bg-[#111217]/80 backdrop-blur-xl border border-[#1f2228]/50 rounded-2xl p-8 shadow-2xl hover:shadow-[0_0_40px_rgba(90,240,177,0.1)] transition-all duration-300">
           <div className="text-center mb-8">
@@ -60,14 +60,14 @@ export default function Register() {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-[#5af0b1] to-[#3dd6ff] bg-clip-text text-transparent mb-2">
               Join Girgit Hub
             </h1>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-gray-500 text-sm leading-relaxed">
               Your next-gen version control awaits. Create your account today.
             </p>
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="group">
-              <label htmlFor="username" className="block text-sm font-semibold text-gray-300 mb-2 transition-colors group-focus-within:text-[#5af0b1]">
+              <label htmlFor="username" className="block text-sm font-semibold text-gray-600 mb-2 transition-colors group-focus-within:text-[#5af0b1]">
                 Username
               </label>
               <input
@@ -77,13 +77,13 @@ export default function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="choose_username"
-                className="w-full px-4 py-3 bg-[#0f1116]/70 border border-[#2b2f35]/50 rounded-lg text-gray-100 placeholder-gray-500 transition-all duration-200 focus:outline-none focus:border-[#5af0b1] focus:ring-2 focus:ring-[#5af0b1]/20 focus:bg-[#0f1116]"
+                className="w-full px-4 py-3 bg-[#0f1116]/70 border border-[#2b2f35]/50 rounded-lg text-gray-800 placeholder-gray-500 transition-all duration-200 focus:outline-none focus:border-[#5af0b1] focus:ring-2 focus:ring-[#5af0b1]/20 focus:bg-[#0f1116]"
                 required
               />
             </div>
 
             <div className="group">
-              <label htmlFor="email" className="block text-sm font-semibold text-gray-300 mb-2 transition-colors group-focus-within:text-[#5af0b1]">
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-600 mb-2 transition-colors group-focus-within:text-[#5af0b1]">
                 Email Address
               </label>
               <input
@@ -93,13 +93,13 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="w-full px-4 py-3 bg-[#0f1116]/70 border border-[#2b2f35]/50 rounded-lg text-gray-100 placeholder-gray-500 transition-all duration-200 focus:outline-none focus:border-[#3dd6ff] focus:ring-2 focus:ring-[#3dd6ff]/20 focus:bg-[#0f1116]"
+                className="w-full px-4 py-3 bg-[#0f1116]/70 border border-[#2b2f35]/50 rounded-lg text-gray-800 placeholder-gray-500 transition-all duration-200 focus:outline-none focus:border-[#3dd6ff] focus:ring-2 focus:ring-[#3dd6ff]/20 focus:bg-[#0f1116]"
                 required
               />
             </div>
 
             <div className="group">
-              <label htmlFor="password" className="block text-sm font-semibold text-gray-300 mb-2 transition-colors group-focus-within:text-[#5af0b1]">
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-600 mb-2 transition-colors group-focus-within:text-[#5af0b1]">
                 Password
               </label>
               <input
@@ -109,7 +109,7 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 bg-[#0f1116]/70 border border-[#2b2f35]/50 rounded-lg text-gray-100 placeholder-gray-500 transition-all duration-200 focus:outline-none focus:border-[#5af0b1] focus:ring-2 focus:ring-[#5af0b1]/20 focus:bg-[#0f1116]"
+                className="w-full px-4 py-3 bg-[#0f1116]/70 border border-[#2b2f35]/50 rounded-lg text-gray-800 placeholder-gray-500 transition-all duration-200 focus:outline-none focus:border-[#5af0b1] focus:ring-2 focus:ring-[#5af0b1]/20 focus:bg-[#0f1116]"
                 required
               />
             </div>
@@ -129,7 +129,7 @@ export default function Register() {
             <div className="flex-1 h-px bg-gradient-to-l from-[#1f2228] to-transparent" />
           </div>
 
-          <p className="text-center text-sm text-gray-400">
+          <p className="text-center text-sm text-gray-500">
             Already have an account?{" "}
             <button
               onClick={onSwitchToLogin}

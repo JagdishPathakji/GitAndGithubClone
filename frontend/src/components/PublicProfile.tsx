@@ -109,21 +109,21 @@ export default function PublicProfile({
 
   if (loading)
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] flex flex-col items-center justify-center text-gray-300">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#ff006e] mb-4"></div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 flex flex-col items-center justify-center text-gray-600">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#b428b4] mb-4"></div>
         <p>Loading profile...</p>
       </div>
     );
 
   if (!profile)
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-300 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-600 flex items-center justify-center">
         <p>Profile not found</p>
       </div>
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-200 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-800 flex flex-col">
       <Navbar
         username={localStorage.getItem("username") || ""}
         setIsAuthenticated={setIsAuthenticated}
@@ -133,13 +133,13 @@ export default function PublicProfile({
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 sm:px-6 py-10 space-y-10">
 
         {/* ---- PROFILE HEADER ---- */}
-        <div className="grid grid-cols-12 gap-8 bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 shadow-2xl transition-all duration-300">
+        <div className="grid grid-cols-12 gap-8 bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 shadow-2xl transition-all duration-300">
           {/* Avatar */}
-          <div className="col-span-12 sm:col-span-4 flex flex-col items-center justify-center border-r border-[#ff006e]/20 px-6 py-8">
-            <div className="bg-gradient-to-br from-[#ff006e] to-[#00d9ff] p-8 shadow-lg shadow-[#ff006e]/40">
+          <div className="col-span-12 sm:col-span-4 flex flex-col items-center justify-center border-r border-[#b428b4]/20 px-6 py-8">
+            <div className="bg-gradient-to-br from-[#b428b4] to-[#3023ae] p-8 shadow-lg shadow-[#b428b4]/40">
               <User className="w-16 h-16 text-white" />
             </div>
-            <p className="text-xs text-gray-400 mt-3">
+            <p className="text-xs text-gray-500 mt-3">
               Joined on {new Date(profile.createdAt).toLocaleDateString()}
             </p>
           </div>
@@ -147,17 +147,17 @@ export default function PublicProfile({
           {/* Profile Info */}
           <div className="col-span-12 sm:col-span-8 px-6 py-8">
             <div className="flex flex-col gap-3">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-[#ff006e] to-[#00d9ff] bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent">
                 {profile.username}
               </h1>
 
-              <p className="text-gray-400 italic text-sm leading-relaxed">
+              <p className="text-gray-500 italic text-sm leading-relaxed">
                 {profile.description || "No bio available."}
               </p>
 
               <div className="flex gap-3 mt-5">
                 <button
-                  className="px-5 py-2 bg-gradient-to-r from-[#ff006e] to-[#00d9ff] hover:from-[#ff1a7e] hover:to-[#1ae5ff] text-white font-semibold transition-all shadow-lg shadow-[#ff006e]/40 active:scale-95 flex-1"
+                  className="px-5 py-2 bg-gradient-to-r from-[#b428b4] to-[#3023ae] hover:from-[#ff1a7e] hover:to-[#1ae5ff] text-white font-semibold transition-all shadow-lg shadow-[#b428b4]/40 active:scale-95 flex-1"
                   onClick={() => addAFollower(profile.username)}
                 >
                   {followstatus ? "Following" : "Follow"}
@@ -165,7 +165,7 @@ export default function PublicProfile({
                 {username === localStorage.getItem("username") && (
                   <button
                     onClick={() => navigate("/profile")}
-                    className="px-5 py-2 bg-[#1a1629] border border-[#ff006e]/30 text-gray-300 hover:text-white hover:border-[#ff006e] transition-all flex items-center gap-2"
+                    className="px-5 py-2 bg-white border border-[#b428b4]/30 text-gray-600 hover:text-white hover:border-[#b428b4] transition-all flex items-center gap-2"
                   >
                     <Settings className="w-4 h-4" /> Manage Profile
                   </button>
@@ -173,20 +173,20 @@ export default function PublicProfile({
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-6">
-                <div className="flex flex-col items-center justify-center text-center border border-[#ff006e]/20 px-4 py-4">
-                  <div className="flex items-center gap-2 text-[#ff006e] font-semibold">
+                <div className="flex flex-col items-center justify-center text-center border border-[#b428b4]/20 px-4 py-4">
+                  <div className="flex items-center gap-2 text-[#b428b4] font-semibold">
                     <Users className="w-4 h-4" />
                     {profile.followedUser}
                   </div>
-                  <span className="text-gray-400 text-xs mt-1">Followings</span>
+                  <span className="text-gray-500 text-xs mt-1">Followings</span>
                 </div>
 
-                <div className="flex flex-col items-center justify-center text-center border border-[#00d9ff]/20 px-4 py-4">
-                  <div className="flex items-center gap-2 text-[#00d9ff] font-semibold">
+                <div className="flex flex-col items-center justify-center text-center border border-[#3023ae]/20 px-4 py-4">
+                  <div className="flex items-center gap-2 text-[#3023ae] font-semibold">
                     <Users className="w-4 h-4 rotate-180" />
                     {follower}
                   </div>
-                  <span className="text-gray-400 text-xs mt-1">Followers</span>
+                  <span className="text-gray-500 text-xs mt-1">Followers</span>
                 </div>
               </div>
             </div>
@@ -195,13 +195,13 @@ export default function PublicProfile({
 
         {/* ---- PROFILE README SECTION ---- */}
         {profile.readme && (
-          <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 shadow-2xl overflow-hidden transition-all duration-300">
-            <div className="px-6 py-4 border-b border-[#ff006e]/20 flex items-center gap-2 text-sm font-mono text-gray-400 bg-[#0d0221]/40">
-              <FileText className="w-4 h-4 text-[#ff006e]" />
+          <div className="bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 shadow-2xl overflow-hidden transition-all duration-300">
+            <div className="px-6 py-4 border-b border-[#b428b4]/20 flex items-center gap-2 text-sm font-mono text-gray-500 bg-gray-100/40">
+              <FileText className="w-4 h-4 text-[#b428b4]" />
               <span>{profile.username} / README.md</span>
             </div>
             <div className="p-6">
-              <div className="prose prose-invert max-w-none text-gray-300 prose-headings:text-[#00d9ff] prose-a:text-[#ff006e] prose-strong:text-[#ffbe0b] prose-code:text-[#ff006e] prose-pre:bg-[#0d0221]/80">
+              <div className="prose prose-invert max-w-none text-gray-600 prose-headings:text-[#3023ae] prose-a:text-[#b428b4] prose-strong:text-[#ffbe0b] prose-code:text-[#b428b4] prose-pre:bg-gray-100/80">
                 <ReactMarkdown
                   remarkPlugins={[remarkGfm]}
                   components={{
@@ -232,10 +232,10 @@ export default function PublicProfile({
         )}
 
         {/* ---- PUBLIC REPOS ---- */}
-        <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#00d9ff]/30 shadow-2xl transition-all duration-300">
-          <div className="px-6 py-6 border-b border-[#00d9ff]/20">
-            <h2 className="text-lg font-bold bg-gradient-to-r from-[#00d9ff] to-[#ff006e] bg-clip-text text-transparent flex items-center gap-2">
-              <GitBranch className="w-5 h-5 text-[#00d9ff]" /> Public Repositories
+        <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 shadow-2xl transition-all duration-300">
+          <div className="px-6 py-6 border-b border-[#3023ae]/20">
+            <h2 className="text-lg font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent flex items-center gap-2">
+              <GitBranch className="w-5 h-5 text-[#3023ae]" /> Public Repositories
             </h2>
           </div>
 
@@ -247,16 +247,16 @@ export default function PublicProfile({
                 <div
                   key={repo._id}
                   onClick={() => navigate(`/repo/public/${repo.name}`)}
-                  className="border border-[#00d9ff]/20 bg-[#0d0221]/60 hover:bg-[#0d0221]/80 p-5 cursor-pointer hover:shadow hover:shadow-[#00d9ff]/30 transition-all"
+                  className="border border-[#3023ae]/20 bg-gray-100/60 hover:bg-gray-100/80 p-5 cursor-pointer hover:shadow hover:shadow-[#3023ae]/30 transition-all"
                 >
                   <div className="flex justify-between items-center">
-                    <h3 className="text-gray-100 hover:text-[#00d9ff] font-semibold text-lg">
+                    <h3 className="text-gray-800 hover:text-[#3023ae] font-semibold text-lg">
                       {repo.name}
                     </h3>
-                    <Globe className="w-4 h-4 text-[#00d9ff]" />
+                    <Globe className="w-4 h-4 text-[#3023ae]" />
                   </div>
 
-                  <p className="text-gray-400 text-sm mt-2 leading-relaxed">
+                  <p className="text-gray-500 text-sm mt-2 leading-relaxed">
                     {repo.description || "No description provided."}
                   </p>
 
