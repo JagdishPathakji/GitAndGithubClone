@@ -3,7 +3,7 @@ const fs = require("fs").promises;
 const fssync = require("fs");
 const chalk = require("chalk");
 const { v4: uuidv4 } = require("uuid");
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("./utility");
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("./utility");
 
 async function commitCmd(message) {
     
@@ -14,7 +14,7 @@ async function commitCmd(message) {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
 
@@ -22,16 +22,16 @@ async function commitCmd(message) {
 
     if(!configData) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
 
-    if(!checkforjvcs()) {
+    if(!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted. Please create it."))
         return
     }
 
-    const repoPath = path.join(process.cwd(),".jvcs")
+    const repoPath = path.join(process.cwd(),".girgit")
     const staging = path.join(repoPath,"staging")
     const commits = path.join(repoPath,"commits")
 

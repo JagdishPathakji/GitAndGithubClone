@@ -1,6 +1,6 @@
-# jvcs — A Lightweight Git & GitHub Clone
+# girgit — A Lightweight Git & GitHub Clone
 
->  **jvcs** — a simple, beginner-friendly version control system built to make Git-like workflows easier to understand and use.  
+>  **girgit** — a simple, beginner-friendly version control system built to make Git-like workflows easier to understand and use.  
 > Designed to simplify core version control operations like committing, reverting, pushing, and cloning — all without the complexity of branches or merges.
 
 ---
@@ -8,7 +8,7 @@
 ## Motive
 
 As a beginner, understanding Git and GitHub can be confusing — especially concepts like staging, branches, and merges.  
-So, **jvcs** was created as a **simplified alternative**, offering a lightweight CLI for personal projects or learners to understand the fundamentals of version control with minimal setup and no complexity.
+So, **girgit** was created as a **simplified alternative**, offering a lightweight CLI for personal projects or learners to understand the fundamentals of version control with minimal setup and no complexity.
 
 
 ## Commands Overview
@@ -29,12 +29,12 @@ So, **jvcs** was created as a **simplified alternative**, offering a lightweight
 
 ### Show help for all commands
 ```bash
-jvcs --help
+girgit --help
 ```
 
 ### Show help for a specific command
 ```bash
-jvcs commandName --help
+girgit commandName --help
 ```
 
 ## 🧑‍💻 Author

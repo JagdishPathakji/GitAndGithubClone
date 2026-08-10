@@ -1,17 +1,17 @@
 // CommonJS style
 const fs = require("fs")
 const path = require("path")
-const JVCS_ROOT = path.join(process.cwd(), ".jvcs")
+const Girgit Hub_ROOT = path.join(process.cwd(), ".girgit")
 
 const IGNORE_FOLDERS = [
-  ".jvcs",
+  ".girgit",
   "node_modules",
   ".git"
 ]
 
 const IGNORE_FILES = [
   ".DS_Store",
-  "jvcs_hashcode.json",
+  "girgit_hashcode.json",
   "meta.json",
   "HEAD",
   "config.json"
@@ -61,12 +61,12 @@ function loadDirectoryRecursive(dirPath, baseDir = dirPath, snapshot = {}) {
 }
 
 function loadStageSnapshot() {
-    const stagePath = path.join(JVCS_ROOT, "staging")
+    const stagePath = path.join(Girgit Hub_ROOT, "staging")
     return loadDirectoryRecursive(stagePath)
 }
 
 function loadCommitSnapshot(commitId) {
-    const commitPath = path.join(JVCS_ROOT, "commits", commitId)
+    const commitPath = path.join(Girgit Hub_ROOT, "commits", commitId)
     return loadDirectoryRecursive(commitPath)
 }
 

@@ -8,7 +8,7 @@ async function initCmd() {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
     
@@ -17,7 +17,7 @@ async function initCmd() {
     
     if(!configData) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
 
@@ -27,11 +27,11 @@ async function initCmd() {
 
     if(cwd ===  home) {
         console.log(chalk.red("Cannot initialize a repository in your home directory."));
-        console.log(chalk.yellow("Hint: navigate to a project folder and run 'jvcs init' there."));
+        console.log(chalk.yellow("Hint: navigate to a project folder and run 'girgit init' there."));
         process.exit(1);
     }
 
-    const repoPath = path.join(cwd,".jvcs")
+    const repoPath = path.join(cwd,".girgit")
     if(fssync.existsSync(repoPath)) {
         console.log(chalk.yellow("Repository already is initialized."));
         process.exit(1);    
@@ -54,7 +54,7 @@ async function initCmd() {
     fssync.writeFileSync(path.join(repoPath, "config.json"), JSON.stringify(config, null, 2))
     fssync.writeFileSync(path.join(repoPath, "HEAD"), "");
 
-    console.log(chalk.green(`Initialized empty JVCS repository`));
+    console.log(chalk.green(`Initialized empty Girgit Hub repository`));
 }
 
 module.exports = initCmd

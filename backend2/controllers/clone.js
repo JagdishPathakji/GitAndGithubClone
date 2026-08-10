@@ -36,7 +36,7 @@ async function downloadFolderFromDrive(folderId, destPath) {
 
         for(const file of files) {
 
-            if(file.name === "jvcs_hashcode.json" || file.name === "meta.json")
+            if(file.name === "girgit_hashcode.json" || file.name === "meta.json")
             continue
 
             const filePath = path.join(destPath, file.name);
@@ -99,7 +99,7 @@ async function cloneCmd(username,reponame) {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."));
-        console.log(chalk.green("jvcs --help for help"));
+        console.log(chalk.green("girgit --help for help"));
         return;
     }
     

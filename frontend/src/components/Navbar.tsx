@@ -96,7 +96,7 @@ export default function Navbar({
                 }}
                 style={{ cursor: "pointer" }}
               >
-                JVCS Space
+                Girgit Hub
               </span>
             </div>
 

@@ -2,13 +2,13 @@ const AppState  = require("./state")
 const getDiff = require("./diffEngine")
 const startUI = require("./ui")
 const chalk = require("chalk")
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("../utility")
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("../utility")
 
 async function diff(mode, options = {}) {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
         
@@ -16,11 +16,11 @@ async function diff(mode, options = {}) {
         
     if(!configData) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
 
-    if(!checkforjvcs()) {
+    if(!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted. Please create it."))
         return
     }

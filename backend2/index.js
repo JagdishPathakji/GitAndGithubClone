@@ -20,7 +20,7 @@ const diff = require("./controllers/diff-engine/diff")
 // file changed
 
 yargs(hideBin(process.argv))
-    .scriptName("jvcs")
+    .scriptName("girgit")
     .command(
         "begin",
         chalk.blue("Initialize the Version Control System (login/signup).\n"),
@@ -54,10 +54,10 @@ yargs(hideBin(process.argv))
 
         Command                          |   Description
         ---------------------------------|-------------------
-        jvcs add .                       | all files/folders
-        jvcs add <file1> <file2>         | multiple files
-        jvcs add <folder1> <folder2>     | multiple folders
-        jvcs add <file> <folder>         | files and folders\n`
+        girgit add .                       | all files/folders
+        girgit add <file1> <file2>         | multiple files
+        girgit add <folder1> <folder2>     | multiple folders
+        girgit add <file> <folder>         | files and folders\n`
         ),
         (yargs) => {
             return yargs.positional("paths", {
@@ -99,10 +99,10 @@ yargs(hideBin(process.argv))
         
         Command                          |   Description
         ---------------------------------|-------------------
-        jvcs unstage .                   | all files/folders
-        jvcs unstage <file1> <file2>     | multiple files
-        jvcs unstage <folder1> <folder2> | multiple folders
-        jvcs unstage <file> <folder>     | files and folders\n
+        girgit unstage .                   | all files/folders
+        girgit unstage <file1> <file2>     | multiple files
+        girgit unstage <folder1> <folder2> | multiple folders
+        girgit unstage <file> <folder>     | files and folders\n
     `),
         (yargs) => {
             return yargs.positional("paths", {
@@ -169,9 +169,9 @@ yargs(hideBin(process.argv))
         commit-vs-commit
 
     Example:
-        jvcs diff --mode stage-vs-cwd
-        jvcs diff --mode commit-vs-stage --commitId <id>
-        jvcs diff --mode commit-vs-commit --commitA <id> --commitB <id>
+        girgit diff --mode stage-vs-cwd
+        girgit diff --mode commit-vs-stage --commitId <id>
+        girgit diff --mode commit-vs-commit --commitA <id> --commitB <id>
     `),
         (yargs) => {
             return yargs
@@ -264,14 +264,14 @@ yargs(hideBin(process.argv))
                 const readline = require("readline");
 
                 // Init repository if not already done
-                const repoExists = fs.existsSync(".jvcs");
+                const repoExists = fs.existsSync(".girgit");
                 if (!repoExists) {
                     console.log(chalk.green("Initializing repository..."));
                     await initCmd();
                 }
 
-                // Check or create .jvcsignore
-                if (!fs.existsSync(".jvcsignore")) {
+                // Check or create .girgitignore
+                if (!fs.existsSync(".girgitignore")) {
                     const rl = readline.createInterface({
                         input: process.stdin,
                         output: process.stdout,
@@ -287,8 +287,8 @@ yargs(hideBin(process.argv))
                         );
                     });
 
-                    fs.writeFileSync(".jvcsignore", ignoreFiles.replace(/\s+/g, ""));
-                    console.log(chalk.green(".jvcsignore created!"));
+                    fs.writeFileSync(".girgitignore", ignoreFiles.replace(/\s+/g, ""));
+                    console.log(chalk.green(".girgitignore created!"));
                 }
 
                 // Stage all files

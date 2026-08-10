@@ -1,13 +1,13 @@
 const fssync = require("fs");
 const path = require("path");
 const chalk = require("chalk");
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("./utility");
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("./utility");
 
 async function logCmd() {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."));
-        console.log(chalk.green("jvcs --help for help"));
+        console.log(chalk.green("girgit --help for help"));
         return;
     }
 
@@ -17,12 +17,12 @@ async function logCmd() {
         return;
     }
 
-    if(!checkforjvcs()) {
+    if(!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted."));
         return;
     }
 
-    const repoPath = path.join(process.cwd(),".jvcs")
+    const repoPath = path.join(process.cwd(),".girgit")
     const commitPath = path.join(repoPath,"commits")
     const headPath = path.join(repoPath,"HEAD")
 

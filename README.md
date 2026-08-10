@@ -1,4 +1,4 @@
-# 🚀 JVCS - Personal Version Control System
+# 🚀 Girgit Hub - Personal Version Control System
 
 > A lightweight, AI-enhanced version control system with a powerful CLI and a vibrant web interface, using Google Drive as cloud storage.
 
@@ -6,12 +6,12 @@
 
 ---
 
-## ✨ How JVCS is Uniquely and Better
+## ✨ How Girgit Hub is Uniquely and Better
 
-While Git and GitHub are industry standards, **JVCS** introduces unique features tailored for modern, social-first development:
+While Git and GitHub are industry standards, **Girgit Hub** introduces unique features tailored for modern, social-first development:
 
-1.  **🤖 Integrated AI Code Review**: Unlike Git, JVCS has built-in AI support (`jvcs diff`) that analyzes your changes and provides instant feedback, suggestions, and risk assessments.
-2.  **☁️ Google Drive as Cloud Provider**: JVCS uses your own Google Drive for storage. No need for complex server setups or worrying about private repo limits on external platforms.
+1.  **🤖 Integrated AI Code Review**: Unlike Git, Girgit Hub has built-in AI support (`girgit diff`) that analyzes your changes and provides instant feedback, suggestions, and risk assessments.
+2.  **☁️ Google Drive as Cloud Provider**: Girgit Hub uses your own Google Drive for storage. No need for complex server setups or worrying about private repo limits on external platforms.
 3.  **🔥 Social-First Architecture**: Features like contribution heatmaps, user following, and repository starring are core to the platform, making it feel like a social network for developers from day one.
 4.  **⚡ Lightweight & Modern**: Built with a sleek React + TypeScript frontend and a Node.js backend, offering a "glassmorphism" aesthetic that feels premium and state-of-the-art.
 
@@ -46,18 +46,18 @@ While Git and GitHub are industry standards, **JVCS** introduces unique features
 
 | Command | Description |
 | :--- | :--- |
-| `jvcs begin` | **Authentication**: Initialize the system with secure Login or Signup. |
-| `jvcs init` | **Initialize**: Create a new empty JVCS repository in the current directory. |
-| `jvcs add <paths...>` | **Stage**: Add files or folders to the staging area (see below for options). |
-| `jvcs commit <message>` | **Commit**: Save the current staging area as a new version with a message. |
-| `jvcs unstage <paths...>`| **Unstage**: Remove files and folders from the staging area. |
-| `jvcs log` | **History**: Show details of all commits made in the repository. |
-| `jvcs push` | **Sync**: Push all the commits to your Google Drive remote storage. |
-| `jvcs status` | **Status**: Check the status of each file/folder (modified, staged, etc.). |
-| `jvcs diff` | **AI Review**: Compare different states (AI-integrated analysis). |
-| `jvcs revert <commitId>` | **Undo**: Replace working directory with a specific previous commit. |
-| `jvcs clone <path>` | **Clone**: Clone a remote repository (username/reponame) to local. |
-| `jvcs save-version` | **Turbo**: One-click `init` + `add` + `commit` + `push`. |
+| `girgit begin` | **Authentication**: Initialize the system with secure Login or Signup. |
+| `girgit init` | **Initialize**: Create a new empty Girgit Hub repository in the current directory. |
+| `girgit add <paths...>` | **Stage**: Add files or folders to the staging area (see below for options). |
+| `girgit commit <message>` | **Commit**: Save the current staging area as a new version with a message. |
+| `girgit unstage <paths...>`| **Unstage**: Remove files and folders from the staging area. |
+| `girgit log` | **History**: Show details of all commits made in the repository. |
+| `girgit push` | **Sync**: Push all the commits to your Google Drive remote storage. |
+| `girgit status` | **Status**: Check the status of each file/folder (modified, staged, etc.). |
+| `girgit diff` | **AI Review**: Compare different states (AI-integrated analysis). |
+| `girgit revert <commitId>` | **Undo**: Replace working directory with a specific previous commit. |
+| `girgit clone <path>` | **Clone**: Clone a remote repository (username/reponame) to local. |
+| `girgit save-version` | **Turbo**: One-click `init` + `add` + `commit` + `push`. |
 
 ### **Detailed Command Usage**
 
@@ -66,19 +66,19 @@ For both `add` and `unstage`, you can specify multiple targets:
 
 | Command Pattern | Description |
 | :--- | :--- |
-| `jvcs add .` | Stage all files/folders in the current directory. |
-| `jvcs add <file1> <file2>` | Stage specific multiple files. |
-| `jvcs add <folder1> <folder2>` | Stage multiple folders. |
-| `jvcs add <file> <folder>` | Stage a mix of files and folders. |
-| `jvcs unstage .` | Unstage everything. |
-| `jvcs unstage <file1> <file2>` | Unstage specific multiple files. |
+| `girgit add .` | Stage all files/folders in the current directory. |
+| `girgit add <file1> <file2>` | Stage specific multiple files. |
+| `girgit add <folder1> <folder2>` | Stage multiple folders. |
+| `girgit add <file> <folder>` | Stage a mix of files and folders. |
+| `girgit unstage .` | Unstage everything. |
+| `girgit unstage <file1> <file2>` | Unstage specific multiple files. |
 
 #### **AI-Powered Diff**
 Compare states with integrated AI analysis:
 ```bash
-jvcs diff --mode stage-vs-cwd          # Compare staging with current work
-jvcs diff --mode commit-vs-stage --commitId <id> # Compare commit with stage
-jvcs diff --mode commit-vs-commit --commitA <id> --commitB <id> # Compare two commits
+girgit diff --mode stage-vs-cwd          # Compare staging with current work
+girgit diff --mode commit-vs-stage --commitId <id> # Compare commit with stage
+girgit diff --mode commit-vs-commit --commitA <id> --commitB <id> # Compare two commits
 ```
 
 ---
@@ -138,7 +138,7 @@ backend2/
 │   │   ├── aiAnalyzer.js        # AI Code Review integration
 │   │   ├── diffEngine.js        # File comparison logic
 │   │   └── ui.js                # CLI Diff visualization
-│   ├── add.js                   # Staging logic with .jvcsignore support
+│   ├── add.js                   # Staging logic with .girgitignore support
 │   ├── commit.js                # UUID-based local commit system
 │   ├── push.js                  # Google Drive syncing logic
 │   ├── status.js                # File state detection
@@ -147,7 +147,7 @@ backend2/
 │   └── handleDbForRepo.js       # Syncing local state with Backend1 DB
 ├── config/
 │   └── drive-config.js          # Client-side Drive API setup
-└── index.js                     # Yargs CLI entry point (`jvcs`)
+└── index.js                     # Yargs CLI entry point (`girgit`)
 ```
 
 ---
@@ -156,20 +156,20 @@ backend2/
 
 ### **1. Install CLI**
 ```bash
-npm install -g jvcs
+npm install -g girgit
 ```
 
 ### **2. Authenticate**
 ```bash
-jvcs begin
+girgit begin
 ```
 
 ### **3. Start Versioning**
 ```bash
-jvcs init
-jvcs add .
-jvcs commit "Initial commit with AI check"
-jvcs push
+girgit init
+girgit add .
+girgit commit "Initial commit with AI check"
+girgit push
 ```
 
 ---

@@ -17,7 +17,7 @@ app.use(express.json())
 
 // Default production origin
 const PROD_ORIGIN1 = "https://version-control-system-frontend.onrender.com";
-const PROD_ORIGIN2 = "https://jvcs-space.netlify.app/"
+const PROD_ORIGIN2 = "https://girgit-space.netlify.app/"
 // When testing locally, set ALLOW_LOCAL=true in your .env to allow localhost origins
 const allowedOrigins = [PROD_ORIGIN1, PROD_ORIGIN2];
 if (process.env.ALLOW_LOCAL === "true") {

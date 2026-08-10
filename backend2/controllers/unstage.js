@@ -2,7 +2,7 @@ const fs = require("fs").promises;
 const fssync = require("fs");
 const path = require("path");
 const chalk = require("chalk");
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("./utility");
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("./utility");
 
 function removeHashesForFolder(hashData,folderPath) {
 
@@ -22,7 +22,7 @@ async function unstageCmd(paths) {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."));
-        console.log(chalk.green("jvcs --help for help"));
+        console.log(chalk.green("girgit --help for help"));
         return;
     }
 
@@ -32,21 +32,21 @@ async function unstageCmd(paths) {
         return;
     }
 
-    if(!checkforjvcs()) {
+    if(!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted."));
         return;
     }
 
-    const repoPath = path.join(process.cwd(), ".jvcs");
+    const repoPath = path.join(process.cwd(), ".girgit");
     const stagingPath = path.join(repoPath, "staging");
-    const hashPath = path.join(stagingPath, "jvcs_hashcode.json");
+    const hashPath = path.join(stagingPath, "girgit_hashcode.json");
 
     if(!fssync.existsSync(stagingPath)) {
         console.log(chalk.yellow("Nothing is staged yet."));
         return;
     }
 
-    const stagedItems = fssync.readdirSync(stagingPath).filter((item)=> item !== "jvcs_hashcode.json")
+    const stagedItems = fssync.readdirSync(stagingPath).filter((item)=> item !== "girgit_hashcode.json")
     if(stagedItems.length === 0) {
         console.log(chalk.yellow("Staging area is empty. Nothing to unstage."));
         return;

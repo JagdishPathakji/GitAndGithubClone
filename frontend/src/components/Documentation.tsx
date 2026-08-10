@@ -38,72 +38,72 @@ export default function Documentation({
 
   const commands = [
     {
-      cmd: "jvcs begin",
-      desc: "Start authentication. It lets you login/signup for using JVCS commands. Must be run first before other commands.",
-      example: "jvcs begin",
+      cmd: "girgit begin",
+      desc: "Start authentication. It lets you login/signup for using Girgit Hub commands. Must be run first before other commands.",
+      example: "girgit begin",
       notes: "You will be prompted to enter your email/password in terminal.",
     },
     {
-      cmd: "jvcs init",
+      cmd: "girgit init",
       desc: "Initialize a new repository in the current directory. Creates necessary metadata files.",
-      example: "jvcs init my-project",
+      example: "girgit init my-project",
       notes: "Repository name should be unique within your account.",
     },
     {
-      cmd: "jvcs add",
+      cmd: "girgit add",
       desc: "Stage files or directories for commit. You can stage specific files or all changes.",
-      example: "jvcs add .",
-      notes: "Use 'jvcs unstage <file>' to remove files from staging.",
+      example: "girgit add .",
+      notes: "Use 'girgit unstage <file>' to remove files from staging.",
     },
     {
-      cmd: "jvcs commit",
+      cmd: "girgit commit",
       desc: "Create a new commit for all staged changes. You should provide a descriptive message.",
-      example: 'jvcs commit "Added authentication module"',
+      example: 'girgit commit "Added authentication module"',
       notes: "Always write meaningful commit messages.",
     },
     {
-      cmd: "jvcs save-version",
-      desc: "A powerful combination of init, add, commit, and push in a single command. It also helps you set up .jvcsignore.",
-      example: "jvcs save-version",
+      cmd: "girgit save-version",
+      desc: "A powerful combination of init, add, commit, and push in a single command. It also helps you set up .girgitignore.",
+      example: "girgit save-version",
       notes: "Follow the terminal prompts to complete the process.",
     },
     {
-      cmd: "jvcs push",
+      cmd: "girgit push",
       desc: "Push local commits to remote repository.",
-      example: "jvcs push",
+      example: "girgit push",
       notes: "Make sure you are authenticated and have initialized the repo.",
     },
     {
-      cmd: "jvcs diff",
+      cmd: "girgit diff",
       desc: "Compare different states of your repository to see what changed.",
-      example: 'jvcs diff --mode stage-vs-cwd\njvcs diff --mode commit-vs-stage --commitId <id>\njvcs diff --mode commit-vs-commit --commitA <id1> --commitB <id2>',
+      example: 'girgit diff --mode stage-vs-cwd\ngirgit diff --mode commit-vs-stage --commitId <id>\ngirgit diff --mode commit-vs-commit --commitA <id1> --commitB <id2>',
       notes: "Modes: stage-vs-cwd, commit-vs-stage, commit-vs-commit.",
     },
     {
-      cmd: "jvcs clone",
+      cmd: "girgit clone",
       desc: "Clone a remote repository into a local directory.",
-      example: "jvcs clone username/reponame",
+      example: "girgit clone username/reponame",
       notes: "Clones the full repository history and sets up remote origin.",
     },
     {
-      cmd: "jvcs status",
+      cmd: "girgit status",
       desc: "View status of files in the repository, including staged, modified, and untracked files.",
-      example: "jvcs status",
+      example: "girgit status",
     },
     {
-      cmd: "jvcs log",
+      cmd: "girgit log",
       desc: "View commit history of the current repository.",
-      example: "jvcs log",
+      example: "girgit log",
     },
     {
-      cmd: "jvcs unstage",
+      cmd: "girgit unstage",
       desc: "Remove files from the staging area.",
-      example: "jvcs unstage <file>",
+      example: "girgit unstage <file>",
     },
     {
-      cmd: "jvcs revert",
+      cmd: "girgit revert",
       desc: "Undo commits and move repository back to a previous state.",
-      example: "jvcs revert <commit-hash>",
+      example: "girgit revert <commit-hash>",
       notes: "Use carefully! You can specify which commit to revert.",
     },
   ];
@@ -111,19 +111,19 @@ export default function Documentation({
   const faq = [
     {
       q: "What's the difference between global and local installation?",
-      a: "Global installation allows you to run JVCS from anywhere on your system without npx. Local installation is project-specific and requires using npx before commands.",
+      a: "Global installation allows you to run Girgit Hub from anywhere on your system without npx. Local installation is project-specific and requires using npx before commands.",
     },
     {
       q: "How do I authenticate?",
-      a: "Run 'jvcs begin' to login or signup. It will prompt you in the terminal for credentials.",
+      a: "Run 'girgit begin' to login or signup. It will prompt you in the terminal for credentials.",
     },
     {
-      q: "What is .jvcsignore and how do I use it?",
-      a: "Similar to .gitignore, .jvcsignore is a file that tells JVCS which files or folders to ignore (e.g., node_modules). You can create it manually or via 'jvcs save-version'.",
+      q: "What is .girgitignore and how do I use it?",
+      a: "Similar to .gitignore, .girgitignore is a file that tells Girgit Hub which files or folders to ignore (e.g., node_modules). You can create it manually or via 'girgit save-version'.",
     },
     {
       q: "Can I undo a commit?",
-      a: "Yes, 'jvcs revert <commit-hash>' allows you to revert a commit.",
+      a: "Yes, 'girgit revert <commit-hash>' allows you to revert a commit.",
     },
     {
       q: "How do I make my repository public?",
@@ -131,7 +131,7 @@ export default function Documentation({
     },
     {
       q: "What if I staged the wrong files?",
-      a: "Use 'jvcs unstage <file>' to remove files from staging before committing.",
+      a: "Use 'girgit unstage <file>' to remove files from staging before committing.",
     },
   ];
 
@@ -175,14 +175,14 @@ export default function Documentation({
                 {[
                   {
                     title: "Global Installation",
-                    cmd: "npm install -g jvcs",
-                    desc: "Install JVCS globally to use anywhere in your system.",
+                    cmd: "npm install -g girgit",
+                    desc: "Install Girgit Hub globally to use anywhere in your system.",
                     note: "Requires admin privileges on some systems.",
                   },
                   {
                     title: "Local Installation",
-                    cmd: "npm install jvcs",
-                    desc: "Install JVCS in the current project folder. Must use npx to run commands.",
+                    cmd: "npm install girgit",
+                    desc: "Install Girgit Hub in the current project folder. Must use npx to run commands.",
                     note: "Useful for project-specific usage.",
                   },
                 ].map((inst, idx) => (
@@ -272,20 +272,20 @@ export default function Documentation({
                   }}
                 >
 {`# Option A: The Manual Flow
-jvcs begin
-jvcs init my-project
-jvcs add .
-jvcs commit "Initial commit"
-jvcs push
+girgit begin
+girgit init my-project
+girgit add .
+girgit commit "Initial commit"
+girgit push
 
 # Option B: The Streamlined Flow
-jvcs begin
-jvcs save-version
+girgit begin
+girgit save-version
 
 # View Changes & History
-jvcs diff --mode stage-vs-cwd
-jvcs status
-jvcs log`}
+girgit diff --mode stage-vs-cwd
+girgit status
+girgit log`}
                 </SyntaxHighlighter>
               </div>
             </section>

@@ -2,7 +2,7 @@
 // Files that exist in your working directory (project folder) but have never been added to staging or committed.
 
 // Changes to be committed
-// Files that are in the staging area (.jvcs/staging) — meaning, you’ve already added them using jvcs add, but haven’t committed yet.
+// Files that are in the staging area (.girgit/staging) — meaning, you’ve already added them using girgit add, but haven’t committed yet.
 
 // Changes not staged for commit
 // Files that were already added to staging earlier, but you modified them again in your working directory after staging — i.e., the staged copy and working copy are different.
@@ -11,7 +11,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const chalk = require("chalk");
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("./utility");
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("./utility");
 
 // normalize relative path to use forward slashes for consistent comparisons
 function normalizeRel(p) {
@@ -39,10 +39,10 @@ function getAllFiles(dir, rootDir=dir, collected=[]) {
         const fullPath = path.join(dir,entry.name)
         const rel = normalizeRel(path.relative(rootDir,fullPath))
 
-        if(entry.isDirectory() && (entry.name === ".jvcs" || entry.name === "node_modules")) 
+        if(entry.isDirectory() && (entry.name === ".girgit" || entry.name === "node_modules")) 
         continue;
         
-        if(entry.isFile() && (entry.name === "meta.json" || entry.name === "jvcs_hashcode.json")) 
+        if(entry.isFile() && (entry.name === "meta.json" || entry.name === "girgit_hashcode.json")) 
         continue;
         
         if(entry.isFile()) {
@@ -61,7 +61,7 @@ async function statusCmd() {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."));
-        console.log(chalk.green("jvcs --help for help"));
+        console.log(chalk.green("girgit --help for help"));
         return;
     }
 
@@ -71,19 +71,19 @@ async function statusCmd() {
         return;
     }
 
-    if(!checkforjvcs()) {
+    if(!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted."));
         return;
     }
 
     const cwd = process.cwd()
-    const jvcsDir = path.join(cwd,".jvcs")
-    const commitDir = path.join(jvcsDir,"commits")
-    const stagingDir = path.join(jvcsDir,"staging")
-    const headFile = path.join(jvcsDir, "HEAD");
+    const girgitDir = path.join(cwd,".girgit")
+    const commitDir = path.join(girgitDir,"commits")
+    const stagingDir = path.join(girgitDir,"staging")
+    const headFile = path.join(girgitDir, "HEAD");
 
-    if(!fs.existsSync(jvcsDir)) {
-        console.log(chalk.red("No repository exists. Please create one using 'jvcs init'"))
+    if(!fs.existsSync(girgitDir)) {
+        console.log(chalk.red("No repository exists. Please create one using 'girgit init'"))
         return
     }
 
@@ -152,9 +152,9 @@ async function statusCmd() {
         console.log(chalk.gray("\tNo untracked files"));
     }
 
-    console.log(chalk.gray("\n(use 'jvcs add <file>' to stage changes)"));
-    console.log(chalk.gray("(use 'jvcs commit -m \"message\"' to commit changes)"));
-    console.log(chalk.gray("(use 'jvcs unstage <file>/<folder> to unstage a file/folder')"))
+    console.log(chalk.gray("\n(use 'girgit add <file>' to stage changes)"));
+    console.log(chalk.gray("(use 'girgit commit -m \"message\"' to commit changes)"));
+    console.log(chalk.gray("(use 'girgit unstage <file>/<folder> to unstage a file/folder')"))
 }
 
 module.exports = statusCmd

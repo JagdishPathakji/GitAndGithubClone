@@ -1,7 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 
-const config = path.join(require("os").homedir(),".jvcs","config.json")
+const config = path.join(require("os").homedir(),".girgit","config.json")
 
 function checkGlobalConfig() {
     return fs.existsSync(config)
@@ -17,13 +17,13 @@ function getGlobalConfig() {
     return null
 }
 
-function checkforjvcs() {
-    const jvcsPath = path.join(process.cwd(),".jvcs")
-    return fs.existsSync(jvcsPath)
+function checkforgirgit() {
+    const girgitPath = path.join(process.cwd(),".girgit")
+    return fs.existsSync(girgitPath)
 }
 
 module.exports = {
     checkGlobalConfig,
     getGlobalConfig,
-    checkforjvcs
+    checkforgirgit
 }

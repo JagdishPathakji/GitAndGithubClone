@@ -213,7 +213,7 @@ export default function OwnRepo({
     const map = new Map<string, TreeNode>();
     const roots: TreeNode[] = [];
     files
-      .filter((f) => f.name !== "jvcs_hashcode.json" && f.name !== "meta.json")
+      .filter((f) => f.name !== "girgit_hashcode.json" && f.name !== "meta.json")
       .forEach((f) => map.set(f.driveId, { ...f, children: [] }));
     map.forEach((node) => {
       if (node.parentId && map.has(node.parentId)) map.get(node.parentId)!.children!.push(node);

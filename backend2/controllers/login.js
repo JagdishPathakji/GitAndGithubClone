@@ -17,7 +17,7 @@ async function login(loginData) {
     if(data.status === true) {
         console.log(chalk.green(data.message))
 
-        const dirPath = path.join(require("os").homedir(), ".jvcs");
+        const dirPath = path.join(require("os").homedir(), ".girgit");
         if (!fs.existsSync(dirPath)) {
             fs.mkdirSync(dirPath, { recursive: true });
         }

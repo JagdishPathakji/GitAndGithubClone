@@ -4,7 +4,7 @@ const aiAnalyzer = require("./aiAnalyzer");
 function startUI(state) {
     const screen = blessed.screen({
         smartCSR: true,
-        title: "JVCS Diff Viewer"
+        title: "Girgit Hub Diff Viewer"
     });
 
     // ---------------------------------------
@@ -12,7 +12,7 @@ function startUI(state) {
     // ---------------------------------------
     const header = blessed.box({
         top: 0, height: 1, width: "100%",
-        content: ` JVCS DIFF VIEW (${state.mode}) | ↑↓ Navigate | Enter Open | Esc Back | Tab Switch | Q Quit `,
+        content: ` Girgit Hub DIFF VIEW (${state.mode}) | ↑↓ Navigate | Enter Open | Esc Back | Tab Switch | Q Quit `,
         style: { fg: "white", bg: "blue", bold: true, underline: true },
         tags: true
     });

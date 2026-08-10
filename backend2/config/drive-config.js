@@ -7,7 +7,7 @@ const chalk = require("chalk");
 
 dotenv.config();
 
-const credDir = path.join(os.homedir(), ".jvcs");
+const credDir = path.join(os.homedir(), ".girgit");
 const credFile = path.join(credDir, "config.json");
 
 function getDriveClient() {

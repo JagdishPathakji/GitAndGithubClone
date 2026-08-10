@@ -15,8 +15,8 @@ async function sendEmail(userData) {
 
     const sendSmtpEmail = {
   to: [{ email: userData.email }],
-  sender: { email: "jagdishgithub1@gmail.com", name: "JVCS Space" },
-  subject: "JVCS | OTP Verification",
+  sender: { email: "jagdishgithub1@gmail.com", name: "Girgit Hub" },
+  subject: "Girgit Hub | OTP Verification",
   htmlContent: `
   <div style="background-color:#0d0221;padding:40px 0;font-family:Arial,Helvetica,sans-serif;">
     <div style="max-width:520px;margin:0 auto;background:#120b2b;border-radius:14px;
@@ -51,7 +51,7 @@ async function sendEmail(userData) {
               background:linear-gradient(90deg,#ff006e,#00d9ff);
               -webkit-background-clip:text;
               -webkit-text-fill-color:transparent;">
-              JVCS Space
+              Girgit Hub
             </div>
             <div style="font-size:12px;color:#bdbdbd;margin-top:4px;">
               Email Verification
@@ -93,7 +93,7 @@ async function sendEmail(userData) {
       <!-- FOOTER -->
       <div style="margin-top:30px;padding-top:16px;border-top:1px solid rgba(255,0,110,0.25);
         font-size:12px;color:#8e8e8e;text-align:center;">
-        © ${new Date().getFullYear()} JVCS Space
+        © ${new Date().getFullYear()} Girgit Hub
       </div>
 
     </div>

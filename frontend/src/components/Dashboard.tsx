@@ -487,7 +487,7 @@ export default function Dashboard({ setIsAuthenticated }) {
                 </h2>
               </div>
               <p className="text-gray-300 max-w-xl mx-auto text-sm sm:text-base">
-                🤖 Coming soon — JVCS Space AI Assistant to help you analyze commits,
+                🤖 Coming soon — Girgit Hub AI Assistant to help you analyze commits,
                 generate insights, and manage repositories smartly.
               </p>
             </section>

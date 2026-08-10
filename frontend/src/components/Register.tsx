@@ -93,7 +93,7 @@ export default function Register() {
               <UserPlus className="w-8 h-8 text-white" strokeWidth={2.5} />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff006e] via-[#00d9ff] to-[#ffbe0b] bg-clip-text text-transparent mb-2">
-              Join JVCS - Signup
+              Join Girgit Hub - Signup
             </h1>
             <p className="text-gray-300 text-sm leading-relaxed">
               Create your account and start collaborating today

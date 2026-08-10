@@ -59,7 +59,7 @@ export default function Otp() {
               <ShieldCheck className="w-8 h-8 text-[#0a0b0f]" strokeWidth={2.5} />
             </div>
             <h1 className="text-4xl font-bold bg-gradient-to-r from-[#5af0b1] to-[#3dd6ff] bg-clip-text text-transparent mb-2">
-              JVCS Space
+              Girgit Hub
             </h1>
             <p className="text-gray-400 text-sm leading-relaxed">
               Enter the verification code sent to your email

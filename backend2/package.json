@@ -1,8 +1,8 @@
 {
-  "name": "jvcs",
+  "name": "girgit",
   "version": "1.6.9",
   "bin": {
-    "jvcs": "index.js"
+    "girgit": "index.js"
   },
   "keywords": [],
   "author": "",

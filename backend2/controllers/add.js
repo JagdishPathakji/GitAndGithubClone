@@ -1,4 +1,4 @@
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("./utility")
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("./utility")
 const path = require("path")
 const fssync = require("fs")
 const chalk = require("chalk")
@@ -12,9 +12,9 @@ async function getFileHash(filepath) {
     return crypto.createHash("sha256").update(buffer).digest("hex")
 }
 
-// load .jvcsignore file
+// load .girgitignore file
 async function loadIgnorePatterns() {
-    const ignorePath = path.join(process.cwd(), ".jvcsignore")
+    const ignorePath = path.join(process.cwd(), ".girgitignore")
     if(!fssync.existsSync(ignorePath)) return []
 
     const content = await fs.readFile(ignorePath, "utf-8")
@@ -40,7 +40,7 @@ async function hashDirectoryRecursive(dir, hashData, ignorePatterns) {
         const relativePath = path.relative(process.cwd(), fullPath)
 
         if (isIgnored(relativePath, ignorePatterns)) {
-            console.log(chalk.gray(`skipped "${relativePath}" as it is present in .jvcsignore`))
+            console.log(chalk.gray(`skipped "${relativePath}" as it is present in .girgitignore`))
             continue
         }
 
@@ -66,7 +66,7 @@ async function addCmd(paths) {
 
     if (!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
 
@@ -74,22 +74,22 @@ async function addCmd(paths) {
 
     if (!configData) {
         console.log(chalk.red("No existing session found. Please login or signup."))
-        console.log(chalk.green("jvcs --help for help"))
+        console.log(chalk.green("girgit --help for help"))
         return
     }
 
-    if (!checkforjvcs()) {
+    if (!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted. Please create it."))
         return
     }
 
-    const repoPath = path.join(process.cwd(), ".jvcs")
+    const repoPath = path.join(process.cwd(), ".girgit")
     const staging = path.join(repoPath, "staging")
 
     if (!fssync.existsSync(staging))
         fssync.mkdirSync(staging, { recursive: true })
 
-    const hashPath = path.join(staging, "jvcs_hashcode.json")
+    const hashPath = path.join(staging, "girgit_hashcode.json")
     let hashData = {}
 
     if (fssync.existsSync(hashPath)) {
@@ -102,7 +102,7 @@ async function addCmd(paths) {
     let targets = []
     if (paths.length === 1 && paths[0] === ".") {
         let rootEntries = await fs.readdir(process.cwd(), { withFileTypes: true })
-        targets = rootEntries.filter((target) => target.name !== ".jvcs" && target.name !== ".jvcsignore").map((item) => path.resolve(process.cwd(), item.name))
+        targets = rootEntries.filter((target) => target.name !== ".girgit" && target.name !== ".girgitignore").map((item) => path.resolve(process.cwd(), item.name))
     }
     else {
         targets = paths.map((p) => path.resolve(process.cwd(), p))
@@ -119,18 +119,18 @@ async function addCmd(paths) {
             }
 
             const relative = path.relative(process.cwd(), target)
-            if (relative === ".jvcs" || relative.startsWith(".jvcs" + path.sep)) {
-                console.log(chalk.red(`Cannot add internal repository folder ".jvcs"`))
+            if (relative === ".girgit" || relative.startsWith(".girgit" + path.sep)) {
+                console.log(chalk.red(`Cannot add internal repository folder ".girgit"`))
                 continue
             }
 
-            if (relative === ".jvcsignore") {
-                console.log(chalk.red(`Cannot add ".jvcsignore" file`))
+            if (relative === ".girgitignore") {
+                console.log(chalk.red(`Cannot add ".girgitignore" file`))
                 continue
             }
 
             if (isIgnored(relative, ignorePatterns)) {
-                console.log(chalk.gray(`skipped "${relative}" as it is present in .jvcsignore`))
+                console.log(chalk.gray(`skipped "${relative}" as it is present in .girgitignore`))
                 continue
             }
 

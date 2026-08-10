@@ -3,7 +3,7 @@ const path = require("path")
 const chalk = require("chalk")
 const { getDriveClient } = require("../config/drive-config")
 const drive = getDriveClient()
-const { getGlobalConfig, checkGlobalConfig, checkforjvcs } = require("./utility")
+const { getGlobalConfig, checkGlobalConfig, checkforgirgit } = require("./utility")
 const getDirectoryStructure = require("./driveUtility")
 const handleDbForRepo = require("../apicall/handleDbForRepo")
 
@@ -77,7 +77,7 @@ async function pushCmd() {
 
         if(!checkGlobalConfig()) {
             console.log(chalk.red("No existing session found. Please login or signup."))
-            console.log(chalk.green("jvcs --help for help"))
+            console.log(chalk.green("girgit --help for help"))
             return
         }
 
@@ -85,18 +85,18 @@ async function pushCmd() {
 
         if(!configData) {
             console.log(chalk.red("No existing session found. Please login or signup."))
-            console.log(chalk.green("jvcs --help for help"))
+            console.log(chalk.green("girgit --help for help"))
             return
         }
         
-        if(!checkforjvcs()) {
+        if(!checkforgirgit()) {
             console.log(chalk.red("Repository is not initialized or is deleted. Please create it."))
             return
         }
         
         const cwd = process.cwd()
-        const jvcsDir = path.join(cwd,".jvcs")
-        const commitDir = path.join(jvcsDir,"commits")
+        const girgitDir = path.join(cwd,".girgit")
+        const commitDir = path.join(girgitDir,"commits")
         const reponame = path.basename(process.cwd())
 
         if(!fs.existsSync(commitDir)) {

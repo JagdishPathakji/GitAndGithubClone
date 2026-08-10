@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const chalk = require("chalk");
-const { checkGlobalConfig, getGlobalConfig, checkforjvcs } = require("./utility");
+const { checkGlobalConfig, getGlobalConfig, checkforgirgit } = require("./utility");
 const { getDriveClient } = require("../config/drive-config");
 
 
@@ -11,7 +11,7 @@ function copyDir(targetCommitFolder, destDir=process.cwd()) {
     
     for(const entry of entries) {
         
-        if (entry.name === ".jvcs") continue;
+        if (entry.name === ".girgit") continue;
         
         const srcpath = path.join(targetCommitFolder,entry.name)
         const destpath = path.join(destDir,entry.name)
@@ -21,7 +21,7 @@ function copyDir(targetCommitFolder, destDir=process.cwd()) {
             copyDir(srcpath, destpath);
         }
         else {
-            if(entry.name !== "meta.json" && entry.name !== "jvcs_hashcode.json")
+            if(entry.name !== "meta.json" && entry.name !== "girgit_hashcode.json")
             fs.copyFileSync(srcpath, destpath);
         }
     }
@@ -33,7 +33,7 @@ function cleanCWD() {
     const entries = fs.readdirSync(cwd, {withFileTypes: true})
 
     for(const entry of entries) {
-        if(entry.name === ".jvcs") continue
+        if(entry.name === ".girgit") continue
         const deleteEntry = path.join(cwd,entry.name)
         fs.rmSync(deleteEntry, {recursive: true, force: true})
     }
@@ -141,7 +141,7 @@ async function revertCmd(commitId) {
 
     if(!checkGlobalConfig()) {
         console.log(chalk.red("No existing session found. Please login or signup."));
-        console.log(chalk.green("jvcs --help for help"));
+        console.log(chalk.green("girgit --help for help"));
         return;
     }
     
@@ -151,19 +151,19 @@ async function revertCmd(commitId) {
         return;
     }
     
-    if(!checkforjvcs()) {
+    if(!checkforgirgit()) {
         console.log(chalk.red("Repository is not initialized or is deleted."));
         return;
     }
     
     // actual implementation
     const cwd = process.cwd()
-    const jvcsDir = path.join(cwd,".jvcs")
-    const commitFolder = path.join(jvcsDir,"commits")
+    const girgitDir = path.join(cwd,".girgit")
+    const commitFolder = path.join(girgitDir,"commits")
     const targetCommitFolder = path.join(commitFolder,commitId)
-    const headFile = path.join(jvcsDir,"HEAD")
+    const headFile = path.join(girgitDir,"HEAD")
 
-    if(!fs.existsSync(jvcsDir)) {
+    if(!fs.existsSync(girgitDir)) {
         console.log(chalk.red("Repository is not initialized or is deleted."));
         return;
     }
@@ -189,7 +189,7 @@ async function revertCmd(commitId) {
     // get commits to delete
     const toDelete = getCommitsToDelete(commitFolder,currentHead,commitId)
 
-    // clear the current working directory except .jvcs
+    // clear the current working directory except .girgit
     cleanCWD()
 
     // copy the content of commit to cwd

@@ -23,19 +23,19 @@ export default function LandingPage() {
     element?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const jvcsCommands = [
-    { cmd: "jvcs begin", icon: <ShieldCheck className="w-5 h-5" />, desc: "Secure authentication. Start your developer session.", color: "text-[#00d9ff]" },
-    { cmd: "jvcs init", icon: <Database className="w-5 h-5" />, desc: "Initialize a fresh JVCS repository in your folder.", color: "text-[#ff006e]" },
-    { cmd: "jvcs add", icon: <Layers className="w-5 h-5" />, desc: "Stage your local changes for the next commit.", color: "text-[#ffbe0b]" },
-    { cmd: "jvcs commit", icon: <Zap className="w-5 h-5" />, desc: "Capture a snapshot of your staged files permanently.", color: "text-[#00d9ff]" },
-    { cmd: "jvcs push", icon: <Globe className="w-5 h-5" />, desc: "Synchronize local commits with your remote Space.", color: "text-[#ff006e]" },
-    { cmd: "jvcs save-version", icon: <RefreshCw className="w-5 h-5" />, desc: "Streamlined backup: init, add, commit, & push at once.", color: "text-[#ffbe0b]" },
-    { cmd: "jvcs diff", icon: <Search className="w-5 h-5" />, desc: "Compare versions with stage-vs-cwd or commit-vs-stage.", color: "text-[#00d9ff]" },
-    { cmd: "jvcs clone", icon: <RefreshCw className="w-5 h-5" />, desc: "Download any public or private repository from the cloud.", color: "text-[#ff006e]" },
-    { cmd: "jvcs status", icon: <Terminal className="w-5 h-5" />, desc: "Real-time overview of modified and tracked files.", color: "text-[#ffbe0b]" },
-    { cmd: "jvcs log", icon: <History className="w-5 h-5" />, desc: "Browse through your entire versioning history.", color: "text-[#00d9ff]" },
-    { cmd: "jvcs unstage", icon: <Layers className="w-5 h-5" />, desc: "Safely remove files from the staging area.", color: "text-[#ff006e]" },
-    { cmd: "jvcs revert", icon: <History className="w-5 h-5" />, desc: "Roll back your repository to any specific commit.", color: "text-[#ffbe0b]" }
+  const girgitCommands = [
+    { cmd: "girgit begin", icon: <ShieldCheck className="w-5 h-5" />, desc: "Secure authentication. Start your developer session.", color: "text-[#00d9ff]" },
+    { cmd: "girgit init", icon: <Database className="w-5 h-5" />, desc: "Initialize a fresh Girgit Hub repository in your folder.", color: "text-[#ff006e]" },
+    { cmd: "girgit add", icon: <Layers className="w-5 h-5" />, desc: "Stage your local changes for the next commit.", color: "text-[#ffbe0b]" },
+    { cmd: "girgit commit", icon: <Zap className="w-5 h-5" />, desc: "Capture a snapshot of your staged files permanently.", color: "text-[#00d9ff]" },
+    { cmd: "girgit push", icon: <Globe className="w-5 h-5" />, desc: "Synchronize local commits with your remote Space.", color: "text-[#ff006e]" },
+    { cmd: "girgit save-version", icon: <RefreshCw className="w-5 h-5" />, desc: "Streamlined backup: init, add, commit, & push at once.", color: "text-[#ffbe0b]" },
+    { cmd: "girgit diff", icon: <Search className="w-5 h-5" />, desc: "Compare versions with stage-vs-cwd or commit-vs-stage.", color: "text-[#00d9ff]" },
+    { cmd: "girgit clone", icon: <RefreshCw className="w-5 h-5" />, desc: "Download any public or private repository from the cloud.", color: "text-[#ff006e]" },
+    { cmd: "girgit status", icon: <Terminal className="w-5 h-5" />, desc: "Real-time overview of modified and tracked files.", color: "text-[#ffbe0b]" },
+    { cmd: "girgit log", icon: <History className="w-5 h-5" />, desc: "Browse through your entire versioning history.", color: "text-[#00d9ff]" },
+    { cmd: "girgit unstage", icon: <Layers className="w-5 h-5" />, desc: "Safely remove files from the staging area.", color: "text-[#ff006e]" },
+    { cmd: "girgit revert", icon: <History className="w-5 h-5" />, desc: "Roll back your repository to any specific commit.", color: "text-[#ffbe0b]" }
   ];
 
   return (
@@ -54,7 +54,7 @@ export default function LandingPage() {
               <GitBranch className="w-6 h-6 text-white" />
             </div>
             <span className="text-2xl font-black bg-gradient-to-r from-[#ff006e] to-[#00d9ff] bg-clip-text text-transparent tracking-tighter">
-              JVCS SPACE
+              GIRGIT HUB
             </span>
           </div>
           <div className="flex gap-4 items-center">
@@ -90,7 +90,7 @@ export default function LandingPage() {
         </h1>
         
         <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12 font-medium leading-relaxed">
-          JVCS is a high-performance, decentralized version control system designed for developers who demand speed, style, and absolute control over their local history.
+          Girgit Hub is a high-performance, decentralized version control system designed for developers who demand speed, style, and absolute control over their local history.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
@@ -116,12 +116,12 @@ export default function LandingPage() {
             COMMAND <span className="text-[#00d9ff]">REFERENCE</span>
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto uppercase tracking-[0.2em] font-bold text-sm">
-            Master the 12 core operations of JVCS Space
+            Master the 12 core operations of Girgit Hub
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {jvcsCommands.map((command, idx) => (
+          {girgitCommands.map((command, idx) => (
             <div 
               key={idx} 
               className="group bg-white/[0.03] backdrop-blur-md border border-white/10 p-6 rounded-3xl hover:bg-white/[0.08] hover:border-[#00d9ff]/50 transition-all duration-300"
@@ -152,7 +152,7 @@ export default function LandingPage() {
                     <div className="flex-shrink-0 w-16 h-16 rounded-3xl bg-gradient-to-br from-[#ff006e] to-[#ff006e]/40 flex items-center justify-center font-black text-2xl text-white shadow-[0_0_20px_rgba(255,0,110,0.3)]">01</div>
                     <div>
                         <h4 className="text-2xl font-black text-white mb-3">Initialize & Track</h4>
-                        <p className="text-gray-400 font-medium italic">"jvcs init && jvcs begin"</p>
+                        <p className="text-gray-400 font-medium italic">"girgit init && girgit begin"</p>
                         <p className="text-gray-500 mt-2">Initialize your Space and link it to your developer profile in seconds.</p>
                     </div>
                 </div>
@@ -161,7 +161,7 @@ export default function LandingPage() {
                     <div className="flex-shrink-0 w-16 h-16 rounded-3xl bg-gradient-to-br from-[#00d9ff] to-[#00d9ff]/40 flex items-center justify-center font-black text-2xl text-white shadow-[0_0_20px_rgba(0,217,255,0.3)]">02</div>
                     <div>
                         <h4 className="text-2xl font-black text-white mb-3">Stage & Snapshot</h4>
-                        <p className="text-gray-400 font-medium italic">"jvcs add . && jvcs commit \"message\""</p>
+                        <p className="text-gray-400 font-medium italic">"girgit add . && girgit commit \"message\""</p>
                         <p className="text-gray-500 mt-2">Capture changes with atomic precision. Track everything from lines to binary assets.</p>
                     </div>
                 </div>
@@ -170,8 +170,8 @@ export default function LandingPage() {
                     <div className="flex-shrink-0 w-16 h-16 rounded-3xl bg-gradient-to-br from-[#ffbe0b] to-[#ffbe0b]/40 flex items-center justify-center font-black text-2xl text-white shadow-[0_0_20px_rgba(255,190,11,0.3)]">03</div>
                     <div>
                         <h4 className="text-2xl font-black text-white mb-3">Synchronize</h4>
-                        <p className="text-gray-400 font-medium italic">"jvcs push"</p>
-                        <p className="text-gray-500 mt-2">Instantly sync your local history to JVCS Space for cloud-based accessibility.</p>
+                        <p className="text-gray-400 font-medium italic">"girgit push"</p>
+                        <p className="text-gray-500 mt-2">Instantly sync your local history to Girgit Hub for cloud-based accessibility.</p>
                     </div>
                 </div>
             </div>
@@ -185,18 +185,18 @@ export default function LandingPage() {
                 </div>
                 <div className="p-8 font-mono text-sm overflow-x-auto min-h-[400px]">
                     <SyntaxHighlighter language="bash" style={tomorrow} customStyle={{ background: "transparent", padding: "0" }}>
-{`$ jvcs begin
+{`$ girgit begin
  Authenticating user... Success!
  Welcome back, Developer.
 
-$ jvcs init web-app
+$ girgit init web-app
  New repository created: web-app
 
-$ jvcs status
+$ girgit status
  M index.tsx (Modified)
  A components/Card.tsx (Added)
 
-$ jvcs save-version
+$ girgit save-version
  Running auto-pipeline...
  [+] Staging 2 files
  [+] Creating commit: Auto-Save
@@ -242,7 +242,7 @@ $ jvcs save-version
         <div className="relative group bg-gradient-to-r from-[#ff006e]/10 to-[#00d9ff]/10 border border-white/10 rounded-[4rem] p-20 text-center overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-[#ff006e]/5 to-[#00d9ff]/5 group-hover:scale-110 transition-transform duration-700"></div>
           <h2 className="text-5xl font-black text-white mb-8 relative z-10">THE SPACE IS WAITING.</h2>
-          <p className="text-gray-400 max-w-xl mx-auto mb-12 text-lg relative z-10 font-medium italic">"Join 5,000+ developers tracking their progress with JVCS."</p>
+          <p className="text-gray-400 max-w-xl mx-auto mb-12 text-lg relative z-10 font-medium italic">"Join 5,000+ developers tracking their progress with Girgit Hub."</p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
             <button
@@ -268,7 +268,7 @@ $ jvcs save-version
             <div className="col-span-2">
               <div className="flex items-center gap-3 mb-8">
                 <div className="p-1 px-3 bg-gradient-to-br from-[#ff006e] to-[#00d9ff] rounded-lg text-white font-black text-xl italic">J</div>
-                <span className="text-2xl font-black text-white">JVCS SPACE</span>
+                <span className="text-2xl font-black text-white">GIRGIT HUB</span>
               </div>
               <p className="text-gray-500 max-w-sm mb-8 leading-relaxed font-medium">
                 The ultimate version control orbit for modern software architects. Fast, safe, and visually elite.
@@ -298,7 +298,7 @@ $ jvcs save-version
           </div>
 
           <div className="border-t border-white/5 mt-20 pt-10 text-center flex flex-col md:flex-row justify-between items-center gap-8">
-            <p className="text-gray-600 font-black text-sm tracking-widest">© 2026 JVCS SPACE. ENGINEERED BY JAGDISH PATHAKJI.</p>
+            <p className="text-gray-600 font-black text-sm tracking-widest">© 2026 GIRGIT HUB. ENGINEERED BY JAGDISH PATHAKJI.</p>
             <div className="flex gap-8 text-xs font-black text-gray-700 tracking-[0.3em]">
                 <a href="#">PRIVACY</a>
                 <a href="#">TERMS</a>

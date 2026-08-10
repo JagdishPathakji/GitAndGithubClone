@@ -10,7 +10,7 @@ const fs = require("fs")
 
 async function beginCmd() {
 
-    const config = path.join(require("os").homedir(),".jvcs","config.json")
+    const config = path.join(require("os").homedir(),".girgit","config.json")
     let isInitialized = false
     let configData = null
     if(fs.existsSync(config)) {
@@ -41,14 +41,14 @@ async function beginCmd() {
         console.log(`Your choice was ${answer.choice}`)
         if (answer.choice === "1") {
             console.log(chalk.green("Continuing as current user..."))
-            console.log(chalk.green("jvcs --help for help"))
+            console.log(chalk.green("girgit --help for help"))
         }
         else {
             console.log(chalk.green("logging out..."))
             fs.unlinkSync(config)
             console.log(chalk.green("Logged out Successfully"))
-            console.log(chalk.green("Please login or signup again (jvcs begin) to use version control system"))
-            console.log(chalk.green("jvcs --help for help"))
+            console.log(chalk.green("Please login or signup again (girgit begin) to use version control system"))
+            console.log(chalk.green("girgit --help for help"))
         }
 
         return
