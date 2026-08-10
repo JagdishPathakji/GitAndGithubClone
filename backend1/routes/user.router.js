@@ -3,7 +3,7 @@ const userRouter = express.Router()
 const userController = require("../controllers/userController")
 
 userRouter.get("/getAllUsers", userController.getAllUsers)
-userRouter.get("/getStreak/:username", userController.getStreak)
+
 userRouter.post("/signup", userController.signup)
 userRouter.post("/verifyEmail", userController.verifyEmail)
 userRouter.post("/verifyToken", userController.verifyToken)

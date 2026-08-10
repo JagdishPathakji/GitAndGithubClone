@@ -1,46 +1,9 @@
 const validator = require("validator")
 const User = require("../database/models/userModel")
-const Repository = require("../database/models/repoModel")
 const bcrypt = require("bcrypt")
 const sendEmail = require("../externals/sendEmail")
 const redisClient = require("../database/redisConnection")
 const jwt = require("jsonwebtoken")
-
-const getStreak = async (req, res) => {
-
-    try {
-        const { username } = req.params
-
-        const token = req.cookies.token
-        if (!token)
-            return res.status(401).send({ status: "login", message: "Unauthorized: Token not found, Please Login again" });
-
-        const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
-
-        const user = await User.findOne({ username })
-        if (!user) return res.status(404).json({ status: false, message: "User not found" });
-
-        const repos = await Repository.find({ owner: user._id }).populate("content");
-        console.log(repos)
-
-        // plain array of commits with Content id
-        const allCommits = repos.flatMap(repo => repo.content)
-        console.log(allCommits)
-
-        const dailyCommits = {}
-        for (const commit of allCommits) {
-            const date = new Date(commit.createdAt).toISOString().split("T")[0]
-            dailyCommits[date] = (dailyCommits[date] || 0) + 1
-        }
-
-        console.log(dailyCommits)
-
-        return res.status(200).send({ status: true, dailyCommits })
-    }
-    catch (error) {
-        return res.status(500).send({ status: false, message: "Internal server error" })
-    }
-}
 
 const follow = async (req, res) => {
 
@@ -425,9 +388,6 @@ const getOwnProfile = async (req, res) => {
         const user = await User.findOne({ email }).select("-password");
         if (!user) return res.status(404).send({ status: "email", message: "User not found" });
 
-        const repositories = await Repository.find({ owner: user._id }).select("_id name description visibility starred createdAt updatedAt")
-            .sort({ createdAt: -1 });
-
         const profile = {
             _id: user._id,
             username: user.username,
@@ -435,7 +395,7 @@ const getOwnProfile = async (req, res) => {
             createdAt: user.createdAt,
             description: user.description || "",
             readme: user.readme || "",
-            repositories: repositories.length,
+            repositories: 0,
             followedUser: user.followedUser ? user.followedUser.length : 0,
             followingUser: user.followingUser ? user.followingUser.length : 0,
         };
@@ -443,7 +403,7 @@ const getOwnProfile = async (req, res) => {
         return res.status(200).json({
             status: true,
             profile,
-            repos: repositories,
+            repos: [],
         });
 
     }
@@ -476,9 +436,6 @@ const getPublicProfile = async (req, res) => {
         if (targetUser.followingUser && targetUser.followingUser.map((id) => id.toString()).includes(user._id.toString()))
             followstatus = true;
 
-        const repositories = await Repository.find({ owner: targetUser._id, visibility: "public" }).select("_id name description visibility starred createdAt updatedAt")
-            .sort({ createdAt: -1 });
-
         const profile = {
             _id: targetUser._id,
             username: targetUser.username,
@@ -486,7 +443,7 @@ const getPublicProfile = async (req, res) => {
             createdAt: targetUser.createdAt,
             description: targetUser.description || "",
             readme: targetUser.readme || "",
-            repositories: repositories.length,
+            repositories: 0,
             followedUser: targetUser.followedUser ? targetUser.followedUser.length : 0,
             followingUser: targetUser.followingUser ? targetUser.followingUser.length : 0,
         };
@@ -494,7 +451,7 @@ const getPublicProfile = async (req, res) => {
         return res.status(200).json({
             status: true,
             profile,
-            repos: repositories,
+            repos: [],
             followstatus
         });
 
@@ -549,7 +506,6 @@ const deleteProfile = async (req, res) => {
         if (!user) return res.status(404).send("User not found");
 
         console.log(user)
-        await Repository.deleteMany({ owner: user._id });
 
         await User.findByIdAndDelete(user._id);
 
@@ -574,6 +530,5 @@ module.exports = {
     logout,
     getUserProfile,
     getPublicProfile,
-    follow,
-    getStreak
+    follow
 }

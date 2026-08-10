@@ -290,7 +290,6 @@ $ girgit save-version
             <div>
               <h4 className="text-gray-900 font-black text-lg mb-8 uppercase tracking-widest">Resources</h4>
               <ul className="space-y-4 text-gray-500 font-bold">
-                <li><button onClick={() => navigate("/documentation")} className="hover:text-[#3023ae] transition-colors">DOCUMENTATION</button></li>
                 <li><a href="https://github.com/JagdishPathakji" target="_blank" className="hover:text-[#b428b4] transition-colors">GITHUB</a></li>
                 <li><a href="#" className="hover:text-[#ffbe0b] transition-colors">SUPPORT</a></li>
               </ul>
