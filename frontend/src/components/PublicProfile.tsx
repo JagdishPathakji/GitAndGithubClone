@@ -231,53 +231,7 @@ export default function PublicProfile({
           </div>
         )}
 
-        {/* ---- PUBLIC REPOS ---- */}
-        {/* <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 shadow-2xl transition-all duration-300">
-          <div className="px-6 py-6 border-b border-[#3023ae]/20">
-            <h2 className="text-lg font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent flex items-center gap-2">
-              <GitBranch className="w-5 h-5 text-[#3023ae]" /> Public Repositories
-            </h2>
-          </div>
 
-          {repos.length === 0 ? (
-            <p className="text-gray-500 text-center py-6">No public repositories yet.</p>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
-              {repos.map((repo) => (
-                <div
-                  key={repo._id}
-                  onClick={() => navigate(`/repo/public/${repo.name}`)}
-                  className="border border-[#3023ae]/20 bg-gray-100/60 hover:bg-gray-100/80 p-5 cursor-pointer hover:shadow hover:shadow-[#3023ae]/30 transition-all"
-                >
-                  <div className="flex justify-between items-center">
-                    <h3 className="text-gray-800 hover:text-[#3023ae] font-semibold text-lg">
-                      {repo.name}
-                    </h3>
-                    <Globe className="w-4 h-4 text-[#3023ae]" />
-                  </div>
-
-                  <p className="text-gray-500 text-sm mt-2 leading-relaxed">
-                    {repo.description || "No description provided."}
-                  </p>
-
-                  <div className="flex justify-between items-center text-xs text-gray-500 mt-3">
-                    <div className="flex items-center gap-3">
-                      <span className="flex items-center gap-1">
-                        <Star className="w-3 h-3 text-[#ffbe0b]" /> {typeof repo.starred === 'number' ? repo.starred : (Array.isArray(repo.starred) ? (repo.starred as any).length : 0)}
-                      </span>
-                      <span>
-                        Updated on {new Date(repo.updatedAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <span className="italic text-gray-600">
-                      Created {new Date(repo.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div> */}
       </main>
     </div>
   );

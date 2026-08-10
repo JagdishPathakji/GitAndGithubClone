@@ -102,13 +102,7 @@ export default function Navbar({
 
             {/* Right Section */}
             <div className="flex items-center gap-4">
-              {/* <button
-                onClick={() => navigate("/documentation")}
-                className="text-sm text-gray-600 hover:text-[#3023ae] transition-colors duration-200 p-2 hover:bg-[#3023ae]/10 rounded-lg flex items-center gap-1"
-              >
-                <BookOpen className="w-4 h-4" />
-                <span className="hidden sm:inline">Docs</span>
-              </button> */}
+
 
               <span
                 className="text-sm text-gray-600 hidden sm:block hover:text-[#b428b4] transition-colors cursor-pointer"

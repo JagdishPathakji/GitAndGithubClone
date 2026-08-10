@@ -6,13 +6,9 @@ import Dashboard from "./components/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import { useState, useEffect } from "react";
 import Otp from "./components/VerifyOtp";
-// import OwnRepo from "./components/OwnRepo";
-// import GetPublicRepo from "./components/getPublicRepo";
 import Profile from "./components/Profile";
 import PublicProfile from "./components/PublicProfile";
-// import Documentation from "./components/Documentation";
 import LandingPage from "./components/LandingPage";
-// import Documentation from "./components/Documentation";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -95,18 +91,7 @@ function App() {
             path="/dashboard"
             element={<Dashboard setIsAuthenticated={setIsAuthenticated} />}
           />
-          {/* <Route
-            path="/documentation"
-            element={<Documentation setIsAuthenticated={setIsAuthenticated} />}
-          />
-          <Route
-            path="/repo/:repoName"
-            element={<OwnRepo setIsAuthenticated={setIsAuthenticated} />}
-          />
-          <Route
-            path="/repo/public/:repoName"
-            element={<GetPublicRepo setIsAuthenticated={setIsAuthenticated} />}
-          /> */}
+
           <Route 
             path="/profile"
             element={<Profile setIsAuthenticated={setIsAuthenticated}/>}
