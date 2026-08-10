@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
-import { Bot } from "lucide-react";
+import { Bot, User } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import getAllProfile from "../functionalities/getAllProfile";
 
 /* Toast */
 function Toast({
@@ -40,6 +42,15 @@ export default function Dashboard({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const username = localStorage.getItem("username") || "Developer";
 
+  const { data: profilesRes, isLoading } = useQuery({
+    queryKey: ["publicProfiles"],
+    queryFn: getAllProfile,
+    staleTime: 5 * 60 * 1000,
+    retry: false,
+  });
+
+  const profiles = Array.isArray(profilesRes?.data) ? profilesRes.data : [];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-100 text-gray-800">
       <Navbar
@@ -49,22 +60,53 @@ export default function Dashboard({ setIsAuthenticated }) {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
-        {/* Main Content Area */}
-        <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 rounded-none p-10 sm:p-16 shadow-2xl transition-all duration-300 text-center">
-          <div className="flex flex-col items-center justify-center gap-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent">
+        <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 rounded-none p-8 sm:p-12 shadow-2xl transition-all duration-300">
+          <div className="flex flex-col items-center text-center gap-4 mb-10">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent">
               Welcome to Girgit Space
             </h1>
-            <p className="text-gray-500 text-lg sm:text-xl max-w-2xl mt-4">
-              Hello {username}! You have successfully authenticated. This is a placeholder dashboard for the authentication module presentation. 
+            <p className="text-gray-500 text-lg max-w-2xl">
+              Hello {username}! You have successfully authenticated.
             </p>
-            <div className="mt-8 p-6 bg-gradient-to-br from-[#b428b4]/10 to-[#3023ae]/10 border border-[#b428b4]/30 max-w-lg w-full">
-               <Bot className="w-12 h-12 text-[#3023ae] mx-auto mb-4" />
-               <h3 className="text-xl font-bold text-gray-800 mb-2">Auth Module Complete</h3>
-               <p className="text-gray-600 text-sm">
-                 The rest of the features (Repositories, Profiles, Issues) have been temporarily hidden for this demonstration.
-               </p>
-            </div>
+          </div>
+
+          <div className="mt-8 border-t border-gray-200 pt-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2 justify-center">
+              <User className="w-6 h-6 text-[#b428b4]" />
+              Registered Users
+            </h2>
+
+            {isLoading ? (
+              <div className="text-center py-8">
+                <div className="inline-block w-8 h-8 border-4 border-[#b428b4] border-t-transparent rounded-full animate-spin"></div>
+                <p className="text-gray-500 mt-2">Loading users...</p>
+              </div>
+            ) : profiles.length === 0 ? (
+              <p className="text-center text-gray-500 py-8 bg-gray-50 border border-gray-200">
+                No users found.
+              </p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {profiles.map((profile, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-center gap-4 p-4 border border-[#b428b4]/20 bg-gray-50 hover:bg-[#b428b4]/5 transition-colors"
+                  >
+                    <div className="flex items-center justify-center w-12 h-12 bg-gradient-to-br from-[#b428b4]/20 to-[#3023ae]/20 border border-[#b428b4]/30 rounded-full flex-shrink-0">
+                      <User className="w-6 h-6 text-[#b428b4]" />
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-800">
+                        {profile.username || "Unknown"}
+                      </h4>
+                      <p className="text-xs text-gray-500 truncate max-w-[150px]">
+                        {profile.email}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
