@@ -58,13 +58,7 @@ export default function Dashboard({ setIsAuthenticated }) {
             <p className="text-gray-500 text-lg sm:text-xl max-w-2xl mt-4">
               Hello {username}! You have successfully authenticated. This is a placeholder dashboard for the authentication module presentation. 
             </p>
-            <div className="mt-8 p-6 bg-gradient-to-br from-[#b428b4]/10 to-[#3023ae]/10 border border-[#b428b4]/30 max-w-lg w-full">
-               <Bot className="w-12 h-12 text-[#3023ae] mx-auto mb-4" />
-               <h3 className="text-xl font-bold text-gray-800 mb-2">Auth Module Complete</h3>
-               <p className="text-gray-600 text-sm">
-                 The rest of the features (Repositories, Profiles, Issues) have been temporarily hidden for this demonstration.
-               </p>
-            </div>
+            
           </div>
         </div>
       </div>
