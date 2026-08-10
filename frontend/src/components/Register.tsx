@@ -84,26 +84,39 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] flex items-center justify-center px-4 py-8 sm:py-12 text-gray-100">
-      <div className="w-full max-w-md">
-        <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 rounded-none p-8 shadow-2xl hover:shadow-[0_0_50px_rgba(255,0,110,0.2)] transition-all duration-300">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#ff006e] to-[#00d9ff] rounded-xl shadow-lg shadow-[#ff006e]/40 mb-4 transform hover:scale-110 transition-transform">
-              <UserPlus className="w-8 h-8 text-white" strokeWidth={2.5} />
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full flex flex-col md:flex-row bg-white rounded-lg shadow-2xl overflow-hidden min-h-[550px]">
+        
+        {/* Left Side (Theme) */}
+        <div className="md:w-1/2 bg-gradient-to-br from-[#3023ae] to-[#b428b4] p-10 flex flex-col justify-center relative overflow-hidden text-white hidden md:flex">
+          <div className="absolute top-10 right-10 w-32 h-32 bg-cyan-400 rounded-full mix-blend-screen opacity-50 blur-xl"></div>
+          <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-blue-500 rounded-full mix-blend-screen opacity-30 blur-2xl"></div>
+          <div className="absolute bottom-20 left-10 w-24 h-24 bg-fuchsia-500 rounded-full mix-blend-screen opacity-50 blur-xl"></div>
+          
+          <div className="relative z-10 text-center flex flex-col items-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-full shadow-lg mb-6 border border-white/20">
+              <UserPlus className="w-10 h-10 text-white" strokeWidth={2} />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff006e] via-[#00d9ff] to-[#ffbe0b] bg-clip-text text-transparent mb-2">
+            <h2 className="text-3xl font-bold mb-4">Join Us</h2>
+            <p className="text-purple-200">Sign up to<br/>create your account</p>
+          </div>
+        </div>
+
+        {/* Right Side (Original Form) */}
+        <div className="md:w-1/2 bg-white p-8 sm:p-12 flex flex-col justify-center">
+          
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent mb-2">
               Join Girgit Hub - Signup
             </h1>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-500 text-sm leading-relaxed">
               Create your account and start collaborating today
             </p>
           </div>
 
-          {/* Form */}
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="group">
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Username
               </label>
               <input
@@ -112,13 +125,13 @@ export default function Register() {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="your_username"
-                className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#ff006e]/20 rounded-lg text-gray-100"
+                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                 required
               />
             </div>
 
             <div className="group">
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Email Address
               </label>
               <input
@@ -127,13 +140,13 @@ export default function Register() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="you@example.com"
-                className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#00d9ff]/20 rounded-lg text-gray-100"
+                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                 required
               />
             </div>
 
             <div className="group">
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Password
               </label>
               <input
@@ -142,32 +155,32 @@ export default function Register() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#ff006e]/20 rounded-lg text-gray-100"
+                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#ff006e] to-[#00d9ff] text-white font-semibold py-3 rounded-lg"
+              className="w-full bg-gradient-to-r from-[#3023ae] to-[#b428b4] text-white font-semibold py-3 flex justify-between px-6 items-center rounded-sm hover:opacity-90 transition-opacity shadow-md mt-4"
             >
-              Create Account
+              <span>Create Account</span>
+              <span>&gt;</span>
             </button>
           </form>
 
           {/* Divider */}
-          <div className="my-6 flex items-center gap-3">
-            <div className="flex-1 h-px bg-gradient-to-r from-[#ff006e]/30 to-transparent" />
-            <span className="text-xs text-gray-500">Or continue with email</span>
-            <div className="flex-1 h-px bg-gradient-to-l from-[#ff006e]/30 to-transparent" />
+          <div className="my-8 flex items-center gap-3">
+            <div className="flex-1 h-px bg-gray-200" />
+            <span className="text-xs text-gray-400">Or continue with email</span>
+            <div className="flex-1 h-px bg-gray-200" />
           </div>
 
-          {/* Footer */}
-          <p className="text-center text-sm text-gray-300">
+          <p className="text-center text-sm text-gray-500">
             Already have an account?{" "}
             <button
               onClick={onSwitchToLogin}
-              className="text-[#ff006e] font-semibold"
+              className="text-[#b428b4] font-semibold hover:underline"
             >
               Log in
             </button>
@@ -178,32 +191,14 @@ export default function Register() {
       {toast.show && (
         <div className="fixed top-6 right-6 z-50 animate-slide-in">
           <div
-            className={`flex items-center gap-3 min-w-[280px] px-5 py-4 backdrop-blur-xl border shadow-2xl
-            ${
-              toast.type === "success"
-                ? "bg-[#0d0221]/90 border-[#00d9ff]/50 shadow-[0_0_30px_rgba(0,217,255,0.25)]"
-                : "bg-[#0d0221]/90 border-[#ff006e]/50 shadow-[0_0_30px_rgba(255,0,110,0.25)]"
-            }`}
+            className={`flex items-center gap-3 min-w-[280px] max-w-sm px-5 py-4 shadow-xl border-l-4
+            ${toast.type === "success" ? "bg-white border-green-500 text-green-700" : "bg-white border-red-500 text-red-700"}`}
           >
-            <div
-              className={`w-1 h-full ${
-                toast.type === "success" ? "bg-[#00d9ff]" : "bg-[#ff006e]"
-              }`}
-            />
-            <div
-              className={`w-8 h-8 flex items-center justify-center rounded-full font-bold
-              ${
-                toast.type === "success"
-                  ? "bg-[#00d9ff]/20 text-[#00d9ff]"
-                  : "bg-[#ff006e]/20 text-[#ff006e]"
-              }`}
-            >
-              {toast.type === "success" ? "✓" : "!"}
-            </div>
-            <p className="text-sm text-gray-200">{toast.message}</p>
+            <p className="text-sm font-medium">{toast.message}</p>
           </div>
         </div>
       )}
+
     </div>
   );
 }

@@ -76,27 +76,39 @@ export default function Login({ isAuthenticated, setIsAuthenticated }) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] flex items-center justify-center px-4 py-8 sm:py-12 text-gray-100">
-      <div className="w-full max-w-md">
-        <div className="bg-[#1a1629]/90 backdrop-blur-xl border border-[#ff006e]/30 rounded-none p-8 shadow-2xl hover:shadow-[0_0_50px_rgba(255,0,110,0.2)] transition-all duration-300">
-
-          {/* Header */}
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-[#ff006e] to-[#00d9ff] rounded-xl shadow-lg shadow-[#ff006e]/40 mb-4 transform hover:scale-110 transition-transform">
-              <LogIn className="w-8 h-8 text-white" strokeWidth={2.5} />
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="max-w-4xl w-full flex flex-col md:flex-row bg-white rounded-lg shadow-2xl overflow-hidden min-h-[550px]">
+        
+        {/* Left Side (Theme) */}
+        <div className="md:w-1/2 bg-gradient-to-br from-[#3023ae] to-[#b428b4] p-10 flex flex-col justify-center relative overflow-hidden text-white hidden md:flex">
+          <div className="absolute top-10 right-10 w-32 h-32 bg-cyan-400 rounded-full mix-blend-screen opacity-50 blur-xl"></div>
+          <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-blue-500 rounded-full mix-blend-screen opacity-30 blur-2xl"></div>
+          <div className="absolute bottom-20 left-10 w-24 h-24 bg-fuchsia-500 rounded-full mix-blend-screen opacity-50 blur-xl"></div>
+          
+          <div className="relative z-10 text-center flex flex-col items-center">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-white/10 backdrop-blur-md rounded-full shadow-lg mb-6 border border-white/20">
+              <LogIn className="w-10 h-10 text-white" strokeWidth={2} />
             </div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-[#ff006e] via-[#00d9ff] to-[#ffbe0b] bg-clip-text text-transparent mb-2">
+            <h2 className="text-3xl font-bold mb-4">Welcome Page</h2>
+            <p className="text-purple-200">Sign in to<br/>continue access</p>
+          </div>
+        </div>
+
+        {/* Right Side (Original Form) */}
+        <div className="md:w-1/2 bg-white p-8 sm:p-12 flex flex-col justify-center">
+          
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent mb-2">
               Girgit Hub - Login
             </h1>
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-gray-500 text-sm leading-relaxed">
               Welcome back, developer! Let's code together.
             </p>
           </div>
 
-          {/* Form */}
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="group">
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Username
               </label>
               <input
@@ -105,13 +117,13 @@ export default function Login({ isAuthenticated, setIsAuthenticated }) {
                 value={formData.username}
                 onChange={handleChange}
                 placeholder="Username"
-                className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#ff006e]/20 rounded-lg text-gray-100"
+                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                 required
               />
             </div>
 
             <div className="group">
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Email Address
               </label>
               <input
@@ -120,13 +132,13 @@ export default function Login({ isAuthenticated, setIsAuthenticated }) {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Email"
-                className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#00d9ff]/20 rounded-lg text-gray-100"
+                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                 required
               />
             </div>
 
             <div className="group">
-              <label className="block text-sm font-semibold text-gray-200 mb-2">
+              <label className="block text-sm font-semibold text-gray-700 mb-1">
                 Password
               </label>
               <input
@@ -135,24 +147,25 @@ export default function Login({ isAuthenticated, setIsAuthenticated }) {
                 value={formData.password}
                 placeholder="Password"
                 onChange={handleChange}
-                className="w-full px-4 py-3 bg-[#0d0221]/60 border border-[#ff006e]/20 rounded-lg text-gray-100"
+                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                 required
               />
             </div>
 
             <button
               type="submit"
-              className="w-full bg-gradient-to-r from-[#ff006e] to-[#00d9ff] text-white font-semibold py-3 rounded-lg"
+              className="w-full bg-gradient-to-r from-[#3023ae] to-[#b428b4] text-white font-semibold py-3 flex justify-between px-6 items-center rounded-sm hover:opacity-90 transition-opacity shadow-md mt-4"
             >
-              Sign in to Girgit Hub
+              <span>Sign in to Girgit Hub</span>
+              <span>&gt;</span>
             </button>
           </form>
 
-          <p className="text-center text-sm text-gray-300 mt-6">
+          <p className="text-center text-sm text-gray-500 mt-8">
             Don't have an account?{" "}
             <button
               onClick={onSwitchToRegister}
-              className="text-[#ff006e] font-semibold"
+              className="text-[#b428b4] font-semibold hover:underline"
             >
               Create one
             </button>
@@ -163,34 +176,10 @@ export default function Login({ isAuthenticated, setIsAuthenticated }) {
       {toast.show && (
         <div className="fixed top-6 right-6 z-50 animate-slide-in">
           <div
-            className={`flex items-center gap-3 min-w-[280px] max-w-sm px-5 py-4 
-      backdrop-blur-xl border shadow-2xl
-      ${toast.type === "success"
-                ? "bg-[#0d0221]/90 border-[#00d9ff]/50 shadow-[0_0_30px_rgba(0,217,255,0.25)]"
-                : "bg-[#0d0221]/90 border-[#ff006e]/50 shadow-[0_0_30px_rgba(255,0,110,0.25)]"
-              }`}
+            className={`flex items-center gap-3 min-w-[280px] max-w-sm px-5 py-4 shadow-xl border-l-4
+            ${toast.type === "success" ? "bg-white border-green-500 text-green-700" : "bg-white border-red-500 text-red-700"}`}
           >
-            {/* Accent bar */}
-            <div
-              className={`w-1 h-full
-        ${toast.type === "success" ? "bg-[#00d9ff]" : "bg-[#ff006e]"}`}
-            />
-
-            {/* Icon */}
-            <div
-              className={`w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold
-        ${toast.type === "success"
-                  ? "bg-[#00d9ff]/20 text-[#00d9ff]"
-                  : "bg-[#ff006e]/20 text-[#ff006e]"
-                }`}
-            >
-              {toast.type === "success" ? "✓" : "!"}
-            </div>
-
-            {/* Message */}
-            <p className="text-sm text-gray-200 leading-snug">
-              {toast.message}
-            </p>
+            <p className="text-sm font-medium">{toast.message}</p>
           </div>
         </div>
       )}
