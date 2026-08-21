@@ -26,6 +26,7 @@ const CreateRepo = () => {
             const data = await res.json();
             
             if (res.ok && data.status) {
+                clearCache('user/repos');
                 navigate('/dashboard');
             } else {
                 setError(data.message || 'Failed to create repository');

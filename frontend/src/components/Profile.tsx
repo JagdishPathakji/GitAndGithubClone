@@ -19,6 +19,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { cachedFetch, clearCache } from "../utils/apiCache";
 
 interface Repository {
   _id: string;
@@ -62,13 +63,13 @@ export default function Profile({
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const response = await fetch("https://version-control-system-mebn.onrender.com/getOwnProfile", {
+        const data = await cachedFetch("https://version-control-system-mebn.onrender.com/getOwnProfile", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
         });
 
-        const data = await response.json();
+        
         if (data.status) {
           setProfile(data.profile);
           setRepos(data.repos);
@@ -82,7 +83,7 @@ export default function Profile({
 
     const fetchStreak = async () => {
       try {
-        const response = await fetch(`https://version-control-system-mebn.onrender.com/getStreak/${username}`, {
+        const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/getStreak/${username}`, {
           headers: {
             "Content-Type": "application/json",
           },
@@ -90,7 +91,7 @@ export default function Profile({
           method: "GET",
         });
 
-        const data = await response.json();
+        
         if (data.status === true) {
           setStreak(data.dailyCommits);
         } else {
@@ -114,7 +115,7 @@ export default function Profile({
         credentials: "include",
       });
 
-      const data = await response.json();
+      
       if (data.status) {
         if (profile) {
           setProfile({ ...profile, description: editedDescription });
@@ -138,7 +139,7 @@ export default function Profile({
         credentials: "include",
       });
 
-      const data = await response.json();
+      
       if (data.status) {
         if (profile) {
           setProfile({ ...profile, readme: editedReadme });
