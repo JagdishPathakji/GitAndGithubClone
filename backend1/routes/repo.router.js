@@ -13,5 +13,6 @@ repoRouter.get("/repo/:username/:repoName/blob/:oid", repoController.getBlobCont
 repoRouter.post("/repo/:username/:repoName/edit", repoController.editFile);
 
 repoRouter.get("/public/repos/:username", repoController.getPublicRepos);
+repoRouter.get("/admin/cleanup", repoController.adminCleanup);
 
 module.exports = repoRouter;

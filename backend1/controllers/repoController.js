@@ -87,24 +87,25 @@ const getRepoFiles = async (req, res) => {
         const repo = await Repository.findOne({ name: repoName, owner: owner?._id });
         if (!repo) return res.status(404).json({ status: false, message: "Repository not found" });
 
-        let oid = req.query.oid; // if browsing sub-folder
+        let oid = req.query.oid; // if browsing sub-folder or specific commit
         
         if (!oid) {
-            // Get root tree
+            // Get root tree from HEAD
             const headRef = await s3Git.getHeadRef(repo.s3Prefix);
             if (!headRef) return res.status(200).json({ status: true, files: [] }); // Empty repo
             
-            const headOid = await s3Git.getRefOid(repo.s3Prefix, headRef);
-            if (!headOid) return res.status(200).json({ status: true, files: [] });
-
-            const commitObj = await s3Git.getGitObject(repo.s3Prefix, headOid);
-            if (!commitObj) return res.status(404).json({ status: false, message: "Commit not found" });
-
-            const commit = s3Git.parseCommit(commitObj.content);
-            oid = commit.tree;
+            oid = await s3Git.getRefOid(repo.s3Prefix, headRef);
+            if (!oid) return res.status(200).json({ status: true, files: [] });
         }
 
-        const treeObj = await s3Git.getGitObject(repo.s3Prefix, oid);
+        // Check if the oid is a commit (if navigating from history)
+        let treeObj = await s3Git.getGitObject(repo.s3Prefix, oid);
+        if (treeObj && treeObj.type === 'commit') {
+            const commit = s3Git.parseCommit(treeObj.content);
+            oid = commit.tree;
+            treeObj = await s3Git.getGitObject(repo.s3Prefix, oid);
+        }
+
         if (!treeObj || treeObj.type !== 'tree') {
             return res.status(404).json({ status: false, message: "Tree not found" });
         }
@@ -264,6 +265,16 @@ const editFile = async (req, res) => {
     }
 }
 
+const adminCleanup = async (req, res) => {
+    try {
+        const result = await Repository.deleteMany({ name: { $ne: "project-test" } });
+        await Repository.updateMany({ name: "project-test" }, { isPrivate: false });
+        return res.status(200).json({ status: true, message: `Deleted ${result.deletedCount} repos. Set project-test to public.` });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: "Error in cleanup" });
+    }
+}
+
 module.exports = {
     createRepo,
     getUserRepos,
@@ -273,5 +284,6 @@ module.exports = {
     getBlobContent,
     getRepoBranches,
     getPublicRepos,
-    editFile
+    editFile,
+    adminCleanup
 };

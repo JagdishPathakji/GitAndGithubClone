@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const RepositoryView = () => {
     const { username, repoName } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    
+    // Parse query parameters
+    const queryParams = new URLSearchParams(location.search);
+    const targetOid = queryParams.get('oid');
+    
     const [repoInfo, setRepoInfo] = useState<any>(null);
     const [isEmpty, setIsEmpty] = useState(true);
     const [files, setFiles] = useState<any[]>([]);
     const [commits, setCommits] = useState<any[]>([]);
     const [branches, setBranches] = useState<string[]>([]);
-    const [selectedBranch, setSelectedBranch] = useState<string>('master');
+    // If browsing history (targetOid), display that OID instead of branch name
+    const [selectedBranch, setSelectedBranch] = useState<string>(targetOid ? targetOid.substring(0, 7) : 'master');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -35,8 +42,12 @@ const RepositoryView = () => {
                     }
 
                     // In a future update, we will pass ?branch=selectedBranch to the backend files/commits endpoints
+                    const filesUrl = targetOid 
+                        ? `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files?oid=${targetOid}`
+                        : `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`;
+                        
                     const [filesRes, commitsRes] = await Promise.all([
-                        fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`, { credentials: 'include' }),
+                        fetch(filesUrl, { credentials: 'include' }),
                         fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' })
                     ]);
                     
@@ -53,7 +64,7 @@ const RepositoryView = () => {
             }
         };
         fetchRepoData();
-    }, [username, repoName, selectedBranch]);
+    }, [username, repoName, selectedBranch, targetOid]);
 
     if (loading) return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">

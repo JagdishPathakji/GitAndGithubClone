@@ -75,7 +75,7 @@ export default function PublicProfile({
   };
 
   useEffect(() => {
-    const fetchPublicProfile = async () => {
+    const fetchProfileData = async () => {
       try {
         const res = await fetch(
           `https://version-control-system-mebn.onrender.com/getPublicProfile/${username}`,
@@ -86,25 +86,28 @@ export default function PublicProfile({
           }
         );
         const data = await res.json();
-        if (data.status) {
-          setProfile(data.profile);
+        if (!data.status) throw new Error(data.message);
 
-          const publicRepos = data.repos.filter(
-            (repo: Repository) => repo.visibility === "public"
-          );
-          setRepos(publicRepos);
+        setProfile(data.profile);
+        setFollowstatus(data.followstatus);
+        setFollower(data.profile.followingUser);
 
-          setFollowstatus(data.followstatus);
-          setFollower(data.profile.followingUser);
+        // Fetch public repositories specifically
+        const reposRes = await fetch(
+          `https://version-control-system-mebn.onrender.com/public/repos/${username}`
+        );
+        const reposData = await reposRes.json();
+        if (reposData.status) {
+          setRepos(reposData.repos);
         }
-      } catch (err) {
-        console.error("Error fetching public profile:", err);
+      } catch (err: any) {
+        setError(err.message || "Failed to load profile");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchPublicProfile();
+    fetchProfileData();
   }, [username]);
 
   if (loading)

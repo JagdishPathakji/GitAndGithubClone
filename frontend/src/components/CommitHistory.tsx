@@ -73,7 +73,11 @@ const CommitHistory = () => {
                                 <button className="px-3 py-1 bg-gray-100 hover:bg-gray-200 border border-gray-300 text-gray-700 font-mono text-sm rounded transition-colors">
                                     {commit.oid.substring(0, 7)}
                                 </button>
-                                <button className="px-3 py-1 bg-white hover:bg-blue-50 border border-blue-200 text-blue-600 font-semibold text-sm rounded transition-colors">
+                                <button 
+                                    onClick={() => navigate(`/repo/${username}/${repoName}?oid=${commit.oid}`)}
+                                    title="Browse repository at this point in history"
+                                    className="px-3 py-1 bg-white hover:bg-blue-50 border border-blue-200 text-blue-600 font-semibold text-sm rounded transition-colors"
+                                >
                                     &lt;&gt;
                                 </button>
                             </div>

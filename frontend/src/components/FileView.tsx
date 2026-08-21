@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const FileView = () => {
     const { username, repoName, branch } = useParams();
@@ -156,9 +160,38 @@ const FileView = () => {
                         </form>
                     ) : (
                         <div className="p-6 bg-white overflow-x-auto">
-                            <pre className="font-mono text-sm text-gray-800 leading-relaxed">
-                                {content}
-                            </pre>
+                            {filePath.toLowerCase().endsWith('.md') ? (
+                                <div className="prose max-w-none text-gray-800">
+                                    <ReactMarkdown
+                                      remarkPlugins={[remarkGfm]}
+                                      components={{
+                                        code({ node, inline, className, children, ...props }: any) {
+                                          const match = /language-(\w+)/.exec(className || "");
+                                          return !inline && match ? (
+                                            <SyntaxHighlighter
+                                              style={oneDark}
+                                              language={match[1]}
+                                              PreTag="div"
+                                              {...props}
+                                            >
+                                              {String(children).replace(/\n$/, "")}
+                                            </SyntaxHighlighter>
+                                          ) : (
+                                            <code className={className} {...props}>
+                                              {children}
+                                            </code>
+                                          );
+                                        },
+                                      }}
+                                    >
+                                        {content}
+                                    </ReactMarkdown>
+                                </div>
+                            ) : (
+                                <pre className="font-mono text-sm text-gray-800 leading-relaxed">
+                                    {content}
+                                </pre>
+                            )}
                         </div>
                     )}
                 </div>
