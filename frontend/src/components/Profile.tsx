@@ -385,6 +385,55 @@ export default function Profile({
           </div>
         </div>
 
+        {/* ---- REPOSITORIES SECTION ---- */}
+        <div className="bg-white/90 backdrop-blur-xl border border-[#b428b4]/30 shadow-2xl p-8 transition-all duration-300">
+          <div className="flex items-center gap-3 border-b border-[#b428b4]/20 pb-4 mb-6">
+            <Globe className="w-6 h-6 text-[#3023ae]" />
+            <h2 className="text-xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent">
+              Repositories <span className="text-sm font-normal text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full border border-gray-200 ml-2">{repos.length}</span>
+            </h2>
+          </div>
+
+          {repos.length === 0 ? (
+            <div className="text-center py-12 bg-gray-50/50 border border-dashed border-[#b428b4]/30">
+              <GitBranch className="w-12 h-12 text-[#b428b4]/30 mx-auto mb-3" />
+              <p className="text-gray-500">No repositories found.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {repos.map((repo) => (
+                <div
+                  key={repo._id}
+                  onClick={() => navigate(`/repo/${profile.username}/${repo.name}`)}
+                  className="group flex flex-col p-5 border border-[#b428b4]/20 bg-gray-50 hover:bg-[#b428b4]/5 transition-all cursor-pointer hover:shadow-lg hover:border-[#b428b4]/40"
+                >
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-semibold text-lg text-[#3023ae] group-hover:text-[#b428b4] transition-colors break-words max-w-[80%]">
+                      {repo.name}
+                    </h3>
+                    <span className="flex items-center gap-1 text-xs text-gray-500 bg-white px-2 py-1 border border-[#b428b4]/20 rounded-full shadow-sm">
+                      <Star className="w-3 h-3 text-yellow-400 fill-current" />
+                      {repo.starred}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 line-clamp-2 mb-4 flex-1">
+                    {repo.description || "No description provided."}
+                  </p>
+                  <div className="flex items-center gap-4 text-xs text-gray-500 mt-auto pt-3 border-t border-[#b428b4]/10">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-[#b428b4]"></div>
+                      <span>Updated {repo.updatedAt ? new Date(repo.updatedAt).toLocaleDateString() : 'Unknown'}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-0.5 border border-gray-300 rounded-full">{repo.visibility === 'private' ? 'Private' : 'Public'}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
 
       </main>
     </div>
