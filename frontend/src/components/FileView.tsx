@@ -165,9 +165,9 @@ const FileView = () => {
                             </div>
                         </form>
                     ) : (
-                        <div className="p-6 bg-white overflow-x-auto">
+                        <div className="p-0 bg-white overflow-x-auto">
                             {filePath.toLowerCase().endsWith('.md') ? (
-                                <div className="prose max-w-none text-gray-800">
+                                <div className="p-6 prose max-w-none text-gray-800">
                                     <ReactMarkdown
                                       remarkPlugins={[remarkGfm]}
                                       components={{
@@ -194,9 +194,30 @@ const FileView = () => {
                                     </ReactMarkdown>
                                 </div>
                             ) : (
-                                <pre className="font-mono text-sm text-gray-800 leading-relaxed">
+                                <SyntaxHighlighter
+                                    style={oneDark}
+                                    language={
+                                        (() => {
+                                            const ext = filePath.split('.').pop()?.toLowerCase();
+                                            switch (ext) {
+                                                case 'js': case 'jsx': return 'javascript';
+                                                case 'ts': case 'tsx': return 'typescript';
+                                                case 'py': return 'python';
+                                                case 'json': return 'json';
+                                                case 'html': return 'html';
+                                                case 'css': return 'css';
+                                                case 'sh': return 'bash';
+                                                case 'yml': case 'yaml': return 'yaml';
+                                                default: return 'text';
+                                            }
+                                        })()
+                                    }
+                                    showLineNumbers={true}
+                                    PreTag="div"
+                                    customStyle={{ margin: 0, padding: '1.5rem', fontSize: '0.875rem' }}
+                                >
                                     {content}
-                                </pre>
+                                </SyntaxHighlighter>
                             )}
                         </div>
                     )}
