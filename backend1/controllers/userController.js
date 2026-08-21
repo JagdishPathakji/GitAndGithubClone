@@ -1,6 +1,7 @@
 const validator = require("validator")
 const User = require("../database/models/userModel")
 const bcrypt = require("bcrypt")
+const Repository = require("../database/models/repoModel")
 const sendEmail = require("../externals/sendEmail")
 const redisClient = require("../database/redisConnection")
 const jwt = require("jsonwebtoken")
@@ -395,7 +396,7 @@ const getOwnProfile = async (req, res) => {
             createdAt: user.createdAt,
             description: user.description || "",
             readme: user.readme || "",
-            repositories: 0,
+            repositories: await Repository.countDocuments({ owner: user._id }),
             followedUser: user.followedUser ? user.followedUser.length : 0,
             followingUser: user.followingUser ? user.followingUser.length : 0,
         };
@@ -443,7 +444,7 @@ const getPublicProfile = async (req, res) => {
             createdAt: targetUser.createdAt,
             description: targetUser.description || "",
             readme: targetUser.readme || "",
-            repositories: 0,
+            repositories: await Repository.countDocuments({ owner: targetUser._id, isPrivate: false }),
             followedUser: targetUser.followedUser ? targetUser.followedUser.length : 0,
             followingUser: targetUser.followingUser ? targetUser.followingUser.length : 0,
         };
@@ -532,3 +533,4 @@ module.exports = {
     getPublicProfile,
     follow
 }
+
