@@ -72,7 +72,18 @@ export default function Profile({
         
         if (data.status) {
           setProfile(data.profile);
-          setRepos(data.repos);
+          
+          // Fetch user repositories
+          try {
+            const reposData = await cachedFetch("https://version-control-system-mebn.onrender.com/user/repos", {
+              credentials: "include"
+            });
+            if (reposData.status) {
+              setRepos(reposData.repos || []);
+            }
+          } catch (e) {
+            console.error("Failed to fetch repos", e);
+          }
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
