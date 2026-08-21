@@ -46,11 +46,11 @@ function App() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] flex flex-col items-center justify-center text-gray-300 font-mono">
+      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center text-gray-800 font-sans">
         <div className="relative w-12 h-12 mb-4">
-          <div className="absolute inset-0 border-4 border-t-[#ff006e] border-b-[#00d9ff] border-l-[#ffbe0b] border-r-[#ff006e] rounded-full animate-spin"></div>
+          <div className="absolute inset-0 border-4 border-t-[#b428b4] border-b-[#3023ae] border-l-[#ffbe0b] border-r-[#b428b4] rounded-full animate-spin"></div>
         </div>
-        <p className="text-sm bg-gradient-to-r from-[#ff006e] via-[#00d9ff] to-[#ffbe0b] bg-clip-text text-transparent tracking-wider animate-pulse font-semibold">
+        <p className="text-sm bg-gradient-to-r from-[#b428b4] via-[#3023ae] to-[#ffbe0b] bg-clip-text text-transparent tracking-wider animate-pulse font-semibold">
           Checking session...
         </p>
       </div>
@@ -58,7 +58,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-200 font-mono transition-colors duration-300">
+    <div className="min-h-screen bg-gray-100 text-gray-800 font-sans transition-colors duration-300">
       <Routes>
         <Route
           path="/"

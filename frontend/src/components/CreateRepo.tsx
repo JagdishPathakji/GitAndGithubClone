@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { clearCache } from '../utils/apiCache';
 
 const CreateRepo = () => {
     const [name, setName] = useState('');

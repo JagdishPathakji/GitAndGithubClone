@@ -70,6 +70,8 @@ const FileView = () => {
             if (data.status) {
                 // Invalidate all repo cache so the UI updates
                 clearCache(`repo/${username}/${repoName}`);
+                clearCache('user/repos');
+                clearCache('getOwnProfile');
                 navigate(`/repo/${username}/${repoName}`);
             } else {
                 throw new Error(data.message);

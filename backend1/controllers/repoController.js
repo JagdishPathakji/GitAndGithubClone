@@ -88,13 +88,14 @@ const getRepoFiles = async (req, res) => {
         if (!repo) return res.status(404).json({ status: false, message: "Repository not found" });
 
         let oid = req.query.oid; // if browsing sub-folder or specific commit
+        const branch = req.query.branch;
         
         if (!oid) {
-            // Get root tree from HEAD
-            const headRef = await s3Git.getHeadRef(repo.s3Prefix);
-            if (!headRef) return res.status(200).json({ status: true, files: [] }); // Empty repo
+            // Get root tree from HEAD or branch
+            let refPath = branch ? `refs/heads/${branch}` : await s3Git.getHeadRef(repo.s3Prefix);
+            if (!refPath) return res.status(200).json({ status: true, files: [] }); // Empty repo
             
-            oid = await s3Git.getRefOid(repo.s3Prefix, headRef);
+            oid = await s3Git.getRefOid(repo.s3Prefix, refPath);
             if (!oid) return res.status(200).json({ status: true, files: [] });
         }
 
@@ -125,10 +126,11 @@ const getRepoCommits = async (req, res) => {
         const repo = await Repository.findOne({ name: repoName, owner: owner?._id });
         if (!repo) return res.status(404).json({ status: false, message: "Repository not found" });
 
-        const headRef = await s3Git.getHeadRef(repo.s3Prefix);
-        if (!headRef) return res.status(200).json({ status: true, commits: [] });
+        const branch = req.query.branch;
+        let refPath = branch ? `refs/heads/${branch}` : await s3Git.getHeadRef(repo.s3Prefix);
+        if (!refPath) return res.status(200).json({ status: true, commits: [] });
         
-        let currentOid = await s3Git.getRefOid(repo.s3Prefix, headRef);
+        let currentOid = await s3Git.getRefOid(repo.s3Prefix, refPath);
         const commits = [];
 
         // Traverse history (limit to 50 for performance)
@@ -257,6 +259,9 @@ const editFile = async (req, res) => {
 
         // 5. Update Ref
         await s3Git.putS3Object(`${repo.s3Prefix}/refs/heads/${branch}`, Buffer.from(commitOid, 'utf-8'));
+
+        repo.updatedAt = new Date();
+        await repo.save();
 
         return res.status(200).json({ status: true, message: "File updated successfully" });
     } catch (error) {

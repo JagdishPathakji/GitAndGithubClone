@@ -40,14 +40,14 @@ const RepositoryView = () => {
                         }
                     }
 
-                    // In a future update, we will pass ?branch=selectedBranch to the backend files/commits endpoints
+                    // Passed branch query param to the backend files/commits endpoints
                     const filesUrl = targetOid 
                         ? `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files?oid=${targetOid}`
-                        : `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`;
+                        : `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files?branch=${selectedBranch}`;
                         
                     const [filesData, commitsData] = await Promise.all([
                         cachedFetch(filesUrl, { credentials: 'include' }),
-                        cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' })
+                        cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits?branch=${selectedBranch}`, { credentials: 'include' })
                     ]);
                     
                     if (filesData.status) setFiles(filesData.files);

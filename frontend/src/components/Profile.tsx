@@ -115,6 +115,7 @@ export default function Profile({
         credentials: "include",
       });
 
+      const data = await response.json();
       
       if (data.status) {
         if (profile) {
@@ -139,6 +140,7 @@ export default function Profile({
         credentials: "include",
       });
 
+      const data = await response.json();
       
       if (data.status) {
         if (profile) {

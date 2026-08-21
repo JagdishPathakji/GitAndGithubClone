@@ -13,9 +13,8 @@ const CommitHistory = () => {
     useEffect(() => {
         const fetchCommits = async () => {
             try {
-                // For now our backend just fetches the default branch commits via the main endpoint, 
-                // but we can pass ?branch=... if we upgrade the backend later.
-                const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' });
+                // Pass ?branch=... to the backend to get branch-specific commits
+                const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits?branch=${branch}`, { credentials: 'include' });
                 if (!data.status) throw new Error(data.message);
                 
                 setCommits(data.commits);
