@@ -95,10 +95,53 @@ function parseCommit(content) {
     return { tree, parent, author, message };
 }
 
+const crypto = require('crypto');
+const { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
+
+// ... existing code ...
+
+async function putS3Object(key, body) {
+    const command = new PutObjectCommand({ Bucket: BUCKET_NAME, Key: key, Body: body });
+    await s3Client.send(command);
+}
+
+function hashObject(data, type) {
+    const obj = Buffer.concat([Buffer.from(type + '\0'), data]);
+    const hash = crypto.createHash('sha1').update(obj).digest('hex');
+    return { oid: hash, buffer: obj };
+}
+
+async function writeObject(prefix, data, type) {
+    const { oid, buffer } = hashObject(data, type);
+    await putS3Object(`${prefix}/objects/${oid}`, buffer);
+    return oid;
+}
+
+async function getBranches(prefix) {
+    try {
+        const command = new ListObjectsV2Command({
+            Bucket: BUCKET_NAME,
+            Prefix: `${prefix}/refs/heads/`
+        });
+        const response = await s3Client.send(command);
+        if (!response.Contents) return [];
+        
+        return response.Contents.map(obj => {
+            const parts = obj.Key.split('/');
+            return parts[parts.length - 1];
+        });
+    } catch (err) {
+        return [];
+    }
+}
+
 module.exports = {
     getGitObject,
     getHeadRef,
     getRefOid,
     parseTree,
-    parseCommit
+    parseCommit,
+    getBranches,
+    writeObject,
+    putS3Object
 };

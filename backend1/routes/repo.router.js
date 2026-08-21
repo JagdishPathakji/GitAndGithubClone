@@ -6,8 +6,12 @@ repoRouter.post("/repo/create", repoController.createRepo);
 repoRouter.get("/user/repos", repoController.getUserRepos);
 
 repoRouter.get("/repo/:username/:repoName", repoController.getRepoDetails);
+repoRouter.get("/repo/:username/:repoName/branches", repoController.getRepoBranches);
 repoRouter.get("/repo/:username/:repoName/files", repoController.getRepoFiles);
 repoRouter.get("/repo/:username/:repoName/commits", repoController.getRepoCommits);
 repoRouter.get("/repo/:username/:repoName/blob/:oid", repoController.getBlobContent);
+repoRouter.post("/repo/:username/:repoName/edit", repoController.editFile);
+
+repoRouter.get("/public/repos/:username", repoController.getPublicRepos);
 
 module.exports = repoRouter;

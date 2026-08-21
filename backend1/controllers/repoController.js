@@ -172,11 +172,106 @@ const getBlobContent = async (req, res) => {
     }
 }
 
+const getRepoBranches = async (req, res) => {
+    try {
+        const { username, repoName } = req.params;
+        const owner = await User.findOne({ username });
+        const repo = await Repository.findOne({ name: repoName, owner: owner?._id });
+        if (!repo) return res.status(404).json({ status: false, message: "Repository not found" });
+
+        const branches = await s3Git.getBranches(repo.s3Prefix);
+        return res.status(200).json({ status: true, branches });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: "Internal server error" });
+    }
+}
+
+const getPublicRepos = async (req, res) => {
+    try {
+        const { username } = req.params;
+        const owner = await User.findOne({ username });
+        if (!owner) return res.status(404).json({ status: false, message: "User not found" });
+
+        const repos = await Repository.find({ owner: owner._id, isPrivate: false }).sort({ createdAt: -1 });
+        return res.status(200).json({ status: true, repos });
+    } catch (error) {
+        return res.status(500).json({ status: false, message: "Internal server error" });
+    }
+}
+
+const editFile = async (req, res) => {
+    try {
+        const user = await getUser(req);
+        if (!user) return res.status(401).json({ status: false, message: "Unauthorized" });
+
+        const { username, repoName } = req.params;
+        if (user.username !== username) return res.status(403).json({ status: false, message: "Forbidden" });
+        
+        const repo = await Repository.findOne({ name: repoName, owner: user._id });
+        if (!repo) return res.status(404).json({ status: false, message: "Repository not found" });
+
+        const { filename, content, commitMessage, branch = "master" } = req.body;
+
+        // 1. Write the new Blob
+        const blobOid = await s3Git.writeObject(repo.s3Prefix, Buffer.from(content, 'utf-8'), 'blob');
+
+        // 2. Fetch current head and tree
+        const headOid = await s3Git.getRefOid(repo.s3Prefix, `refs/heads/${branch}`);
+        let currentTreeEntries = [];
+        if (headOid) {
+            const commitObj = await s3Git.getGitObject(repo.s3Prefix, headOid);
+            if (commitObj) {
+                const commit = s3Git.parseCommit(commitObj.content);
+                const treeObj = await s3Git.getGitObject(repo.s3Prefix, commit.tree);
+                if (treeObj) {
+                    currentTreeEntries = s3Git.parseTree(treeObj.content);
+                }
+            }
+        }
+
+        // 3. Update the tree entry
+        const existingIdx = currentTreeEntries.findIndex(e => e.name === filename);
+        if (existingIdx >= 0) {
+            currentTreeEntries[existingIdx].oid = blobOid;
+        } else {
+            currentTreeEntries.push({ type: 'blob', oid: blobOid, name: filename });
+        }
+
+        // Sort entries by name
+        currentTreeEntries.sort((a, b) => a.name.localeCompare(b.name));
+
+        // Format tree string (girgit format: "type oid name\n")
+        const treeString = currentTreeEntries.map(e => `${e.type} ${e.oid} ${e.name}\n`).join('');
+        const treeOid = await s3Git.writeObject(repo.s3Prefix, Buffer.from(treeString, 'utf-8'), 'tree');
+
+        // 4. Create Commit
+        let commitData = `tree ${treeOid}\n`;
+        if (headOid) {
+            commitData += `parent ${headOid}\n`;
+        }
+        commitData += `author ${user.username}\n\n`;
+        commitData += `${commitMessage || `Update ${filename}`}\n`;
+
+        const commitOid = await s3Git.writeObject(repo.s3Prefix, Buffer.from(commitData, 'utf-8'), 'commit');
+
+        // 5. Update Ref
+        await s3Git.putS3Object(`${repo.s3Prefix}/refs/heads/${branch}`, Buffer.from(commitOid, 'utf-8'));
+
+        return res.status(200).json({ status: true, message: "File updated successfully" });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ status: false, message: "Internal server error" });
+    }
+}
+
 module.exports = {
     createRepo,
     getUserRepos,
     getRepoDetails,
     getRepoFiles,
     getRepoCommits,
-    getBlobContent
+    getBlobContent,
+    getRepoBranches,
+    getPublicRepos,
+    editFile
 };

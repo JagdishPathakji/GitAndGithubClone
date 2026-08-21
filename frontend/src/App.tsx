@@ -11,6 +11,8 @@ import PublicProfile from "./components/PublicProfile";
 import LandingPage from "./components/LandingPage";
 import CreateRepo from "./components/CreateRepo";
 import RepositoryView from "./components/RepositoryView";
+import FileView from "./components/FileView";
+import CommitHistory from "./components/CommitHistory";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -109,6 +111,14 @@ function App() {
           <Route 
             path="/repo/:username/:repoName"
             element={<RepositoryView />}
+          />
+          <Route 
+            path="/repo/:username/:repoName/blob/:branch/*"
+            element={<FileView />}
+          />
+          <Route 
+            path="/repo/:username/:repoName/commits/:branch"
+            element={<CommitHistory />}
           />
         </Route>
 

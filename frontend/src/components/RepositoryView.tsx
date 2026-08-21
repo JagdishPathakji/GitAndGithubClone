@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
 
 const RepositoryView = () => {
     const { username, repoName } = useParams();
+    const navigate = useNavigate();
     const [repoInfo, setRepoInfo] = useState<any>(null);
     const [isEmpty, setIsEmpty] = useState(true);
     const [files, setFiles] = useState<any[]>([]);
     const [commits, setCommits] = useState<any[]>([]);
+    const [branches, setBranches] = useState<string[]>([]);
+    const [selectedBranch, setSelectedBranch] = useState<string>('master');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -22,6 +25,16 @@ const RepositoryView = () => {
                 setIsEmpty(data.isEmpty);
 
                 if (!data.isEmpty) {
+                    const branchesRes = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/branches`, { credentials: 'include' });
+                    const branchesData = await branchesRes.json();
+                    if (branchesData.status && branchesData.branches.length > 0) {
+                        setBranches(branchesData.branches);
+                        if (!branchesData.branches.includes(selectedBranch)) {
+                            setSelectedBranch(branchesData.branches[0]);
+                        }
+                    }
+
+                    // In a future update, we will pass ?branch=selectedBranch to the backend files/commits endpoints
                     const [filesRes, commitsRes] = await Promise.all([
                         fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`, { credentials: 'include' }),
                         fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' })
@@ -40,7 +53,7 @@ const RepositoryView = () => {
             }
         };
         fetchRepoData();
-    }, [username, repoName]);
+    }, [username, repoName, selectedBranch]);
 
     if (loading) return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
@@ -62,7 +75,7 @@ const RepositoryView = () => {
 
     return (
         <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
-            <Navbar username={localStorage.getItem("username")} setIsAuthenticated={()=>{}} navigate={()=>{}} />
+            <Navbar username={localStorage.getItem("username")} setIsAuthenticated={()=>{}} navigate={navigate} />
 
             {/* Header / Navigation Bar */}
             <div className="bg-white border-b border-gray-200 pt-6 pb-4 px-8 shadow-sm">
@@ -104,6 +117,26 @@ const RepositoryView = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
                         {/* Main File Explorer */}
                         <div className="lg:col-span-3 space-y-4">
+                            <div className="flex items-center justify-between mb-4">
+                                <div className="flex items-center gap-2">
+                                    <select 
+                                        value={selectedBranch}
+                                        onChange={(e) => setSelectedBranch(e.target.value)}
+                                        className="bg-gray-100 border border-gray-300 text-gray-700 text-sm rounded focus:ring-[#3023ae] focus:border-[#3023ae] block px-3 py-1.5 font-semibold"
+                                    >
+                                        {branches.length > 0 ? branches.map(b => (
+                                            <option key={b} value={b}>{b}</option>
+                                        )) : <option value="master">master</option>}
+                                    </select>
+                                </div>
+                                <button 
+                                    onClick={() => navigate(`/repo/${username}/${repoName}/commits/${selectedBranch}`)}
+                                    className="text-gray-600 hover:text-blue-600 font-semibold text-sm flex items-center gap-1 transition-colors"
+                                >
+                                    🕒 {commits.length} Commits &gt;
+                                </button>
+                            </div>
+
                             {/* Latest Commit Header */}
                             {commits.length > 0 && (
                                 <div className="bg-blue-50 border border-blue-200 rounded-t-lg p-3 flex justify-between items-center">
@@ -113,9 +146,6 @@ const RepositoryView = () => {
                                     </div>
                                     <div className="text-gray-500 flex items-center gap-3 text-sm">
                                         <span className="font-mono text-xs">{commits[0].oid.substring(0, 7)}</span>
-                                        <span className="font-semibold flex items-center gap-1 hover:text-blue-600 cursor-pointer">
-                                            🕒 {commits.length} commits
-                                        </span>
                                     </div>
                                 </div>
                             )}
@@ -133,9 +163,13 @@ const RepositoryView = () => {
                                                     )}
                                                 </td>
                                                 <td className="py-3 px-2 font-medium">
-                                                    <span className={file.type === 'tree' ? 'text-[#3023ae] cursor-pointer hover:underline' : 'text-gray-800'}>
+                                                    <Link 
+                                                        to={`/repo/${username}/${repoName}/blob/${selectedBranch}/${file.name}`}
+                                                        state={{ oid: file.oid }}
+                                                        className={file.type === 'tree' ? 'text-[#3023ae] cursor-pointer hover:underline' : 'text-gray-800 hover:text-blue-600 hover:underline'}
+                                                    >
                                                         {file.name}
-                                                    </span>
+                                                    </Link>
                                                 </td>
                                                 <td className="py-3 px-4 text-right text-gray-500 font-mono text-xs hidden sm:table-cell">
                                                     {file.oid.substring(0, 7)}
