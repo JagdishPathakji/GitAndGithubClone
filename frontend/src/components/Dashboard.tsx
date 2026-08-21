@@ -44,7 +44,7 @@ export default function Dashboard({ setIsAuthenticated }) {
   const [repos, setRepos] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:4000/user/repos', { credentials: 'include' })
+    fetch('https://version-control-system-mebn.onrender.com/user/repos', { credentials: 'include' })
       .then(res => res.json())
       .then(data => {
         if (data.status) setRepos(data.repos);

@@ -15,7 +15,7 @@ const CreateRepo = () => {
         setLoading(true);
 
         try {
-            const res = await fetch('http://localhost:4000/repo/create', {
+            const res = await fetch('https://version-control-system-mebn.onrender.com/repo/create', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

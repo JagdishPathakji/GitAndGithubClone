@@ -14,7 +14,7 @@ const RepositoryView = () => {
         const fetchRepoData = async () => {
             try {
                 // Fetch Details
-                const res = await fetch(`http://localhost:4000/repo/${username}/${repoName}`, { credentials: 'include' });
+                const res = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}`, { credentials: 'include' });
                 const data = await res.json();
                 if (!data.status) throw new Error(data.message);
                 
@@ -24,8 +24,8 @@ const RepositoryView = () => {
                 // If not empty, fetch files and commits
                 if (!data.isEmpty) {
                     const [filesRes, commitsRes] = await Promise.all([
-                        fetch(`http://localhost:4000/repo/${username}/${repoName}/files`, { credentials: 'include' }),
-                        fetch(`http://localhost:4000/repo/${username}/${repoName}/commits`, { credentials: 'include' })
+                        fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`, { credentials: 'include' }),
+                        fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' })
                     ]);
                     
                     const filesData = await filesRes.json();
