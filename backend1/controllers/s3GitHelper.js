@@ -1,4 +1,4 @@
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
 const zlib = require('zlib');
 
 // The SDK automatically picks up ~/.aws/credentials
@@ -96,7 +96,7 @@ function parseCommit(content) {
 }
 
 const crypto = require('crypto');
-const { S3Client, GetObjectCommand, PutObjectCommand, ListObjectsV2Command } = require('@aws-sdk/client-s3');
+
 
 // ... existing code ...
 
