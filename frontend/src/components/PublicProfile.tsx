@@ -14,6 +14,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { cachedFetch } from "../utils/apiCache";
 
 interface Repository {
   _id: string;
@@ -40,6 +41,8 @@ export default function PublicProfile({
 }: {
   setIsAuthenticated: (value: boolean) => void;
 }) {
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
   const { username } = useParams();
 
@@ -77,7 +80,7 @@ export default function PublicProfile({
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
-        const res = await fetch(
+        const data = await cachedFetch(
           `https://version-control-system-mebn.onrender.com/getPublicProfile/${username}`,
           {
             method: "POST",
@@ -85,7 +88,6 @@ export default function PublicProfile({
             credentials: "include",
           }
         );
-        const data = await res.json();
         if (!data.status) throw new Error(data.message);
 
         setProfile(data.profile);
@@ -93,10 +95,9 @@ export default function PublicProfile({
         setFollower(data.profile.followingUser);
 
         // Fetch public repositories specifically
-        const reposRes = await fetch(
+        const reposData = await cachedFetch(
           `https://version-control-system-mebn.onrender.com/public/repos/${username}`
         );
-        const reposData = await reposRes.json();
         if (reposData.status) {
           setRepos(reposData.repos);
         }

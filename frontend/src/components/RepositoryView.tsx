@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
+import { cachedFetch } from '../utils/apiCache';
 
 const RepositoryView = () => {
     const { username, repoName } = useParams();
@@ -24,16 +25,14 @@ const RepositoryView = () => {
     useEffect(() => {
         const fetchRepoData = async () => {
             try {
-                const res = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}`, { credentials: 'include' });
-                const data = await res.json();
+                const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}`, { credentials: 'include' });
                 if (!data.status) throw new Error(data.message);
                 
                 setRepoInfo(data.repo);
                 setIsEmpty(data.isEmpty);
 
                 if (!data.isEmpty) {
-                    const branchesRes = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/branches`, { credentials: 'include' });
-                    const branchesData = await branchesRes.json();
+                    const branchesData = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/branches`, { credentials: 'include' });
                     if (branchesData.status && branchesData.branches.length > 0) {
                         setBranches(branchesData.branches);
                         if (!branchesData.branches.includes(selectedBranch)) {
@@ -46,13 +45,10 @@ const RepositoryView = () => {
                         ? `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files?oid=${targetOid}`
                         : `https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`;
                         
-                    const [filesRes, commitsRes] = await Promise.all([
-                        fetch(filesUrl, { credentials: 'include' }),
-                        fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' })
+                    const [filesData, commitsData] = await Promise.all([
+                        cachedFetch(filesUrl, { credentials: 'include' }),
+                        cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' })
                     ]);
-                    
-                    const filesData = await filesRes.json();
-                    const commitsData = await commitsRes.json();
                     
                     if (filesData.status) setFiles(filesData.files);
                     if (commitsData.status) setCommits(commitsData.commits);

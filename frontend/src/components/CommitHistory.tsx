@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
+import { cachedFetch } from '../utils/apiCache';
 
 const CommitHistory = () => {
     const { username, repoName, branch } = useParams();
@@ -14,8 +15,7 @@ const CommitHistory = () => {
             try {
                 // For now our backend just fetches the default branch commits via the main endpoint, 
                 // but we can pass ?branch=... if we upgrade the backend later.
-                const res = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' });
-                const data = await res.json();
+                const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/commits`, { credentials: 'include' });
                 if (!data.status) throw new Error(data.message);
                 
                 setCommits(data.commits);

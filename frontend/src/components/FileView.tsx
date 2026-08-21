@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { cachedFetch, clearCache } from '../utils/apiCache';
 
 const FileView = () => {
     const { username, repoName, branch } = useParams();
@@ -36,8 +37,7 @@ const FileView = () => {
 
         const fetchFile = async () => {
             try {
-                const res = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/blob/${oid}`, { credentials: 'include' });
-                const data = await res.json();
+                const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/blob/${oid}`, { credentials: 'include' });
                 if (!data.status) throw new Error(data.message);
                 setContent(data.content);
                 setEditContent(data.content);
@@ -66,10 +66,14 @@ const FileView = () => {
                 })
             });
             const data = await res.json();
-            if (!data.status) throw new Error(data.message);
             
-            // Go back to repo page
-            navigate(`/repo/${username}/${repoName}`);
+            if (data.status) {
+                // Invalidate all repo cache so the UI updates
+                clearCache(`repo/${username}/${repoName}`);
+                navigate(`/repo/${username}/${repoName}`);
+            } else {
+                throw new Error(data.message);
+            }
         } catch (err: any) {
             alert(err.message || 'Failed to save file');
             setIsSaving(false);
