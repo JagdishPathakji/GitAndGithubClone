@@ -34,9 +34,11 @@ const RepositoryView = () => {
                 if (!data.isEmpty) {
                     const branchesData = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/branches`, { credentials: 'include' });
                     if (branchesData.status && branchesData.branches.length > 0) {
-                        setBranches(branchesData.branches);
-                        if (!targetOid && !branchesData.branches.includes(selectedBranch)) {
-                            setSelectedBranch(branchesData.branches[0]);
+                        // Filter out accidental branches created from commit hashes
+                        const validBranches = branchesData.branches.filter((b: string) => !/^[0-9a-f]{7,40}$/i.test(b));
+                        setBranches(validBranches);
+                        if (!targetOid && validBranches.length > 0 && !validBranches.includes(selectedBranch)) {
+                            setSelectedBranch(validBranches[0]);
                         }
                     }
 

@@ -160,13 +160,14 @@ export default function PublicProfile({
               </p>
 
               <div className="flex gap-3 mt-5">
-                <button
-                  className="px-5 py-2 bg-gradient-to-r from-[#b428b4] to-[#3023ae] hover:from-[#ff1a7e] hover:to-[#1ae5ff] text-white font-semibold transition-all shadow-lg shadow-[#b428b4]/40 active:scale-95 flex-1"
-                  onClick={() => addAFollower(profile.username)}
-                >
-                  {followstatus ? "Following" : "Follow"}
-                </button>
-                {username === localStorage.getItem("username") && (
+                {username !== localStorage.getItem("username") ? (
+                  <button
+                    className="px-5 py-2 bg-gradient-to-r from-[#b428b4] to-[#3023ae] hover:from-[#ff1a7e] hover:to-[#1ae5ff] text-white font-semibold transition-all shadow-lg shadow-[#b428b4]/40 active:scale-95 flex-1"
+                    onClick={() => addAFollower(profile.username)}
+                  >
+                    {followstatus ? "Following" : "Follow"}
+                  </button>
+                ) : (
                   <button
                     onClick={() => navigate("/profile")}
                     className="px-5 py-2 bg-white border border-[#b428b4]/30 text-gray-600 hover:text-white hover:border-[#b428b4] transition-all flex items-center gap-2"

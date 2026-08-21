@@ -119,7 +119,7 @@ const FileView = () => {
                     <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 flex justify-between items-center">
                         <span className="font-mono text-sm text-gray-600">{content.split('\n').length} lines</span>
                         
-                        {localStorage.getItem("username") === username && (
+                        {localStorage.getItem("username") === username && !/^[0-9a-f]{7,40}$/i.test(branch || '') && (
                             <div className="flex gap-2">
                                 <button 
                                     onClick={() => setIsEditing(!isEditing)}
