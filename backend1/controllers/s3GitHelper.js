@@ -54,18 +54,19 @@ async function getRefOid(prefix, refPath) {
 // Parses a tree object content into an array of entries
 function parseTree(content) {
     const entries = [];
-    let i = 0;
-    while (i < content.length) {
-        const spaceIdx = content.indexOf(32, i); // ' '
-        const nullIdx = content.indexOf(0, spaceIdx);
-        if (spaceIdx === -1 || nullIdx === -1) break;
-        
-        const mode = content.subarray(i, spaceIdx).toString('utf-8');
-        const name = content.subarray(spaceIdx + 1, nullIdx).toString('utf-8');
-        const oidHex = content.subarray(nullIdx + 1, nullIdx + 21).toString('hex');
-        
-        entries.push({ mode, name, oid: oidHex, type: mode === '40000' ? 'tree' : 'blob' });
-        i = nullIdx + 21;
+    const text = content.toString('utf-8').replace(/\r/g, '');
+    const lines = text.split('\n');
+    
+    for (let line of lines) {
+        if (!line.trim()) continue;
+        // Format: "type oid name"
+        const parts = line.split(' ');
+        if (parts.length >= 3) {
+            const type = parts[0];
+            const oid = parts[1];
+            const name = parts.slice(2).join(' ');
+            entries.push({ type, oid, name });
+        }
     }
     return entries;
 }
