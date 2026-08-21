@@ -9,6 +9,8 @@ import Otp from "./components/VerifyOtp";
 import Profile from "./components/Profile";
 import PublicProfile from "./components/PublicProfile";
 import LandingPage from "./components/LandingPage";
+import CreateRepo from "./components/CreateRepo";
+import RepositoryView from "./components/RepositoryView";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -99,6 +101,14 @@ function App() {
           <Route 
             path="/publicProfile/:username"
             element={<PublicProfile  setIsAuthenticated={setIsAuthenticated}/>}
+          />
+          <Route 
+            path="/repo/new"
+            element={<CreateRepo />}
+          />
+          <Route 
+            path="/repo/:username/:repoName"
+            element={<RepositoryView />}
           />
         </Route>
 

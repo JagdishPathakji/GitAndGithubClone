@@ -41,6 +41,16 @@ function Toast({
 export default function Dashboard({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const username = localStorage.getItem("username") || "Developer";
+  const [repos, setRepos] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:4000/user/repos', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status) setRepos(data.repos);
+      })
+      .catch(console.error);
+  }, []);
 
   const { data: profilesRes, isLoading } = useQuery({
     queryKey: ["publicProfiles"],
@@ -59,8 +69,44 @@ export default function Dashboard({ setIsAuthenticated }) {
         navigate={navigate}
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
-        <div className="bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 rounded-none p-8 sm:p-12 shadow-2xl transition-all duration-300">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        {/* Left Sidebar - Repositories */}
+        <div className="lg:col-span-1 bg-white/90 backdrop-blur-xl border border-gray-200 p-6 shadow-xl h-fit">
+          <div className="flex justify-between items-center mb-6 border-b border-gray-200 pb-2">
+            <h2 className="text-xl font-bold text-gray-800">Your Repositories</h2>
+            <button 
+              onClick={() => navigate('/repo/new')}
+              className="px-3 py-1 bg-gradient-to-r from-green-500 to-green-600 text-white text-sm font-semibold rounded hover:opacity-90 transition-opacity"
+            >
+              New
+            </button>
+          </div>
+          
+          {repos.length === 0 ? (
+            <p className="text-gray-500 text-sm text-center py-4">You don't have any repositories yet.</p>
+          ) : (
+            <ul className="space-y-3">
+              {repos.map((repo: any) => (
+                <li key={repo._id}>
+                  <div 
+                    onClick={() => navigate(`/repo/${username}/${repo.name}`)}
+                    className="block cursor-pointer p-3 hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-colors"
+                  >
+                    <h3 className="text-blue-600 font-semibold text-lg hover:underline">{repo.name}</h3>
+                    {repo.description && <p className="text-gray-500 text-xs mt-1 truncate">{repo.description}</p>}
+                    <div className="mt-2 text-xs text-gray-400 flex items-center gap-2">
+                      <span className="px-2 py-0.5 border border-gray-300 rounded-full">{repo.isPrivate ? 'Private' : 'Public'}</span>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Main Content - Welcome & Users */}
+        <div className="lg:col-span-2 bg-white/90 backdrop-blur-xl border border-[#3023ae]/30 p-8 sm:p-12 shadow-2xl transition-all duration-300">
           <div className="flex flex-col items-center text-center gap-4 mb-10">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent">
               Welcome to Girgit Space
@@ -86,7 +132,7 @@ export default function Dashboard({ setIsAuthenticated }) {
                 No users found.
               </p>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {profiles.map((profile, index) => (
                   <div 
                     key={index} 
@@ -110,6 +156,7 @@ export default function Dashboard({ setIsAuthenticated }) {
             )}
           </div>
         </div>
+
       </div>
     </div>
   );
