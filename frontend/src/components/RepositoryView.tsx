@@ -35,7 +35,7 @@ const RepositoryView = () => {
                     const branchesData = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/branches`, { credentials: 'include' });
                     if (branchesData.status && branchesData.branches.length > 0) {
                         setBranches(branchesData.branches);
-                        if (!branchesData.branches.includes(selectedBranch)) {
+                        if (!targetOid && !branchesData.branches.includes(selectedBranch)) {
                             setSelectedBranch(branchesData.branches[0]);
                         }
                     }
@@ -128,9 +128,19 @@ const RepositoryView = () => {
                                 <div className="flex items-center gap-2">
                                     <select 
                                         value={selectedBranch}
-                                        onChange={(e) => setSelectedBranch(e.target.value)}
+                                        onChange={(e) => {
+                                            if (e.target.value !== targetOid?.substring(0, 7)) {
+                                                navigate(`/repo/${username}/${repoName}`);
+                                                setSelectedBranch(e.target.value);
+                                            }
+                                        }}
                                         className="bg-gray-100 border border-gray-300 text-gray-700 text-sm rounded focus:ring-[#3023ae] focus:border-[#3023ae] block px-3 py-1.5 font-semibold"
                                     >
+                                        {targetOid && (
+                                            <option value={targetOid.substring(0, 7)}>
+                                                Commit: {targetOid.substring(0, 7)}
+                                            </option>
+                                        )}
                                         {branches.length > 0 ? branches.map(b => (
                                             <option key={b} value={b}>{b}</option>
                                         )) : <option value="master">master</option>}
@@ -144,20 +154,26 @@ const RepositoryView = () => {
                                 </button>
                             </div>
 
-                            {/* Latest Commit Header */}
+                            <div className="border border-gray-300 rounded-lg bg-white overflow-hidden shadow-sm">
                             {commits.length > 0 && (
-                                <div className="bg-blue-50 border border-blue-200 rounded-t-lg p-3 flex justify-between items-center">
-                                    <div className="flex items-center gap-3">
-                                        <div className="font-semibold text-gray-800">{commits[0].author || username}</div>
-                                        <div className="text-gray-600 hover:text-blue-600 cursor-pointer">{commits[0].message}</div>
-                                    </div>
-                                    <div className="text-gray-500 flex items-center gap-3 text-sm">
-                                        <span className="font-mono text-xs">{commits[0].oid.substring(0, 7)}</span>
-                                    </div>
-                                </div>
+                                (() => {
+                                    const activeCommit = targetOid ? commits.find(c => c.oid === targetOid) : commits[0];
+                                    if (!activeCommit) return null;
+                                    return (
+                                        <div className="bg-blue-50 border-b border-blue-200 p-3 flex justify-between items-center">
+                                            <div className="flex items-center gap-3">
+                                                <div className="font-semibold text-gray-800">{activeCommit.author || username}</div>
+                                                <div className="text-gray-600 hover:text-blue-600 cursor-pointer">{activeCommit.message}</div>
+                                            </div>
+                                            <div className="text-gray-500 flex items-center gap-3 text-sm">
+                                                <span className="font-mono text-xs">{activeCommit.oid.substring(0, 7)}</span>
+                                            </div>
+                                        </div>
+                                    );
+                                })()
                             )}
                             
-                            <div className="bg-white border border-gray-300 rounded-b-lg overflow-hidden shadow-sm">
+                            <div className="bg-white border-t border-gray-300 overflow-hidden">
                                 <table className="w-full text-left border-collapse">
                                     <tbody>
                                         {files.map((file, idx) => (
