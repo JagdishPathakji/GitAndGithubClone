@@ -211,6 +211,7 @@ const RepositoryView = () => {
                             </div>
                         </div>
 
+                        </div>
                         {/* Sidebar */}
                         <div className="lg:col-span-1 space-y-6">
                             <div className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
