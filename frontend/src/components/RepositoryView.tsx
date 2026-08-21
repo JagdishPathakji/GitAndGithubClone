@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import Navbar from './Navbar';
 
 const RepositoryView = () => {
     const { username, repoName } = useParams();
@@ -13,7 +14,6 @@ const RepositoryView = () => {
     useEffect(() => {
         const fetchRepoData = async () => {
             try {
-                // Fetch Details
                 const res = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}`, { credentials: 'include' });
                 const data = await res.json();
                 if (!data.status) throw new Error(data.message);
@@ -21,7 +21,6 @@ const RepositoryView = () => {
                 setRepoInfo(data.repo);
                 setIsEmpty(data.isEmpty);
 
-                // If not empty, fetch files and commits
                 if (!data.isEmpty) {
                     const [filesRes, commitsRes] = await Promise.all([
                         fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/files`, { credentials: 'include' }),
@@ -40,95 +39,131 @@ const RepositoryView = () => {
                 setLoading(false);
             }
         };
-
         fetchRepoData();
     }, [username, repoName]);
 
-    if (loading) return <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center">Loading...</div>;
-    if (error) return <div className="min-h-screen bg-gray-900 text-red-500 p-10">{error}</div>;
+    if (loading) return (
+        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
+            <div className="inline-block w-12 h-12 border-4 border-[#b428b4] border-t-transparent rounded-full animate-spin"></div>
+            <p className="mt-4 text-gray-600 font-semibold text-lg">Loading Repository...</p>
+        </div>
+    );
+    
+    if (error) return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+            <div className="bg-white p-8 rounded-lg shadow-xl border-l-4 border-red-500 max-w-md w-full">
+                <h2 className="text-xl font-bold text-red-600 mb-2">Error</h2>
+                <p className="text-gray-700">{error}</p>
+            </div>
+        </div>
+    );
 
     const s3Url = `s3://girgit-project/${username}/${repoName}`;
 
     return (
-        <div className="min-h-screen bg-[#0d0221] text-gray-200 font-mono">
-            {/* Header */}
-            <div className="bg-[#1a1629] border-b border-gray-700 py-6 px-8 flex justify-between items-center">
-                <div>
-                    <h1 className="text-2xl font-bold">
-                        <Link to={`/publicProfile/${username}`} className="text-[#00d9ff] hover:underline">{username}</Link>
-                        <span className="text-gray-500 mx-2">/</span>
-                        <span className="text-white">{repoName}</span>
-                        <span className="ml-4 px-2 py-1 text-xs border border-gray-600 rounded-full text-gray-400">
+        <div className="min-h-screen bg-gray-50 text-gray-800 font-sans">
+            <Navbar username={localStorage.getItem("username")} setIsAuthenticated={()=>{}} navigate={()=>{}} />
+
+            {/* Header / Navigation Bar */}
+            <div className="bg-white border-b border-gray-200 pt-6 pb-4 px-8 shadow-sm">
+                <div className="max-w-6xl mx-auto">
+                    <div className="flex items-center gap-2 text-xl font-semibold mb-3">
+                        <Link to={`/publicProfile/${username}`} className="text-[#3023ae] hover:underline hover:text-[#b428b4] transition-colors">{username}</Link>
+                        <span className="text-gray-400 font-light">/</span>
+                        <span className="text-gray-800 font-bold">{repoName}</span>
+                        <span className="ml-2 px-2.5 py-0.5 text-xs font-semibold border border-gray-300 rounded-full text-gray-500 bg-gray-100">
                             {repoInfo?.isPrivate ? 'Private' : 'Public'}
                         </span>
-                    </h1>
-                    {repoInfo?.description && <p className="mt-2 text-gray-400 text-sm">{repoInfo.description}</p>}
+                    </div>
+                    {repoInfo?.description && <p className="text-gray-600 text-sm">{repoInfo.description}</p>}
                 </div>
             </div>
 
             {/* Main Content */}
             <div className="max-w-6xl mx-auto py-8 px-4">
                 {isEmpty ? (
-                    <div className="bg-[#1e1b30] border border-gray-700 rounded-lg p-8 shadow-xl">
-                        <h2 className="text-xl font-bold mb-4 text-[#ff006e]">Quick setup — if you've done this kind of thing before</h2>
-                        <div className="bg-black p-4 rounded text-[#00d9ff] overflow-x-auto mb-8">
-                            <code>girgit remote add aws {s3Url}</code><br/>
-                            <code>girgit push aws master</code>
+                    <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-md">
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Quick setup — if you've done this kind of thing before</h2>
+                        <div className="bg-gray-100 p-4 rounded-md border border-gray-200 text-gray-800 overflow-x-auto mb-8 shadow-inner font-mono text-sm">
+                            <p>girgit remote add aws {s3Url}</p>
+                            <p>girgit push aws master</p>
                         </div>
 
-                        <h3 className="text-lg font-bold mb-2">...or create a new repository on the command line</h3>
-                        <div className="bg-black p-4 rounded text-gray-300 overflow-x-auto space-y-2">
-                            <code>mkdir {repoName}</code><br/>
-                            <code>cd {repoName}</code><br/>
-                            <code>girgit init</code><br/>
-                            <code>echo "# {repoName}" &gt; README.md</code><br/>
-                            <code>girgit commit -m "first commit"</code><br/>
-                            <code>girgit remote add aws {s3Url}</code><br/>
-                            <code>girgit push aws master</code>
+                        <h3 className="text-xl font-semibold text-gray-800 mb-4">...or create a new repository on the command line</h3>
+                        <div className="bg-gray-100 p-4 rounded-md border border-gray-200 text-gray-800 overflow-x-auto space-y-1 shadow-inner font-mono text-sm">
+                            <p>mkdir {repoName}</p>
+                            <p>cd {repoName}</p>
+                            <p>girgit init</p>
+                            <p>echo "# {repoName}" &gt; README.md</p>
+                            <p>girgit commit -m "first commit"</p>
+                            <p>girgit remote add aws {s3Url}</p>
+                            <p>girgit push aws master</p>
                         </div>
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                        {/* Files Explorer */}
-                        <div className="lg:col-span-2 space-y-4">
-                            <div className="bg-[#1e1b30] border border-gray-700 rounded-lg overflow-hidden shadow-lg">
-                                <div className="bg-[#2a2640] px-4 py-3 border-b border-gray-700 font-bold flex justify-between">
-                                    <span>Code</span>
-                                    <span className="text-sm font-normal text-gray-400">{commits.length} commits</span>
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                        {/* Main File Explorer */}
+                        <div className="lg:col-span-3 space-y-4">
+                            {/* Latest Commit Header */}
+                            {commits.length > 0 && (
+                                <div className="bg-blue-50 border border-blue-200 rounded-t-lg p-3 flex justify-between items-center">
+                                    <div className="flex items-center gap-3">
+                                        <div className="font-semibold text-gray-800">{commits[0].author || username}</div>
+                                        <div className="text-gray-600 hover:text-blue-600 cursor-pointer">{commits[0].message}</div>
+                                    </div>
+                                    <div className="text-gray-500 flex items-center gap-3 text-sm">
+                                        <span className="font-mono text-xs">{commits[0].oid.substring(0, 7)}</span>
+                                        <span className="font-semibold flex items-center gap-1 hover:text-blue-600 cursor-pointer">
+                                            🕒 {commits.length} commits
+                                        </span>
+                                    </div>
                                 </div>
-                                <ul>
-                                    {files.map((file, idx) => (
-                                        <li key={idx} className="px-4 py-3 border-b border-gray-700/50 hover:bg-[#252136] flex items-center transition-colors">
-                                            {file.type === 'tree' ? (
-                                                <span className="text-[#00d9ff] mr-3">📁</span>
-                                            ) : (
-                                                <span className="text-gray-400 mr-3">📄</span>
-                                            )}
-                                            <span className={file.type === 'tree' ? 'text-[#00d9ff] cursor-pointer hover:underline' : 'text-gray-200'}>
-                                                {file.name}
-                                            </span>
-                                        </li>
-                                    ))}
-                                    {files.length === 0 && <li className="p-4 text-center text-gray-500">No files found.</li>}
-                                </ul>
+                            )}
+                            
+                            <div className="bg-white border border-gray-300 rounded-b-lg overflow-hidden shadow-sm">
+                                <table className="w-full text-left border-collapse">
+                                    <tbody>
+                                        {files.map((file, idx) => (
+                                            <tr key={idx} className="border-t border-gray-200 hover:bg-gray-50 transition-colors">
+                                                <td className="px-4 py-3 w-10 text-center">
+                                                    {file.type === 'tree' ? (
+                                                        <span className="text-blue-400 text-lg">📁</span>
+                                                    ) : (
+                                                        <span className="text-gray-400 text-lg">📄</span>
+                                                    )}
+                                                </td>
+                                                <td className="py-3 px-2 font-medium">
+                                                    <span className={file.type === 'tree' ? 'text-[#3023ae] cursor-pointer hover:underline' : 'text-gray-800'}>
+                                                        {file.name}
+                                                    </span>
+                                                </td>
+                                                <td className="py-3 px-4 text-right text-gray-500 font-mono text-xs hidden sm:table-cell">
+                                                    {file.oid.substring(0, 7)}
+                                                </td>
+                                            </tr>
+                                        ))}
+                                        {files.length === 0 && (
+                                            <tr>
+                                                <td colSpan={3} className="p-8 text-center text-gray-500">
+                                                    No files found in the current directory.
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
-                        {/* Sidebar / Commits */}
-                        <div className="space-y-6">
-                            <div className="bg-[#1e1b30] border border-gray-700 rounded-lg p-4 shadow-lg">
-                                <h3 className="font-bold text-gray-300 mb-2 border-b border-gray-700 pb-2">Recent Commits</h3>
-                                <ul className="space-y-3 mt-4">
-                                    {commits.slice(0, 5).map((c, idx) => (
-                                        <li key={idx} className="text-sm">
-                                            <p className="text-gray-200 font-medium truncate">{c.message}</p>
-                                            <div className="flex justify-between items-center mt-1">
-                                                <span className="text-gray-500 text-xs">{c.author}</span>
-                                                <span className="text-[#ff006e] font-mono text-xs">{c.oid.substring(0, 7)}</span>
-                                            </div>
-                                        </li>
-                                    ))}
-                                </ul>
+                        {/* Sidebar */}
+                        <div className="lg:col-span-1 space-y-6">
+                            <div className="bg-white border border-gray-200 rounded-lg p-5 shadow-sm">
+                                <h3 className="font-bold text-gray-800 mb-4 border-b border-gray-100 pb-2">About</h3>
+                                <p className="text-gray-600 text-sm mb-4">
+                                    {repoInfo?.description || "No description, website, or topics provided."}
+                                </p>
+                                <div className="flex items-center gap-2 text-gray-600 text-sm">
+                                    <span>🌐 S3 Backend Active</span>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -38,25 +38,27 @@ const CreateRepo = () => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-[#0d0221] via-[#1a1629] to-[#0d0221] text-gray-200 font-mono py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full mx-auto space-y-8 bg-[#1e1b30] p-8 rounded-xl border border-gray-700 shadow-2xl">
-                <div>
-                    <h2 className="text-center text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-[#ff006e] to-[#00d9ff]">
+        <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+            <div className="max-w-md w-full bg-white p-8 sm:p-10 rounded-lg shadow-2xl">
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl font-bold bg-gradient-to-r from-[#3023ae] to-[#b428b4] bg-clip-text text-transparent">
                         Create a new repository
                     </h2>
-                    <p className="mt-2 text-center text-sm text-gray-400">
+                    <p className="mt-2 text-sm text-gray-500">
                         A repository contains all project files, including the revision history.
                     </p>
                 </div>
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                <form className="space-y-6" onSubmit={handleSubmit}>
                     {error && (
-                        <div className="bg-red-500/10 border border-red-500 text-red-500 text-sm rounded-lg p-4">
+                        <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 text-sm font-medium">
                             {error}
                         </div>
                     )}
-                    <div className="rounded-md shadow-sm space-y-4">
-                        <div>
-                            <label htmlFor="repo-name" className="block text-sm font-medium text-gray-300">Repository name *</label>
+                    <div className="space-y-5">
+                        <div className="group">
+                            <label htmlFor="repo-name" className="block text-sm font-semibold text-gray-700 mb-1">
+                                Repository name <span className="text-red-500">*</span>
+                            </label>
                             <input
                                 id="repo-name"
                                 name="name"
@@ -64,41 +66,44 @@ const CreateRepo = () => {
                                 required
                                 value={name}
                                 onChange={(e) => setName(e.target.value.replace(/\s+/g, '-'))}
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-600 bg-gray-800 placeholder-gray-500 text-white rounded-md focus:outline-none focus:ring-[#00d9ff] focus:border-[#00d9ff] focus:z-10 sm:text-sm"
+                                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
                                 placeholder="my-awesome-project"
                             />
                         </div>
-                        <div>
-                            <label htmlFor="description" className="block text-sm font-medium text-gray-300">Description (optional)</label>
+                        <div className="group">
+                            <label htmlFor="description" className="block text-sm font-semibold text-gray-700 mb-1">
+                                Description <span className="text-gray-400 font-normal">(optional)</span>
+                            </label>
                             <input
                                 id="description"
                                 name="description"
                                 type="text"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
-                                className="mt-1 appearance-none relative block w-full px-3 py-2 border border-gray-600 bg-gray-800 placeholder-gray-500 text-white rounded-md focus:outline-none focus:ring-[#00d9ff] focus:border-[#00d9ff] focus:z-10 sm:text-sm"
+                                className="w-full border-b border-gray-300 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-[#b428b4] transition-colors bg-transparent"
+                                placeholder="Short description of your project"
                             />
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center mt-4">
                             <input
                                 id="private"
                                 name="private"
                                 type="checkbox"
                                 checked={isPrivate}
                                 onChange={(e) => setIsPrivate(e.target.checked)}
-                                className="h-4 w-4 text-[#ff006e] focus:ring-[#ff006e] border-gray-600 rounded bg-gray-800"
+                                className="h-4 w-4 text-[#b428b4] focus:ring-[#b428b4] border-gray-300 rounded"
                             />
-                            <label htmlFor="private" className="ml-2 block text-sm text-gray-300">
+                            <label htmlFor="private" className="ml-2 block text-sm text-gray-700 font-medium">
                                 Make repository private
                             </label>
                         </div>
                     </div>
 
-                    <div>
+                    <div className="pt-4">
                         <button
                             type="submit"
                             disabled={loading}
-                            className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-[#ff006e] to-[#00d9ff] hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00d9ff] focus:ring-offset-gray-900 disabled:opacity-50 transition-all duration-300"
+                            className="w-full bg-gradient-to-r from-[#3023ae] to-[#b428b4] text-white font-semibold py-3 flex justify-center px-6 items-center rounded-sm hover:opacity-90 transition-opacity shadow-md disabled:opacity-50"
                         >
                             {loading ? 'Creating...' : 'Create repository'}
                         </button>
