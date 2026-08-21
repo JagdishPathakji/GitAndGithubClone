@@ -22,16 +22,15 @@ async function getGitObject(prefix, oid) {
     const compressed = await getS3Object(key);
     if (!compressed) return null;
     
-    // Decompress zlib
-    const decompressed = zlib.inflateSync(compressed);
+    // In girgit, objects are stored uncompressed!
+    const decompressed = compressed;
     
-    // Format: "type size\0content"
+    // Format: "type\0content" (girgit does not include size in the header!)
     const nullIdx = decompressed.indexOf(0);
-    const header = decompressed.subarray(0, nullIdx).toString('utf-8');
-    const [type, size] = header.split(' ');
+    const type = decompressed.subarray(0, nullIdx).toString('utf-8');
     const content = decompressed.subarray(nullIdx + 1);
     
-    return { type, size: parseInt(size), content };
+    return { type, size: content.length, content };
 }
 
 async function getHeadRef(prefix) {
@@ -73,7 +72,7 @@ function parseTree(content) {
 
 // Parses a commit object content
 function parseCommit(content) {
-    const text = content.toString('utf-8');
+    const text = content.toString('utf-8').replace(/\r/g, '');
     const lines = text.split('\n');
     let tree = null;
     let parent = null;
@@ -84,7 +83,7 @@ function parseCommit(content) {
     for (; i < lines.length; i++) {
         if (lines[i] === "") break;
         const [key, ...rest] = lines[i].split(' ');
-        const val = rest.join(' ');
+        const val = rest.join(' ').trim();
         if (key === 'tree') tree = val;
         else if (key === 'parent') parent = val;
         else if (key === 'author') author = val;
