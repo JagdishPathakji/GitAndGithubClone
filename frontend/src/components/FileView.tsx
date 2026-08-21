@@ -18,10 +18,6 @@ const FileView = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
     
-    const [isEditing, setIsEditing] = useState(false);
-    const [editContent, setEditContent] = useState('');
-    const [commitMessage, setCommitMessage] = useState('');
-    const [isSaving, setIsSaving] = useState(false);
     const navigate = useNavigate();
 
     // Since our backend doesn't support fetching by path easily yet, 
@@ -40,7 +36,6 @@ const FileView = () => {
                 const data = await cachedFetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/blob/${oid}`, { credentials: 'include' });
                 if (!data.status) throw new Error(data.message);
                 setContent(data.content);
-                setEditContent(data.content);
             } catch (err: any) {
                 setError(err.message || 'Failed to load file');
             } finally {
@@ -49,38 +44,6 @@ const FileView = () => {
         };
         fetchFile();
     }, [username, repoName, oid]);
-
-    const handleSave = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSaving(true);
-        try {
-            const res = await fetch(`https://version-control-system-mebn.onrender.com/repo/${username}/${repoName}/edit`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include',
-                body: JSON.stringify({
-                    filename: filePath,
-                    content: editContent,
-                    commitMessage,
-                    branch
-                })
-            });
-            const data = await res.json();
-            
-            if (data.status) {
-                // Invalidate all repo cache so the UI updates
-                clearCache(`repo/${username}/${repoName}`);
-                clearCache('user/repos');
-                clearCache('getOwnProfile');
-                navigate(`/repo/${username}/${repoName}`);
-            } else {
-                throw new Error(data.message);
-            }
-        } catch (err: any) {
-            alert(err.message || 'Failed to save file');
-            setIsSaving(false);
-        }
-    };
 
     if (loading) return (
         <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
@@ -118,54 +81,9 @@ const FileView = () => {
                 <div className="bg-white border border-gray-300 rounded-lg shadow-sm overflow-hidden">
                     <div className="bg-gray-50 border-b border-gray-200 px-4 py-3 flex justify-between items-center">
                         <span className="font-mono text-sm text-gray-600">{content.split('\n').length} lines</span>
-                        
-                        {localStorage.getItem("username") === username && !/^[0-9a-f]{7,40}$/i.test(branch || '') && (
-                            <div className="flex gap-2">
-                                <button 
-                                    onClick={() => setIsEditing(!isEditing)}
-                                    className="px-3 py-1 bg-gray-100 hover:bg-gray-200 border border-gray-300 rounded text-sm font-semibold transition-colors"
-                                >
-                                    {isEditing ? 'Cancel Edit' : '✏️ Edit'}
-                                </button>
-                                {!isEditing && (
-                                    <button 
-                                        onClick={() => alert("Delete not implemented in this UI version yet, but you can push a deletion from CLI!")}
-                                        className="px-3 py-1 bg-red-50 hover:bg-red-100 border border-red-200 text-red-600 rounded text-sm font-semibold transition-colors"
-                                    >
-                                        🗑️ Delete
-                                    </button>
-                                )}
-                            </div>
-                        )}
                     </div>
 
-                    {isEditing ? (
-                        <form onSubmit={handleSave} className="p-4 bg-gray-50">
-                            <textarea
-                                value={editContent}
-                                onChange={(e) => setEditContent(e.target.value)}
-                                className="w-full h-96 font-mono text-sm p-4 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-[#b428b4] bg-white text-gray-800"
-                            />
-                            <div className="mt-4 bg-white p-4 border border-gray-300 rounded">
-                                <h3 className="font-semibold text-gray-800 mb-2">Commit changes</h3>
-                                <input
-                                    type="text"
-                                    value={commitMessage}
-                                    onChange={(e) => setCommitMessage(e.target.value)}
-                                    placeholder={`Update ${filePath}`}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded mb-4 focus:outline-none focus:border-[#3023ae]"
-                                />
-                                <button
-                                    type="submit"
-                                    disabled={isSaving}
-                                    className="bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded disabled:opacity-50"
-                                >
-                                    {isSaving ? 'Committing...' : 'Commit changes'}
-                                </button>
-                            </div>
-                        </form>
-                    ) : (
-                        <div className="p-0 bg-white overflow-x-auto">
+                    <div className="p-0 bg-white overflow-x-auto">
                             {filePath.toLowerCase().endsWith('.md') ? (
                                 <div className="p-6 prose max-w-none text-gray-800">
                                     <ReactMarkdown
@@ -220,7 +138,6 @@ const FileView = () => {
                                 </SyntaxHighlighter>
                             )}
                         </div>
-                    )}
                 </div>
             </div>
         </div>

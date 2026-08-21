@@ -87,39 +87,56 @@ const RepositoryView = () => {
             <Navbar username={localStorage.getItem("username")} setIsAuthenticated={()=>{}} navigate={navigate} />
 
             {/* Header / Navigation Bar */}
-            <div className="bg-white border-b border-gray-200 pt-6 pb-4 px-8 shadow-sm">
-                <div className="max-w-6xl mx-auto">
-                    <div className="flex items-center gap-2 text-xl font-semibold mb-3">
-                        <Link to={`/publicProfile/${username}`} className="text-[#3023ae] hover:underline hover:text-[#b428b4] transition-colors">{username}</Link>
-                        <span className="text-gray-400 font-light">/</span>
-                        <span className="text-gray-800 font-bold">{repoName}</span>
-                        <span className="ml-2 px-2.5 py-0.5 text-xs font-semibold border border-gray-300 rounded-full text-gray-500 bg-gray-100">
-                            {repoInfo?.isPrivate ? 'Private' : 'Public'}
-                        </span>
+            <div className="bg-white border-b border-[#b428b4]/20 pt-8 pb-6 px-8 shadow-sm">
+                <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <div className="flex items-center gap-2 text-2xl mb-2">
+                            <span className="text-gray-400">
+                                {repoInfo?.isPrivate ? '🔒' : '🌐'}
+                            </span>
+                            <Link to={`/publicProfile/${username}`} className="text-[#3023ae] hover:underline hover:text-[#b428b4] transition-colors">{username}</Link>
+                            <span className="text-gray-400 font-light">/</span>
+                            <span className="text-gray-800 font-bold">{repoName}</span>
+                            <span className="ml-3 px-3 py-1 text-xs font-semibold border border-[#b428b4]/30 rounded-full text-[#b428b4] bg-[#b428b4]/5 shadow-sm">
+                                {repoInfo?.isPrivate ? 'Private' : 'Public'}
+                            </span>
+                        </div>
+                        {repoInfo?.description && <p className="text-gray-500 text-sm">{repoInfo.description}</p>}
                     </div>
-                    {repoInfo?.description && <p className="text-gray-600 text-sm">{repoInfo.description}</p>}
                 </div>
             </div>
 
             {/* Main Content */}
             <div className="max-w-6xl mx-auto py-8 px-4">
                 {isEmpty ? (
-                    <div className="bg-white border border-gray-200 rounded-lg p-8 shadow-md">
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Quick setup — if you've done this kind of thing before</h2>
-                        <div className="bg-gray-100 p-4 rounded-md border border-gray-200 text-gray-800 overflow-x-auto mb-8 shadow-inner font-mono text-sm">
-                            <p>girgit remote add aws {s3Url}</p>
-                            <p>girgit push aws master</p>
+                    <div className="bg-white border border-[#b428b4]/20 rounded-xl p-8 sm:p-12 shadow-xl">
+                        <div className="text-center mb-10">
+                            <h2 className="text-3xl font-bold bg-gradient-to-r from-[#b428b4] to-[#3023ae] bg-clip-text text-transparent mb-4">Repository is empty</h2>
+                            <p className="text-gray-500">Get started by pushing some code from your command line.</p>
                         </div>
 
-                        <h3 className="text-xl font-semibold text-gray-800 mb-4">...or create a new repository on the command line</h3>
-                        <div className="bg-gray-100 p-4 rounded-md border border-gray-200 text-gray-800 overflow-x-auto space-y-1 shadow-inner font-mono text-sm">
-                            <p>mkdir {repoName}</p>
-                            <p>cd {repoName}</p>
-                            <p>girgit init</p>
-                            <p>echo "# {repoName}" &gt; README.md</p>
-                            <p>girgit commit -m "first commit"</p>
-                            <p>girgit remote add aws {s3Url}</p>
-                            <p>girgit push aws master</p>
+                        <div className="max-w-2xl mx-auto space-y-8">
+                            <div>
+                                <h3 className="text-lg font-semibold text-gray-800 mb-3 border-b border-gray-100 pb-2">Quick setup</h3>
+                                <div className="bg-gray-900 p-5 rounded-lg text-gray-100 overflow-x-auto shadow-inner font-mono text-sm leading-relaxed border border-gray-800 relative">
+                                    <p className="text-green-400"># Push an existing repository</p>
+                                    <p>girgit remote add aws {s3Url}</p>
+                                    <p>girgit push aws master</p>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 className="text-lg font-semibold text-gray-800 mb-3 border-b border-gray-100 pb-2">Create a new repository</h3>
+                                <div className="bg-gray-900 p-5 rounded-lg text-gray-100 overflow-x-auto shadow-inner font-mono text-sm leading-relaxed border border-gray-800">
+                                    <p>mkdir {repoName}</p>
+                                    <p>cd {repoName}</p>
+                                    <p>girgit init</p>
+                                    <p>echo <span className="text-yellow-300">"# {repoName}"</span> &gt; README.md</p>
+                                    <p>girgit commit -m <span className="text-yellow-300">"first commit"</span></p>
+                                    <p>girgit remote add aws {s3Url}</p>
+                                    <p>girgit push aws master</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 ) : (
@@ -189,7 +206,7 @@ const RepositoryView = () => {
                                                 </td>
                                                 <td className="py-3 px-2 font-medium">
                                                     <Link 
-                                                        to={`/repo/${username}/${repoName}/blob/${selectedBranch}/${file.name}`}
+                                                        to={file.type === 'tree' ? `/repo/${username}/${repoName}?oid=${file.oid}` : `/repo/${username}/${repoName}/blob/${selectedBranch}/${file.name}`}
                                                         state={{ oid: file.oid }}
                                                         className={file.type === 'tree' ? 'text-[#3023ae] cursor-pointer hover:underline' : 'text-gray-800 hover:text-blue-600 hover:underline'}
                                                     >
